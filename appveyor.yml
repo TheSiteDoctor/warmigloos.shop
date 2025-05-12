@@ -1,0 +1,100 @@
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+version: 1.0.{build}
+
+branches:
+  only:
+  - deploy/*
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+image: Previous Visual Studio 2022 # Visual Studio 2022
+
+clone_depth: 1  # clone entire repository history if not defined
+
+#cache:
+  #- '%LocalAppData%\NuGet\Cache'    # NuGet < v3
+  #- '%LocalAppData%\NuGet\v3-cache' # NuGet v3
+  #- '%USERPROFILE%\.nuget\packages -> **\packages.csproj' # NetCore
+  #- packages -> **\packages.csproj      # preserve "packages" directory in the root of build folder but will reset it if csproj is modified
+  #- node_modules                        # local npm modules
+  #- '%APPDATA%\npm-cache'               # npm cache
+
+environment:
+  AutoParameterizationWebConfigConnectionStrings: false
+  APPVEYOR_WAP_ARTIFACT_NAME: WI
+  APPVEYOR_WAP_SKIP_ACLS: true
+  APPVEYOR_BUILD_ARTIFACT_STORAGE: gce-artifacts-us
+  TSD_ARTIFACT_NAME: WI
+  TSD_DEPLOY_SITE: true
+  TSD_SITE_NAME: warmigloos.shop
+  TSD_APP_OFFLINE: false #use this to add the default blank site maintenance app_offline.htm, bespoke app_offline use in deploy-before/deploy.ps1
+  TSD_ASPNET_CORE: true #optimises for netcore eg makes sure iis is set to 'no managed code'
+
+test: false
+
+nuget:
+   account_feed: true
+
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+install:
+  # https://help.appveyor.com/discussions/questions/7543-installing-gulp-devbuild-depencies#comment_44031932
+  - npm install
+  - npm run build
+
+before_build:
+- cmd: dotnet --version
+- cmd: dotnet restore src\warmigloos.shop.sln --verbosity m   # verbosity can be q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic] (default is minimal)
+
+build_script:
+  - cmd: echo `CONFIGURATION - %configuration% - %APPVEYOR_BUILD_VERSION%`
+  - cmd: dotnet build src\warmigloos.shop\warmigloos.shop.csproj -c %configuration% -f net8.0 --no-restore -p:Version=%APPVEYOR_BUILD_VERSION%
+  - cmd: dotnet publish src\warmigloos.shop\warmigloos.shop.csproj -c %configuration% -f net8.0 -o publish\ --no-restore --no-build
+
+#---------------------------------#
+#      artifacts configuration    #
+#---------------------------------#
+
+artifacts:
+ - path: publish
+   name: WI # This should be %APPVEYOR_WAP_ARTIFACT_NAME% I think
+
+#---------------------------------#
+#     notification configuration  #
+#---------------------------------#
+notifications:
+- provider: Slack
+  incoming_webhook: https://hooks.slack.com/services/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
+  channel: '#pingdom'
+  on_build_success: true
+  on_build_failure: true
+  on_build_status_changed: false
+
+#---------------------------------#
+#     deployment configuration    #
+#---------------------------------#
+for:
+-
+ branches:
+  only:
+   - deploy/staging
+ configuration: Release
+ deploy:
+ - provider: Environment
+   debug: false
+   name: Amazon-PROD-WEB-CMS-01
+
+-
+ branches:
+  only:
+    - deploy/production
+ configuration: Release
+ deploy:
+ - provider: Environment
+   debug: false
+   name: Amazon-PROD-WEB-CMS-01
