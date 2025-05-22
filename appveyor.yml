@@ -43,6 +43,8 @@ nuget:
 #       build configuration       #
 #---------------------------------#
 install:
+  - cmd: nuget sources add -name TSDGHNuget -source https://nuget.pkg.github.com/TheSiteDoctor/index.json -username TSD -password %GHNugetToken%
+  #- cmd: nuget sources add -name TSDAVNuget -source https://ci.appveyor.com/nuget/thesitedoctor -username #nuget@thesitedoctor.co.uk -password %AVNugetToken%
   # https://help.appveyor.com/discussions/questions/7543-installing-gulp-devbuild-depencies#comment_44031932
   #- npm install
   #- npm run build
