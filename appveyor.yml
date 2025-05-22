@@ -37,15 +37,15 @@ environment:
 test: false
 
 nuget:
-   account_feed: true
+   account_feed: false
 
 #---------------------------------#
 #       build configuration       #
 #---------------------------------#
 install:
-  - cmd: nuget sources List
   - cmd: nuget sources add -name TSDGHNuget -source https://nuget.pkg.github.com/TheSiteDoctor/index.json -username TSD -password %GHNugetToken%
-  - cmd: nuget sources remove -name TheSourceToRemove
+  - cmd: nuget sources List
+  
   # https://help.appveyor.com/discussions/questions/7543-installing-gulp-devbuild-depencies#comment_44031932
   #- npm install
   #- npm run build
