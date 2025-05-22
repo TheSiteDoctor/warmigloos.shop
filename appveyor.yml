@@ -44,8 +44,8 @@ nuget:
 #---------------------------------#
 install:
   # https://help.appveyor.com/discussions/questions/7543-installing-gulp-devbuild-depencies#comment_44031932
-  - npm install
-  - npm run build
+  #- npm install
+  #- npm run build
 
 before_build:
 - cmd: dotnet --version
