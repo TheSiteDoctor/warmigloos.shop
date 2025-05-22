@@ -1,0 +1,99 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.LatestFromFeed)Model.Content;
+    var settings = (ContentModels.LatestFromFeedSettings)Model.Settings;
+
+    var textColorClass = settings.TextColor?.ToString() == "white" ? "light-color" : "";
+    var backgroundColor = settings.BackgroundColor?.ToString();
+    var backgroundColorClass = string.IsNullOrWhiteSpace(backgroundColor) ? "gray-bg" : backgroundColor + "-bg";
+}
+<section class="block feed @(backgroundColorClass) @(textColorClass)" @if (!string.IsNullOrEmpty(settings.AnchorID)) { <text> id="@settings.AnchorID" </text> }>
+
+    @if (content.PreHeading != "" || content.Heading != "" || content.IntroText.ToString() != "")
+    {
+
+        <div class="block__header">
+            @if (content.PreHeading != "")
+            {
+                <div class="pre-head">@content.PreHeading</div>
+            }
+            @if (content.Heading != "")
+            {
+                <h2>@content.Heading</h2>
+            }
+            @if (content.IntroText.ToString() != "")
+            {
+                <div class="block__header-text text-big">
+                    @content.IntroText
+                </div>
+            }
+        </div>
+    }
+
+    @if (content.FeedPage != null)
+    {
+        ContentModels.Feed FeedPage = content.FeedPage as ContentModels.Feed;
+
+        int numberOfPosts = (settings.NumberOfPosts != default ? (settings.NumberOfPosts) : 3);
+
+        var posts = content.FeedPage.Children<ContentModels.Post>().Where(x => x.IsVisible()).OrderByDescending(x => x.Date).Take(numberOfPosts).ToList();
+
+        <div class="block__body">
+
+            <div class="container">
+
+                <div class="row row--center row--no-wrap-s box-wrap">
+
+                    @foreach (var post in posts)
+                    {
+                        <div class="col-33 col-s-80">
+                            <article class="box">
+                                @if (post.PostImage != null)
+                                {
+                                    <div class="box__image">
+                                        <a href="@post.Url()" title="@post.Heading" tabindex="-1">
+                                            <img class="lazyload"
+                                                 src="@(post.PostImage.GetCropUrl(10,7))"
+                                                 data-sizes="auto"
+                                                 data-srcset="@(post.PostImage.GetCropUrl(300,210, quality: 80)) 300w,
+                                        	    @(post.PostImage.GetCropUrl(500,350, quality: 80)) 500w,
+                                        	    @(post.PostImage.GetCropUrl(1000,700, quality: 80)) 1000w"
+                                                 alt="@post.Heading">
+                                        </a>
+                                    </div>
+                                }
+                                <div class="box__text">
+                                    <h3 class="h5"><a title="@post.Heading" href="@post.Url()">@post.Heading</a></h3>
+                                    @if (!FeedPage.HideDates)
+                                    {
+                                        <div class="box__meta">
+                                            @String.Format("{0: dd MMMM yyyy}", post.Date)
+                                        </div>
+                                    }
+                                    <p>@post.PostDescription</p>
+                                </div>
+                            </article>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+        if (content.Buttons != null && content.Buttons.Any())
+        {
+            <div class="text-center">
+                <div class="button-wrap">
+                    @foreach (var button in content.Buttons)
+                    {
+                        @await Html.PartialAsync("~/Views/Partials/Widgets/Renderbutton.cshtml", button)
+                    }
+                </div>
+            </div>
+        }
+    }
+</section>

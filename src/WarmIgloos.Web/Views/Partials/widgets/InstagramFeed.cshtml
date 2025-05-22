@@ -1,0 +1,56 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inject Igloo.Core.Services.ISettingsService _settingsService;
+@{
+    var content = (ContentModels.InstagramFeed)Model.Content;
+    var settings = (ContentModels.InstagramFeedSettings)Model.Settings;
+
+    var instagramUsername = _settingsService.Get<string>
+        (Umbraco.AssignedContentItem, "instagramUsername");
+    var instagramAccessToken = _settingsService.Get<string>
+        (Umbraco.AssignedContentItem, "instagramAccessToken");
+    // var removeImageBorder = settings.RemoveImageBorder ? "gallery__group--no-gap" : "";
+    var removeImageBorder = settings.RemoveImageBorder;
+
+    var backgroundColor = settings.BackgroundColor?.ToString();
+    var backgroundColorClass = string.IsNullOrWhiteSpace(backgroundColor) ? "white-bg" : backgroundColor + "-bg";
+
+    var containerWidthClass = "";
+    switch (settings.ContainerWidth)
+    {
+        case "small":
+            containerWidthClass = "container container--small";
+            break;
+        case "standard":
+            containerWidthClass = "container";
+            break;
+        case "big":
+            containerWidthClass = "container container--big";
+            break;
+        case "full width":
+            containerWidthClass = "container container--fluid";
+            break;
+    }
+
+
+}
+
+<section class="block gallery @(settings.Compact ? " block--compact" : "" ) @(backgroundColorClass)" @if (!string.IsNullOrEmpty(settings.AnchorID))
+{
+    <text> id="@settings.AnchorID" </text>
+}>
+    <div class="@(containerWidthClass)">
+        <div class="row">
+            <div class="col-100">
+                <div class="gallery__group @(content.ImageCount == 9 ? "gallery__group--insta-9" : "gallery__group--grid") gallery--instagram @(removeImageBorder)" id="instafeed"
+                     data-token="@(instagramAccessToken)"
+                     data-username="@(instagramUsername)"
+                     data-count="@(content.ImageCount)"
+                     data-link="@(settings.LinkImages ? 1 : 0)"
+                     data-icon="@(settings.LinkToInstagramAccount ? 1 : 0)">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

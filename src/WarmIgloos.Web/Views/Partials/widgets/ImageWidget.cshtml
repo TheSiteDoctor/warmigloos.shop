@@ -1,0 +1,66 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.ImageWidget)Model.Content;
+    var settings = (ContentModels.ImageWidgetSettings)Model.Settings;
+
+    var compactClass = settings.Compact ? "block--compact" : "";
+
+    var textColorClass = settings.TextColor?.ToString() == "white" ? "light-color" : "";
+    var backgroundColor = settings.BackgroundColor?.ToString();
+    var backgroundColorClass = string.IsNullOrWhiteSpace(backgroundColor) ? "white-bg" : backgroundColor + "-bg";
+
+    var containerWidthClass = "container";
+    switch (settings.ImageSize)
+    {
+        case "small":
+            containerWidthClass = "container container--small";
+            break;
+        case "standard":
+            containerWidthClass = "container";
+            break;
+        case "big":
+            containerWidthClass = "container container--big";
+            break;
+        case "full width":
+            containerWidthClass = "";
+            break;
+    }
+}
+
+@if (content.ImageBlock != null)
+{
+    <div class="block @(compactClass) @(backgroundColorClass) @(textColorClass)" @if (!string.IsNullOrEmpty(settings.AnchorID)) { <text> id="@settings.AnchorID" </text> }>
+
+        <div class="@containerWidthClass">
+            <div class="@(containerWidthClass == "" ? "row row--flat" : "row")">
+
+                <div class="col-100">
+
+                    <figure class="image-block">
+
+                        <img class="lazyload"
+                             src="@(content.ImageBlock.Url())?width=50"
+                             data-sizes="auto"
+                             data-srcset="@(content.ImageBlock.Url())?upscale=false&width=480&quality=80 480w,
+                    	    @(content.ImageBlock.Url())?upscale=false&width=768&quality=80 768w,
+                    	    @(content.ImageBlock.Url())?upscale=false&width=1000&quality=80 1000w,
+                    	    @(content.ImageBlock.Url())?upscale=false&width=1300&quality=80 1300w,
+                    	    @(content.ImageBlock.Url())?upscale=false&width=1600&quality=80 1600w,
+                    	    @(content.ImageBlock.Url())?upscale=false&width=1920&quality=80 1920w" alt="@content.ImageCaption" />
+
+                        @if (content.ImageCaption != "")
+                        {
+                            <figcaption>@content.ImageCaption</figcaption>
+                        }
+                    </figure>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+}

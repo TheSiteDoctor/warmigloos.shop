@@ -1,0 +1,13 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.LineBreak)Model.Content;
+
+    var drawLine = content.DrawLine ? "line-break--divider" : "";
+}
+<div class="line-break @(drawLine)"
+     @if (content.CustomHeight != "") { <text>
+     style="height: @(content.CustomHeight);"
+     </text>  }>
+</div>

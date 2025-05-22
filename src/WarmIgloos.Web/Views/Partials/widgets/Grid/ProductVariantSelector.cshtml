@@ -1,0 +1,3 @@
+﻿@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
+
+@await Component.InvokeAsync("ProductVariantSelector", new { contentPublishedModel = (ProductVariantSelector)Model.Content, settingsPublishedModel = (ProductVariantSelectorSettings)Model.Settings })

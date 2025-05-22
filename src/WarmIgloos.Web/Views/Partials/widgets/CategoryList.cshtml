@@ -1,0 +1,81 @@
+﻿@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Models.Blocks
+@using Igloo.Core.Extensions
+@using IglooThemeCommerce.Extensions
+
+@{
+    UmbracoContext.PricesIncludeTax();
+    var content = (ContentModels.CategoryList)Model.Content;
+    var settings = (ContentModels.CategoryListSettings)Model.Settings;
+
+    var parentCategoriesList = content.Categories?.Select(x => (Category)x).ToList();
+    var categoriesList = null as List<Category>;
+    
+    var includeChildCategories = content.IncludeSubCategories;
+    var maxItemsPerCol = settings.MaximumNumberOfColumns;
+
+    var haveCategories = parentCategoriesList is not null && parentCategoriesList.Any();
+
+    if (includeChildCategories && haveCategories)
+    {
+        categoriesList = new List<Category>();
+        foreach (var parentCategory in parentCategoriesList!)
+        {
+            categoriesList.Add(parentCategory);
+            var subCategories = parentCategory.Children?.Select(x => (Category)x).ToList();
+
+            if (subCategories?.Any() ?? false) 
+            {
+                foreach (var subCategory in subCategories)
+                {
+                    categoriesList.Add(subCategory);
+                }
+            }
+        }
+    }
+    else
+    {
+        categoriesList = parentCategoriesList;
+    }
+   
+    
+    IEnumerable<BlockListItem>? widgets = null;
+    if (haveCategories)
+    {
+        //Ensure we go up the chain in case the category is a sub category
+        var categoriesParent = categoriesList!.First().Ancestor<Categories>();
+        Console.WriteLine();
+        widgets = categoriesParent?.Value<IEnumerable<BlockListItem>>("widgets");
+    }
+}
+
+<div class="container">
+    <div class="categories-grid">
+        @if (widgets != null && haveCategories)
+            {
+                var allWidgetsList = widgets.ToList();
+                foreach (var category in categoriesList!)
+                {
+                    ViewData["categoryData"] = category;
+                    var index = 0;
+                    <a href="@category.Url()" style="border: 1px solid black">
+                    @foreach (var widget in allWidgetsList)
+                    {
+                      
+                              @await Html.RenderWidget(widget, WidgetIndex: index)
+                   
+                        index++;
+                        }
+                             </a>
+                }
+            }
+    </div>
+</div>
+<style>
+    .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 10px;
+    }
+</style>

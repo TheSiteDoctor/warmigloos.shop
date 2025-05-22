@@ -1,0 +1,2 @@
+﻿@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
+@await Component.InvokeAsync("ProductDescription", new { contentPublishedModel = (ProductDescription)Model.Content, settingsPublishedModel = (ProductDescriptionSettings)Model.Settings })

@@ -1,0 +1,28 @@
+﻿@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.FooterText)Model.Content;
+    var settings = (ContentModels.FooterTextSettings)Model.Settings;
+}
+
+<div class="footer-item footer-item--text text-@(settings.AlignContent)">
+
+    @if (content.Heading != "")
+    {
+        <h2 class="h6">@content.Heading</h2>
+    }
+    <div>
+        @Html.Raw(content.Text)
+    </div>
+
+    @if (content.Buttons != null && content.Buttons.Any())
+    {
+        <div class="button-wrap">
+            @foreach (var button in content.Buttons)
+            {
+                @await Html.PartialAsync("~/Views/Partials/Widgets/Renderbutton.cshtml", button)
+            }
+        </div>
+
+    }
+</div>

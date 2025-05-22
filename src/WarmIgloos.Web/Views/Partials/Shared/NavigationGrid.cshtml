@@ -1,0 +1,95 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Web.Common.Models
+@{
+    @*=====================
+    # Grid Settings
+    =====================*@
+    var content = (ContentModels.Grid)Model.Content;
+    var settings = (ContentModels.GridSettings)Model.Settings;
+    
+    var containerWidthClass = "container";
+    
+    switch (settings.ContainerWidth)
+    {
+        case "small":
+            containerWidthClass = "container container--small";
+            break;
+        case "standard":
+            containerWidthClass = "container";
+            break;
+        case "big":
+            containerWidthClass = "container container--big";
+            break;
+        case "full width":
+            containerWidthClass = "container-fluid";
+            break;
+    }
+    
+    var removeColumnGutterClass = settings.RemoveColumnGutter ? "row--flat" : "";
+    var compactClass = settings.Compact ? "grid--compact" : "";
+    
+    var animateClass = settings.Animate ? "animate" : "";
+    
+    var textColorClass = settings.TextColor?.ToString() == "white" ? "light-color" : "";
+    var backgroundColor = settings.BackgroundColor?.ToString();
+    var backgroundColorClass = string.IsNullOrWhiteSpace(backgroundColor) ? "white-bg" : backgroundColor + "-bg";
+    
+    var backgroundMediaUrl = settings.BackgroundImage != null ? settings.BackgroundImage.Url() : "";
+    if (backgroundMediaUrl != "")
+    {
+        backgroundColorClass = "";
+    }
+}
+@if (content.Columns != null && content.Columns.Any())
+{
+    <div class="grid grid--nav @(backgroundColorClass) @(textColorClass) @(removeColumnGutterClass) @(compactClass) @(animateClass)">
+        <div class="@(containerWidthClass) @(settings.HorizontalScrollMobile ? "container--mobile-scroll" : "")">
+            <div class="row @(removeColumnGutterClass) row--@(settings.HorizontalAlignColumns) row--v-@(settings.VerticalAlignColumns) @(settings.HorizontalScrollMobile ? "row--no-wrap-s" : "") @(settings.AdjustColumnHeight ? "row--v-grow" : "")">
+
+                @foreach (BlockListItem column in content.Columns)
+                {
+                    var columnWidth = column.Settings?.Value<string>("columnWidth", "")?.Replace("%", "") ?? "100";
+                    var columnType = column.Content.ContentType.Alias;
+                    
+                    switch (columnWidth)
+                    {
+                        case "":
+                            columnWidth = "col";
+                            break;
+                        case "25":
+                            columnWidth = "col-25 col-m-50";
+                            break;
+                        case "20":
+                            columnWidth = "col-20 col-m-33";
+                            break;
+                        case "10":
+                            columnWidth = "col-10 col-m-20";
+                            break;
+                        default:
+                            columnWidth = "col-" + columnWidth;
+                            break;
+                    }
+
+                    <div class="@(columnWidth) @(settings.HorizontalScrollMobile ? "col-s-90" : "col-s-100")">
+                        @if (columnType == "lineBreak"){
+                            @await Html.PartialAsync("~/Views/Partials/Shared/LineBreak.cshtml", column)
+                        } else {
+                            @await Html.PartialAsync("~/Views/Partials/Widgets/Grid/"+columnType+".cshtml", column, new ViewDataDictionary(ViewData) { { "containerWidth", settings.ContainerWidth }, {"order", 1} })
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+        @if (backgroundMediaUrl != "")
+        {
+            <div class="block__background lazyload"
+                 data-bgset="@(backgroundMediaUrl)?upscale=false&width=1280 1280w,
+        		@(backgroundMediaUrl)?upscale=false&width=1600 1600w,
+        		@(backgroundMediaUrl)?upscale=false&width=1920 1920w"
+                 data-sizes="auto">
+            </div>
+        }
+    </div>
+}

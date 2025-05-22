@@ -1,0 +1,41 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.FooterSocialLinks)Model.Content;
+    var settings = (ContentModels.FooterSocialLinksSettings)Model.Settings;
+}
+
+<div class="footer-item footer-item--social-links text-@(settings.AlignContent)">
+
+    @if (content.Heading != "")
+    {
+        <h2 class="h6">@content.Heading</h2>
+    }
+
+    <ul class="social-nav" itemscope itemtype="http://schema.org/Organization">
+        <link itemprop="url" href="@Umbraco.AssignedContentItem.Url(mode: UrlMode.Absolute)">
+
+        @if (content.Facebook != "")
+        {
+            <li><a itemprop="sameAs" href="@(content.Facebook)" target="_blank" title="Facebook" rel="noopener"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+        }
+        @if (content.Twitter != "")
+        {
+            <li><a itemprop="sameAs" href="@(content.Twitter)" target="_blank" title="Twitter" rel="noopener"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+        }
+        @if (content.Instagram != "")
+        {
+            <li><a itemprop="sameAs" href="@(content.Instagram)" target="_blank" title="Instagram" rel="noopener"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+        }
+        @if (content.LinkedIn != "")
+        {
+            <li><a itemprop="sameAs" href="@(content.LinkedIn)" target="_blank" title="Linked In" rel="noopener"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+        }
+        @if (content.YouTube != "")
+        {
+            <li><a itemprop="sameAs" href="@(content.YouTube)" target="_blank" title="YouTube" rel="noopener"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+        }
+    </ul>
+
+</div>

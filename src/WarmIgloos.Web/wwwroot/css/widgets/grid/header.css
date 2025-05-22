@@ -1,0 +1,6 @@
+.grid-item--header .button-wrap {
+  margin-top: 30px;
+}
+.grid-item--header p:last-of-type {
+  margin-bottom: 0;
+}

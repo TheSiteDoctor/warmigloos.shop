@@ -1,0 +1,43 @@
+{
+    // actual property editors
+    propertyEditors: [
+        {
+            alias: "BBB.ButtonPicker",
+            name: "Igloo - Picker Buttons",
+			
+            icon: "icon-tactics",
+            group: "Igloo - Buttons Buttons Buttons",
+            editor: {
+                view: "/App_Plugins/ButtonsButtonsButtons/editors/bbb.buttonpicker.html",
+				"valueType": "STRING"
+            },
+            prevalues: {
+                fields: [
+                    {
+                        label: "Default value",
+                        description: "If no default value selected, first value is used.",
+                        key: "defaultValue",
+                        view: "textstring"
+                    },
+					{
+						label: "Buttons",
+						key: "buttons",
+						view: "multivalues"
+					},
+					{
+						label: "Small",
+						key: "small",
+						view: "boolean"
+					}
+                ]    
+            }
+        }
+    ],
+
+    // array of files we want to inject into the application
+    "javascript": [
+        "/App_Plugins/ButtonsButtonsButtons/buttonsbuttonsbuttons.controller.js",
+        "/App_Plugins/ButtonsButtonsButtons/buttonsbuttonsbuttons.resource.js"
+    ],
+   
+}

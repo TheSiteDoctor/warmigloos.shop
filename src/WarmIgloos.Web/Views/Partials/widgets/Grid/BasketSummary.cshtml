@@ -1,0 +1,29 @@
+﻿
+@using IglooTheme.Commerce.Views.Shared.Models
+@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
+@{
+    var settingsPublishedModel = (BasketSummarySettings)Model.Settings;
+    var invokeDto = new BasketSummaryInvokeDto
+    {
+        ColumnHorizontalAlignmentCssClass = settingsPublishedModel.TableHorizontalAlignment,
+        ColumnWidthCssClass = settingsPublishedModel.TableWidth,
+        ContainerWidthCssClass = settingsPublishedModel.ContainerWidth,
+        BackgroundColourCssClass = settingsPublishedModel.BackgroundColour,
+        ApplyGutterToBottom = settingsPublishedModel.ApplyGutterSpacingToBottom,
+        ApplyGutterToTop = settingsPublishedModel.ApplyGutterSpacingToTop,
+        CustomCssClasses = settingsPublishedModel.CustomCssClasses,
+        SubTotalText = settingsPublishedModel.SubTotalText,
+        DiscountText = settingsPublishedModel.DiscountText,
+        ShippingText = settingsPublishedModel.ShippingText,
+        TaxText = settingsPublishedModel.TaxText,
+        TotalPriceText = settingsPublishedModel.TotalPriceText
+    };
+}
+<div class="basket-summary-widget__container">
+    @await Component.InvokeAsync("BasketSummary", invokeDto)
+</div>
+<script>
+    const basketSummaryInvokeModel = @Html.Raw(Json.Serialize(invokeDto));
+
+     WidgetHelper.reRenderOnBasketEmptied("BasketSummary", "basket-summary-widget__container", basketSummaryInvokeModel)
+ </script>

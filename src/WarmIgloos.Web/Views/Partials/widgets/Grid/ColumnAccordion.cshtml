@@ -1,0 +1,63 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using System.Text.RegularExpressions;
+@{
+    var content = (ContentModels.ColumnAccordion)Model.Content;
+    var settings = (ContentModels.ColumnAccordionSettings)Model.Settings;
+
+    var boxedColumnClass = settings.BoxedColumn ? "grid-item--boxed" : "";
+}
+
+<div class="grid-item grid-item--acc @(boxedColumnClass)">
+    @if (content.Accordion != null)
+    {
+        foreach (var accItemBlock in content.Accordion)
+        {
+            var accItem = (ContentModels.AccordionItem)accItemBlock.Content;
+
+            <div class="acc">
+                <button class="acc__head">
+                    @accItem.Header
+                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                </button>
+                <div class="acc__body">
+                    @accItem.Text
+                </div>
+            </div>
+
+        }
+    }
+</div>
+
+@if (settings.MarkAsFaq)
+{
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "FAQPage",
+      "mainEntity": [
+      @foreach (var accItemBlock in content.Accordion)
+      {
+        var accItem = (ContentModels.AccordionItem)accItemBlock.Content;
+
+        <text>
+            {
+                "@@type": "Question",
+                "name": "@accItem.Header",
+                "acceptedAnswer": {
+                  "@@type": "Answer",
+                  "text": "@(Regex.Replace(accItem?.Text?.ToString() ?? string.Empty, "<[^>]+>", string.Empty))"
+                }
+            }
+            @if (content.Accordion.Last() != accItemBlock)
+            {
+                @Html.Raw(',')
+            }
+        </text>
+      }
+
+      ]
+    }
+    </script>
+}

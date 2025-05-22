@@ -1,0 +1,1141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<umbPackage>
+  <info>
+    <package>
+      <name>IT310RadioButtonLetterCase</name>
+    </package>
+  </info>
+  <DocumentTypes>
+    <DocumentType Folders="Base" FolderKeys="36512fe6-a88c-4ead-87f3-153733074e2c">
+      <Info>
+        <Name>Settings</Name>
+        <Alias>websiteSettings</Alias>
+        <Key>c7eea93e-5ab4-41c5-aa9f-78713787df27</Key>
+        <Icon>icon-settings color-blue</Icon>
+        <Thumbnail>folder.png</Thumbnail>
+        <Description>Holds all settings nodes for your site</Description>
+        <AllowAtRoot>False</AllowAtRoot>
+        <IsListView>False</IsListView>
+        <IsElement>False</IsElement>
+        <Variations>Culture</Variations>
+        <Compositions />
+        <AllowedTemplates />
+        <DefaultTemplate></DefaultTemplate>
+      </Info>
+      <Structure>
+        <DocumentType>general</DocumentType>
+        <DocumentType>theme</DocumentType>
+      </Structure>
+      <GenericProperties />
+      <Tabs />
+      <HistoryCleanupPolicy preventCleanup="false" />
+    </DocumentType>
+    <DocumentType>
+      <Info>
+        <Name>Theme</Name>
+        <Alias>theme</Alias>
+        <Key>9ffb4391-7c57-432f-9353-135e9d15d8ce</Key>
+        <Icon>icon-brush-alt color-blue</Icon>
+        <Thumbnail>folder.png</Thumbnail>
+        <Description>Settings for colors, fonts, logos and much more</Description>
+        <AllowAtRoot>False</AllowAtRoot>
+        <IsListView>False</IsListView>
+        <IsElement>False</IsElement>
+        <Variations>Nothing</Variations>
+        <Master>websiteSettings</Master>
+        <Compositions>
+          <Composition>websiteSettings</Composition>
+        </Compositions>
+        <AllowedTemplates />
+        <DefaultTemplate></DefaultTemplate>
+      </Info>
+      <Structure />
+      <GenericProperties>
+        <GenericProperty>
+          <Name>Show Theme Explorer</Name>
+          <Alias>showThemeExplorer</Alias>
+          <Key>e43d7bb5-692b-4f3e-9e0a-d0cf33e025f8</Key>
+          <Type>Umbraco.TrueFalse</Type>
+          <Definition>92897bc6-a5f3-4ffe-ae27-f2e7e33dda49</Definition>
+          <Tab Alias="general">General</Tab>
+          <SortOrder>0</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Displays a toolbar in the top right corner of the site, allowing you to test different theme settings for colors, fonts etc.]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Logo On Dark</Name>
+          <Alias>headerLogoOnDark</Alias>
+          <Key>69f6da69-5cf7-4406-8eee-aa235818fa10</Key>
+          <Type>Umbraco.MediaPicker3</Type>
+          <Definition>d195af77-4fe1-41ed-a70e-91cad8f35595</Definition>
+          <Tab Alias="general">General</Tab>
+          <SortOrder>1</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Logo that works on a dark background, recommended format .svg]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Logo On Light</Name>
+          <Alias>headerLogoOnLight</Alias>
+          <Key>d2a29773-f4ba-44e6-8c20-7c8ce00b87c4</Key>
+          <Type>Umbraco.MediaPicker3</Type>
+          <Definition>d195af77-4fe1-41ed-a70e-91cad8f35595</Definition>
+          <Tab Alias="general">General</Tab>
+          <SortOrder>2</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Logo that works on a light background]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Favicon</Name>
+          <Alias>favicon</Alias>
+          <Key>1cd69d9e-0ce7-4f77-9604-8845261eb3ff</Key>
+          <Type>Umbraco.MediaPicker3</Type>
+          <Definition>d195af77-4fe1-41ed-a70e-91cad8f35595</Definition>
+          <Tab Alias="general">General</Tab>
+          <SortOrder>3</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Select a square .png image. 192px x 192px for best result]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>App Icon</Name>
+          <Alias>appIcon</Alias>
+          <Key>68edfc18-3a33-4274-94dc-b0dd02a2bc71</Key>
+          <Type>Umbraco.MediaPicker3</Type>
+          <Definition>d195af77-4fe1-41ed-a70e-91cad8f35595</Definition>
+          <Tab Alias="general">General</Tab>
+          <SortOrder>4</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Select a square .png image with background color. 180px x 180px for best result]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Icon Background Color</Name>
+          <Alias>iconBackgroundColor</Alias>
+          <Key>91d0eae7-9c70-41c5-8a65-f337364d8702</Key>
+          <Type>ColorValue</Type>
+          <Definition>ca5d09cb-6193-4b95-b7c1-bc3de01fea8d</Definition>
+          <Tab Alias="general">General</Tab>
+          <SortOrder>5</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[In some cases your favicon will be shown with a background color, enter the hex value of that color, include #]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Button Border Radius</Name>
+          <Alias>buttonBorderRadius</Alias>
+          <Key>a8dc402c-3c1d-421d-b8f1-0429e038665c</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>c5babca9-845d-484f-a896-0aacd90ba311</Definition>
+          <Tab Alias="general">General</Tab>
+          <SortOrder>6</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>"To top"-button color</Name>
+          <Alias>toTopButtonColor</Alias>
+          <Key>d5489d30-135d-42c2-8742-cf0d46bd9080</Key>
+          <Type>IglooApprovedColorPicker</Type>
+          <Definition>f88e9541-af93-4b65-a3a3-0e658361e13d</Definition>
+          <Tab Alias="general">General</Tab>
+          <SortOrder>7</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Set the color of the "scroll to top"-button visible in the lower right corner]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Theme</Name>
+          <Alias>themeColor</Alias>
+          <Key>56e55423-775e-44d0-aa37-1fa29699c093</Key>
+          <Type>ColorValue</Type>
+          <Definition>ca5d09cb-6193-4b95-b7c1-bc3de01fea8d</Definition>
+          <Tab Alias="colors">Colors</Tab>
+          <SortOrder>0</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Theme Contrast</Name>
+          <Alias>themeContrast</Alias>
+          <Key>578c966b-c677-40a3-98b6-06f6f4f9b0c3</Key>
+          <Type>ColorValue</Type>
+          <Definition>ca5d09cb-6193-4b95-b7c1-bc3de01fea8d</Definition>
+          <Tab Alias="colors">Colors</Tab>
+          <SortOrder>1</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Color of text placed over the theme color. Default: #FFF]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Theme Alt</Name>
+          <Alias>themeAltColor</Alias>
+          <Key>52de9088-c311-449a-a6b3-3baf16f77195</Key>
+          <Type>ColorValue</Type>
+          <Definition>ca5d09cb-6193-4b95-b7c1-bc3de01fea8d</Definition>
+          <Tab Alias="colors">Colors</Tab>
+          <SortOrder>2</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Theme Alt Contrast</Name>
+          <Alias>themeAltColorContrast</Alias>
+          <Key>43cdbbe8-c805-4934-a297-b465f35f3941</Key>
+          <Type>ColorValue</Type>
+          <Definition>ca5d09cb-6193-4b95-b7c1-bc3de01fea8d</Definition>
+          <Tab Alias="colors">Colors</Tab>
+          <SortOrder>3</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Color of text placed over the alternative theme color. Default: #FFF]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Heading Dark</Name>
+          <Alias>headingColorDark</Alias>
+          <Key>2e170cf0-b7d4-4155-bdee-54fe7eecfa89</Key>
+          <Type>ColorValue</Type>
+          <Definition>ca5d09cb-6193-4b95-b7c1-bc3de01fea8d</Definition>
+          <Tab Alias="colors">Colors</Tab>
+          <SortOrder>4</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Color of headings on light background. Default: #111]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Text Dark</Name>
+          <Alias>textColorDark</Alias>
+          <Key>685782ca-82f8-463b-bff4-9a01f6f5de39</Key>
+          <Type>ColorValue</Type>
+          <Definition>ca5d09cb-6193-4b95-b7c1-bc3de01fea8d</Definition>
+          <Tab Alias="colors">Colors</Tab>
+          <SortOrder>5</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Color of text on light background. Default: #444]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Border Dark</Name>
+          <Alias>borderDark</Alias>
+          <Key>d0690ff1-8677-4810-b8cd-3f4f5fa7ebbb</Key>
+          <Type>ColorValue</Type>
+          <Definition>ca5d09cb-6193-4b95-b7c1-bc3de01fea8d</Definition>
+          <Tab Alias="colors">Colors</Tab>
+          <SortOrder>6</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: rgba(0,0,0,0.08)]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Heading Light</Name>
+          <Alias>headingColorLight</Alias>
+          <Key>83b3cb27-8f8f-4f59-8f29-ed8207caa666</Key>
+          <Type>ColorValue</Type>
+          <Definition>ca5d09cb-6193-4b95-b7c1-bc3de01fea8d</Definition>
+          <Tab Alias="colors">Colors</Tab>
+          <SortOrder>7</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Color of headings on dark background. Default: #FFF]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Text Light</Name>
+          <Alias>textColorLight</Alias>
+          <Key>2cc9a310-4b98-484c-84c4-eb953d5e1a00</Key>
+          <Type>ColorValue</Type>
+          <Definition>ca5d09cb-6193-4b95-b7c1-bc3de01fea8d</Definition>
+          <Tab Alias="colors">Colors</Tab>
+          <SortOrder>8</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Color of text on dark background. Default: #FFF]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Border Light</Name>
+          <Alias>borderLight</Alias>
+          <Key>d7500808-78f1-41ff-9b97-cdba23ae9486</Key>
+          <Type>ColorValue</Type>
+          <Definition>ca5d09cb-6193-4b95-b7c1-bc3de01fea8d</Definition>
+          <Tab Alias="colors">Colors</Tab>
+          <SortOrder>9</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: rgba(255,255,255,0.1)]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Gray Background</Name>
+          <Alias>grayBackground</Alias>
+          <Key>803ce554-9451-4013-bff2-e49aa4d202fc</Key>
+          <Type>ColorValue</Type>
+          <Definition>ca5d09cb-6193-4b95-b7c1-bc3de01fea8d</Definition>
+          <Tab Alias="colors">Colors</Tab>
+          <SortOrder>10</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: #F9F9F9]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Dark Background</Name>
+          <Alias>darkBackground</Alias>
+          <Key>00bef0a0-f55c-449b-b6d7-9db04e53d33c</Key>
+          <Type>ColorValue</Type>
+          <Definition>ca5d09cb-6193-4b95-b7c1-bc3de01fea8d</Definition>
+          <Tab Alias="colors">Colors</Tab>
+          <SortOrder>11</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: #111]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Selected Navigation Item</Name>
+          <Alias>selectedNavigationItem</Alias>
+          <Key>81d84eee-eb35-487e-abe5-353d19799e49</Key>
+          <Type>ColorValue</Type>
+          <Definition>ca5d09cb-6193-4b95-b7c1-bc3de01fea8d</Definition>
+          <Tab Alias="colors">Colors</Tab>
+          <SortOrder>12</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Color of selected item in the main navigation. Default is Theme Color]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Success</Name>
+          <Alias>success</Alias>
+          <Key>b982dc50-8241-49c2-8b99-ccd04b3473a0</Key>
+          <Type>ColorValue</Type>
+          <Definition>ca5d09cb-6193-4b95-b7c1-bc3de01fea8d</Definition>
+          <Tab Alias="colors">Colors</Tab>
+          <SortOrder>13</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: #2ecc71]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Error</Name>
+          <Alias>error</Alias>
+          <Key>d11fe4e5-fa7e-4ae1-b69f-d66cc60813cf</Key>
+          <Type>ColorValue</Type>
+          <Definition>ca5d09cb-6193-4b95-b7c1-bc3de01fea8d</Definition>
+          <Tab Alias="colors">Colors</Tab>
+          <SortOrder>14</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: #e74c3c]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Embed Font</Name>
+          <Alias>embedFont</Alias>
+          <Key>a8cb7446-1d6c-464d-a8ab-2f676722eae9</Key>
+          <Type>Umbraco.TextBox</Type>
+          <Definition>0cc0eba1-9960-42c9-bf9b-60e150b429ae</Definition>
+          <Tab Alias="typography">Typography</Tab>
+          <SortOrder>0</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[This html code will be placed in the &lt;head&gt;]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Heading Font</Name>
+          <Alias>headingFont</Alias>
+          <Key>a8d6f872-a837-4ed8-8624-04eeb233ef80</Key>
+          <Type>Umbraco.TextBox</Type>
+          <Definition>0cc0eba1-9960-42c9-bf9b-60e150b429ae</Definition>
+          <Tab Alias="typography">Typography</Tab>
+          <SortOrder>1</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Font Stack for headings]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Body Font</Name>
+          <Alias>bodyFont</Alias>
+          <Key>cf60415b-62ad-4d7a-b804-3feb14a87853</Key>
+          <Type>Umbraco.TextBox</Type>
+          <Definition>0cc0eba1-9960-42c9-bf9b-60e150b429ae</Definition>
+          <Tab Alias="typography">Typography</Tab>
+          <SortOrder>2</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Font Stack for site]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Text: Font Size</Name>
+          <Alias>textFontSize</Alias>
+          <Key>884fba12-4caa-412e-ad63-151c08dd4bae</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>a87d223b-7045-40d5-97ba-ec9bd4d5ea3d</Definition>
+          <Tab Alias="typography">Typography</Tab>
+          <SortOrder>3</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: 1.1rem]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Text Big: Font Size</Name>
+          <Alias>textBigFontSize</Alias>
+          <Key>603619b1-4f60-4864-85c3-007dd84d6339</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>a87d223b-7045-40d5-97ba-ec9bd4d5ea3d</Definition>
+          <Tab Alias="typography">Typography</Tab>
+          <SortOrder>4</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: 1.25rem]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Text Small: Font Size</Name>
+          <Alias>textSmallFontSize</Alias>
+          <Key>05b65f37-8040-4be4-acb6-39f68e7f3798</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>a87d223b-7045-40d5-97ba-ec9bd4d5ea3d</Definition>
+          <Tab Alias="typography">Typography</Tab>
+          <SortOrder>5</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: 0.75rem]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Text: Line Height</Name>
+          <Alias>textLineHeight</Alias>
+          <Key>eae0888d-255f-4121-b20e-dda4f6d8becf</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>69d8e3b0-a7b1-4b31-bba3-bba3942ba5eb</Definition>
+          <Tab Alias="typography">Typography</Tab>
+          <SortOrder>6</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: 1.6]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Text: Font Weight</Name>
+          <Alias>textFontWeight</Alias>
+          <Key>4cfbd175-8efc-4690-bf8f-557fe48bfe21</Key>
+          <Type>Umbraco.TextBox</Type>
+          <Definition>0cc0eba1-9960-42c9-bf9b-60e150b429ae</Definition>
+          <Tab Alias="typography">Typography</Tab>
+          <SortOrder>7</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: normal]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Text Big: Font Weight</Name>
+          <Alias>textBigFontWeight</Alias>
+          <Key>815598c6-2dea-46f1-adcc-29f0833b5a89</Key>
+          <Type>Umbraco.TextBox</Type>
+          <Definition>0cc0eba1-9960-42c9-bf9b-60e150b429ae</Definition>
+          <Tab Alias="typography">Typography</Tab>
+          <SortOrder>8</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: 300]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Heading: Line Height</Name>
+          <Alias>headingLineHeight</Alias>
+          <Key>50d2f81e-0d26-4019-8bc2-aa89ee2d060b</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>69d8e3b0-a7b1-4b31-bba3-bba3942ba5eb</Definition>
+          <Tab Alias="typography">Typography</Tab>
+          <SortOrder>9</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: 1.5]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Heading: Font Weight</Name>
+          <Alias>headingFontWeight</Alias>
+          <Key>e2089aac-0952-4bc4-9174-12361ad9b6b2</Key>
+          <Type>Umbraco.TextBox</Type>
+          <Definition>0cc0eba1-9960-42c9-bf9b-60e150b429ae</Definition>
+          <Tab Alias="typography">Typography</Tab>
+          <SortOrder>10</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: bold]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Heading 1: Font Size</Name>
+          <Alias>heading1FontSize</Alias>
+          <Key>1334a66e-f95a-4219-b594-15951895c90a</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>a87d223b-7045-40d5-97ba-ec9bd4d5ea3d</Definition>
+          <Tab Alias="typography">Typography</Tab>
+          <SortOrder>11</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: 2.5rem]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Heading 2: Font Size</Name>
+          <Alias>heading2FontSize</Alias>
+          <Key>293fbbcd-4238-4f8d-82b9-1d2b3a73d4d1</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>a87d223b-7045-40d5-97ba-ec9bd4d5ea3d</Definition>
+          <Tab Alias="typography">Typography</Tab>
+          <SortOrder>12</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: 2.25rem]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Heading 3: Font Size</Name>
+          <Alias>heading3FontSize</Alias>
+          <Key>3c2a46f9-9acf-4e16-b7c1-f6d0ec292acc</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>a87d223b-7045-40d5-97ba-ec9bd4d5ea3d</Definition>
+          <Tab Alias="typography">Typography</Tab>
+          <SortOrder>13</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: 1.75rem]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Heading 4: Font Size</Name>
+          <Alias>heading4FontSize</Alias>
+          <Key>5bf7b68e-43a1-461c-8da1-301438109728</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>a87d223b-7045-40d5-97ba-ec9bd4d5ea3d</Definition>
+          <Tab Alias="typography">Typography</Tab>
+          <SortOrder>14</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: 1.5rem]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Heading 5: Font Size</Name>
+          <Alias>heading5FontSize</Alias>
+          <Key>c2b73a9a-cd26-4b30-afa5-37414abd6afd</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>a87d223b-7045-40d5-97ba-ec9bd4d5ea3d</Definition>
+          <Tab Alias="typography">Typography</Tab>
+          <SortOrder>15</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: 1.2rem]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Heading 6: Font Size</Name>
+          <Alias>heading6FontSize</Alias>
+          <Key>06d3e37f-8b40-45b3-90d7-596ef1877215</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>a87d223b-7045-40d5-97ba-ec9bd4d5ea3d</Definition>
+          <Tab Alias="typography">Typography</Tab>
+          <SortOrder>16</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: 1rem]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Hero Heading: Font Size</Name>
+          <Alias>heroHeadingFontSize</Alias>
+          <Key>4b45a301-0101-493e-baa1-a7c3ac8432bc</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>a87d223b-7045-40d5-97ba-ec9bd4d5ea3d</Definition>
+          <Tab Alias="typography">Typography</Tab>
+          <SortOrder>17</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default:  3.75rem]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Hero Heading Mobile: Font Size</Name>
+          <Alias>heroHeadingMobileFontSize</Alias>
+          <Key>d1de4798-f4dd-465b-a8c0-b14765ec0d63</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>a87d223b-7045-40d5-97ba-ec9bd4d5ea3d</Definition>
+          <Tab Alias="typography">Typography</Tab>
+          <SortOrder>18</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: 2.5rem]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Header Theme</Name>
+          <Alias>headerBackgroundColor</Alias>
+          <Key>3a8d771f-e80a-4566-a6fc-4c3b052ab602</Key>
+          <Type>IglooApprovedColorPicker</Type>
+          <Definition>1b288bec-2cf1-42f0-a445-97bed308e0f3</Definition>
+          <Tab Alias="header">Header</Tab>
+          <SortOrder>0</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Background color for the header]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Container Width</Name>
+          <Alias>headerContainerWidth</Alias>
+          <Key>e4ed07cb-6d21-4b4e-ab45-3ecb2abeb1d4</Key>
+          <Type>BBB.ButtonPicker</Type>
+          <Definition>6cf36ab1-264f-48f4-8265-217127b86e25</Definition>
+          <Tab Alias="header">Header</Tab>
+          <SortOrder>1</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Header Layout</Name>
+          <Alias>headerLayout</Alias>
+          <Key>9d365451-5d56-4741-bc92-2ccb29768beb</Key>
+          <Type>BBB.ButtonPicker</Type>
+          <Definition>85c53ccd-7fac-4c2a-8203-033165986ab3</Definition>
+          <Tab Alias="header">Header</Tab>
+          <SortOrder>2</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Height</Name>
+          <Alias>headerHeight</Alias>
+          <Key>d1347f13-394e-408a-a855-3d053f8a11a4</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>c5babca9-845d-484f-a896-0aacd90ba311</Definition>
+          <Tab Alias="header">Header</Tab>
+          <SortOrder>3</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Height of the header. Default: 70px]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Height Mobile</Name>
+          <Alias>headerHeightMobile</Alias>
+          <Key>05bc0365-82a5-477a-b0cc-7339469a710c</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>c5babca9-845d-484f-a896-0aacd90ba311</Definition>
+          <Tab Alias="header">Header</Tab>
+          <SortOrder>4</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Height of the header on mobile. Default: 50px]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Logo Padding</Name>
+          <Alias>logoPadding</Alias>
+          <Key>74c9f4d6-a403-4fb1-ab5f-dcf493bf3b8a</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>c5babca9-845d-484f-a896-0aacd90ba311</Definition>
+          <Tab Alias="header">Header</Tab>
+          <SortOrder>5</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Padding over and under the logo. Default: 17px]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Logo Padding Mobile</Name>
+          <Alias>logoPaddingMobile</Alias>
+          <Key>723a43ba-ccd3-42d3-b2fd-bc3e4e0682ce</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>c5babca9-845d-484f-a896-0aacd90ba311</Definition>
+          <Tab Alias="header">Header</Tab>
+          <SortOrder>6</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Padding over and under the logo on mobile. Default: 12px]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Navigation Padding</Name>
+          <Alias>navigationPadding</Alias>
+          <Key>5b3cd544-8949-48bc-b3e2-1c0d9964984e</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>c5babca9-845d-484f-a896-0aacd90ba311</Definition>
+          <Tab Alias="header">Header</Tab>
+          <SortOrder>7</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Padding around navigation items. Default: 30px]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Navigation Padding Smaller Screens</Name>
+          <Alias>navigationPaddingSmallerScreens</Alias>
+          <Key>652ec3b6-81f0-4560-81c5-9e59a271cf8f</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>c5babca9-845d-484f-a896-0aacd90ba311</Definition>
+          <Tab Alias="header">Header</Tab>
+          <SortOrder>8</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Padding around navigation items on smaller screens. Default: 15px]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Navigation Font Size</Name>
+          <Alias>navigationFontSize</Alias>
+          <Key>4f5616b7-09c4-4329-8089-80c838a6befb</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>a87d223b-7045-40d5-97ba-ec9bd4d5ea3d</Definition>
+          <Tab Alias="header">Header</Tab>
+          <SortOrder>9</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: 0.875rem]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Navigation Font Size Mobile</Name>
+          <Alias>navigationFontSizeMobile</Alias>
+          <Key>804930ea-d075-4f5f-9a52-64f2488cf898</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>a87d223b-7045-40d5-97ba-ec9bd4d5ea3d</Definition>
+          <Tab Alias="header">Header</Tab>
+          <SortOrder>10</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: 1rem]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Navigation Font Weight</Name>
+          <Alias>navigationFontWeight</Alias>
+          <Key>60b6fc27-1d84-48ab-96fb-a7556c6efda2</Key>
+          <Type>Umbraco.TextBox</Type>
+          <Definition>0cc0eba1-9960-42c9-bf9b-60e150b429ae</Definition>
+          <Tab Alias="header">Header</Tab>
+          <SortOrder>11</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default: bold]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Navigation Letter Case</Name>
+          <Alias>navigationLetterCase</Alias>
+          <Key>24472e3f-25ad-4610-ba39-83d5451e9df9</Key>
+          <Type>Umbraco.RadioButtonList</Type>
+          <Definition>06673cec-cf2e-44b3-9ae6-52406fe69b67</Definition>
+          <Tab Alias="header">Header</Tab>
+          <SortOrder>12</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Footer Theme</Name>
+          <Alias>footerBackgroundColor</Alias>
+          <Key>cdab2df4-61ff-4d96-a551-2bdd088b2879</Key>
+          <Type>IglooApprovedColorPicker</Type>
+          <Definition>1b288bec-2cf1-42f0-a445-97bed308e0f3</Definition>
+          <Tab Alias="footer">Footer</Tab>
+          <SortOrder>0</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Background color for the footer]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Container Width</Name>
+          <Alias>footerContainerWidth</Alias>
+          <Key>388a789a-26e0-42ec-81ab-514d179dd451</Key>
+          <Type>BBB.ButtonPicker</Type>
+          <Definition>6cf36ab1-264f-48f4-8265-217127b86e25</Definition>
+          <Tab Alias="footer">Footer</Tab>
+          <SortOrder>1</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Container Width Small</Name>
+          <Alias>containerWidthSmall</Alias>
+          <Key>a839e29e-044f-4640-93da-5f50681cedcc</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>c5babca9-845d-484f-a896-0aacd90ba311</Definition>
+          <Tab Alias="grid">Grid</Tab>
+          <SortOrder>0</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Small container width. Default: 850px]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Container Width</Name>
+          <Alias>containerWidth</Alias>
+          <Key>17c36ea6-739e-48c4-9faf-2af9081cbbcd</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>c5babca9-845d-484f-a896-0aacd90ba311</Definition>
+          <Tab Alias="grid">Grid</Tab>
+          <SortOrder>1</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Default container width. Default: 1300px]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Container Width Big</Name>
+          <Alias>containerWidthBig</Alias>
+          <Key>ce8097f1-7ac5-4122-aa35-457ebbe0e044</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>c5babca9-845d-484f-a896-0aacd90ba311</Definition>
+          <Tab Alias="grid">Grid</Tab>
+          <SortOrder>2</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Big container width. Default: 1600px]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Grid Gutter</Name>
+          <Alias>gridGutter</Alias>
+          <Key>a65892d4-38ef-4daf-910e-9913084b411c</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>c5babca9-845d-484f-a896-0aacd90ba311</Definition>
+          <Tab Alias="grid">Grid</Tab>
+          <SortOrder>3</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Space between columns. Default: 30px]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Grid Gutter Medium</Name>
+          <Alias>gridGutterMedium</Alias>
+          <Key>93cce584-997a-4109-ab01-5a8cec443c04</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>c5babca9-845d-484f-a896-0aacd90ba311</Definition>
+          <Tab Alias="grid">Grid</Tab>
+          <SortOrder>4</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Space between columns on tablets. Default: 15px]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Grid Gutter Small</Name>
+          <Alias>gridGutterSmall</Alias>
+          <Key>e78e6b51-1028-49f7-b1bc-5b4f4fa933e7</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>c5babca9-845d-484f-a896-0aacd90ba311</Definition>
+          <Tab Alias="grid">Grid</Tab>
+          <SortOrder>5</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Space between columns on mobile. Default: 15px]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Grid Gutter XS</Name>
+          <Alias>gridGutterXS</Alias>
+          <Key>6087e653-61e4-474f-9c1c-c0c302b06ebe</Key>
+          <Type>IglooMeasurmentValue</Type>
+          <Definition>c5babca9-845d-484f-a896-0aacd90ba311</Definition>
+          <Tab Alias="grid">Grid</Tab>
+          <SortOrder>6</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Space between columns on smaller mobiles. Default: 15px]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+      </GenericProperties>
+      <Tabs>
+        <Tab>
+          <Id>171</Id>
+          <Key>3f46043e-0615-4324-8979-1a5392a1e7f6</Key>
+          <Type>Group</Type>
+          <Caption>General</Caption>
+          <Alias>general</Alias>
+          <SortOrder>0</SortOrder>
+        </Tab>
+        <Tab>
+          <Id>172</Id>
+          <Key>611250eb-f59a-44df-9bd3-fead680b4d78</Key>
+          <Type>Group</Type>
+          <Caption>Colors</Caption>
+          <Alias>colors</Alias>
+          <SortOrder>1</SortOrder>
+        </Tab>
+        <Tab>
+          <Id>173</Id>
+          <Key>046ebf02-fcf2-478e-8721-dcd0f47bcf3c</Key>
+          <Type>Group</Type>
+          <Caption>Typography</Caption>
+          <Alias>typography</Alias>
+          <SortOrder>2</SortOrder>
+        </Tab>
+        <Tab>
+          <Id>174</Id>
+          <Key>939a48b9-997c-4e13-a281-5dd5e7656eeb</Key>
+          <Type>Group</Type>
+          <Caption>Header</Caption>
+          <Alias>header</Alias>
+          <SortOrder>3</SortOrder>
+        </Tab>
+        <Tab>
+          <Id>175</Id>
+          <Key>c9ccdee1-65dd-4441-917d-f46fe53bbeda</Key>
+          <Type>Group</Type>
+          <Caption>Footer</Caption>
+          <Alias>footer</Alias>
+          <SortOrder>4</SortOrder>
+        </Tab>
+        <Tab>
+          <Id>176</Id>
+          <Key>097ec06c-a9eb-4bde-8596-ba5ec7fa32dc</Key>
+          <Type>Group</Type>
+          <Caption>Grid</Caption>
+          <Alias>grid</Alias>
+          <SortOrder>5</SortOrder>
+        </Tab>
+      </Tabs>
+      <HistoryCleanupPolicy preventCleanup="false" />
+    </DocumentType>
+  </DocumentTypes>
+  <MediaTypes />
+  <Templates />
+  <Stylesheets />
+  <Scripts />
+  <PartialViews />
+  <Macros />
+  <MacroPartialViews />
+  <DictionaryItems />
+  <Languages />
+  <DataTypes>
+    <DataType Name="IG - Text Transform - Radio" Id="Umbraco.RadioButtonList" Definition="06673cec-cf2e-44b3-9ae6-52406fe69b67" DatabaseType="Nvarchar" Configuration="{&quot;items&quot;:[{&quot;id&quot;:5,&quot;value&quot;:&quot;none&quot;},{&quot;id&quot;:6,&quot;value&quot;:&quot;lowercase&quot;},{&quot;id&quot;:7,&quot;value&quot;:&quot;uppercase&quot;},{&quot;id&quot;:8,&quot;value&quot;:&quot;capitalize&quot;}]}" Folders="IG+-+Content" FolderKeys="dce161a3-cee7-4fe0-be04-177042691ac4" />
+  </DataTypes>
+  <MediaItems />
+</umbPackage>

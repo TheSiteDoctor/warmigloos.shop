@@ -1,0 +1,35 @@
+﻿<div ng-controller="IglooApprovedColorPicker.Controller" class="IG_ACP_container umb-color-swatches ">
+    <button type="button" ng-if="model.config.displayDark == '1'" ng-click="model.value = 'dark'" ng-class="{ 'active': model.value == 'dark' }" class="IG_ACP_colorbox umb-color-box umb-color-box--m btn-000000" style="background: {{darkBg}};">
+        <div class="umb-color-box-inner">
+            <div class="check_circle">
+                <i class="icon icon-check small ng-hide" ng-show="model.value == 'dark'" aria-hidden="true"></i>
+            </div>
+        </div>
+    </button>
+    <button type="button" ng-if="model.config.displayWhite == '1'" ng-click="model.value = 'white'" ng-class="{ 'active': model.value == 'white' }" class="IG_ACP_colorbox umb-color-box umb-color-box--m btn-ffffff" style="background: {{whiteBg}};">
+        <div class="umb-color-box-inner">
+            <div class="check_circle">
+                <i class="icon icon-check small ng-hide" ng-show="model.value == 'white'" aria-hidden="true"></i>
+            </div>
+        </div>
+    </button>
+    <button type="button" ng-if="model.config.displayGray == '1'" ng-click="model.value = 'gray'" ng-class="{ 'active': model.value == 'gray' }" class="IG_ACP_colorbox umb-color-box umb-color-box--m btn-ffffff" style="background: {{grayBg}};">
+        <div class="umb-color-box-inner">
+            <div class="check_circle">
+                <i class="icon icon-check small ng-hide" ng-show="model.value == 'gray'" aria-hidden="true"></i>
+            </div>
+        </div>
+    </button>
+    <button type="button" ng-if="model.config.displayTheme == '1'" ng-click="model.value = 'theme'" ng-class="{ 'active': model.value == 'theme' }" class="IG_ACP_colorbox umb-color-box umb-color-box--m" style="background: {{themeBg}};">
+        <div class="umb-color-box-inner">
+            <div class="check_circle">
+                <i class="icon icon-check small ng-hide" ng-show="model.value == 'theme'" aria-hidden="true"></i>
+            </div>
+        </div>
+    </button>
+    <button type="button" ng-if="model.config.displayThemeAlt == '1'" ng-click="model.value = 'theme-alt'" ng-class="{ 'active': model.value == 'theme-alt' }" class="IG_ACP_colorbox umb-color-box umb-color-box--m" style="background: {{themeAltBg}};">
+        <div class="umb-color-box-inner">
+            <i class="icon icon-check small ng-hide" ng-show="model.value == 'theme-alt'" aria-hidden="true"></i>
+        </div>
+    </button>
+</div>

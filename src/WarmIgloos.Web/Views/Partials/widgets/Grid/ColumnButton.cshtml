@@ -1,0 +1,19 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.ColumnButton)Model.Content;
+    var settings = (ContentModels.ColumnButtonSettings)Model.Settings;
+}
+
+<div class="grid-item grid-item--button text-@(settings.AlignContent)">
+    @if (content.Buttons != null && content.Buttons.Any())
+    {
+        <div class="button-wrap">
+            @foreach (var button in content.Buttons)
+            {
+                @await Html.PartialAsync("~/Views/Partials/Widgets/RenderButton.cshtml", button)
+            }
+        </div>
+    }
+</div>

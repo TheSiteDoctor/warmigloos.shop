@@ -1,0 +1,112 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.ColumnPod)Model.Content;
+    var settings = (ContentModels.ColumnPodSettings)Model.Settings;
+    var iconImage = settings.Value<bool>("iconImage");
+    var podMediaUrl = content.Image?.Url() ?? string.Empty;
+    var podId = "a" + Guid.NewGuid().ToString().Replace("-","");
+}
+
+<div class="grid-item grid-item--pod pod @(settings.BoxedColumn ? "grid-item--boxed" : "") @(settings.CenterContent ? "text-center" : "" ) @(settings.PodMediaLeft ? "pod--compact" : "")">
+    <article>
+        @if (content.Icon != null || content.Image != null)
+        {
+            <div class="pod__image @(iconImage ? "pod__image--icon" : "")">
+                @if (content.Link != null)
+                {
+                    <a href="@content.Link.Url" target="@content.Link.Target" title="@content.Heading">
+                        @if (content.Icon != null)
+                        {
+                            <i class="fa @(content.Icon)" aria-hidden="true"></i>
+                        }
+                        else if (!string.IsNullOrEmpty(podMediaUrl))
+                        {
+                            if (podMediaUrl.Contains(".mp4"))
+                            {
+                                <video id="@(podId)" playsinline muted loop>
+                                    <source src="@(podMediaUrl)" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            }
+                            else
+                            {
+                                <img class="lazyload"
+                                src="@(content.Image.Url())?width=10"
+                                data-sizes="auto"
+                                data-srcset="@(content.Image.Url())?upscale=false&width=300&quality=80 300w,
+                                @(content.Image.Url())?upscale=false&width=500&quality=80 500w,
+                                @(content.Image.Url())?upscale=false&width=750&quality=80 750w,
+                                @(content.Image.Url())?upscale=false&width=1000&quality=80 1000w"
+                                alt="@content.Heading">
+                            }
+                        }
+                    </a>
+                }
+                else
+                {
+                    if (content.Icon != null)
+                    {
+                        <i class="fa @(content.Icon)" aria-hidden="true"></i>
+                    }
+                    else
+                    {
+                        if (podMediaUrl.Contains(".mp4"))
+                        {
+                            <video id="@(podId)" playsinline muted loop>
+                                <source src="@(podMediaUrl)" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        }
+                        else
+                        {
+                            <img class="lazyload"
+                                 src="@(content.Image.Url())?width=10"
+                                 data-sizes="auto"
+                                 data-srcset="@(content.Image.Url())?upscale=false&width=300&quality=80 300w,
+                            @(content.Image.Url())?upscale=false&width=500&quality=80 500w,
+                            @(content.Image.Url())?upscale=false&width=750&quality=80 750w,
+                            @(content.Image.Url())?upscale=false&width=1000&quality=80 1000w"
+                                 alt="@content.Heading">
+                        }
+                    }
+                }
+            </div>
+        }
+        <div class="pod__text">
+            @if (content.Link != null)
+            {
+                <h3 class="h5"><a href="@content.Link.Url" target="@content.Link.Target" title="@content.Heading">@content.Heading</a></h3>
+            }
+            else
+            {
+                <h3 class="h5">@content.Heading</h3>
+            }
+            @Html.Raw(content.Text)
+
+            @if (content.Buttons != null & content.Buttons.Any())
+            {
+                <div class="button-wrap">
+                    @foreach (var button in content.Buttons)
+                    {
+                        @Html.Partial("~/Views/Partials/Widgets/RenderButton.cshtml", button)
+                    }
+                </div>
+            }
+        </div>
+    </article>
+
+    <script>
+        var @(podId) = document.getElementById('@(podId)');
+
+        @(podId).addEventListener('mouseover', () => {
+            @(podId).play();
+        });
+
+        @(podId).addEventListener('mouseout', () => {
+            @(podId).pause();
+        });
+    </script>
+</div>
+

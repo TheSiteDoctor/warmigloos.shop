@@ -6,6 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="IglooTheme.Commerce" Version="1.0.0-9" />
+        <PackageReference Include="LittleNorth.Igloo" Version="13.3.0" />
         <PackageReference Include="Umbraco.Cms" Version="13.5.2"/>
     </ItemGroup>
 

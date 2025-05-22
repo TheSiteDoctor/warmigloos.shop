@@ -1,0 +1,49 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.ColumnImage)Model.Content;
+    var settings = (ContentModels.ColumnImageSettings)Model.Settings;
+
+    var imageUrl = content.Image != null ? content.Image.Url() : "";
+}
+
+<div class="grid-item grid-item--image">
+    <figure>
+        @if (content.Link != null)
+        {
+            <a href="@(content.Link.Url)" target="@(content.Link.Target)">
+                <img class="lazyload"
+                     src="@(imageUrl)?width=10"
+                     data-sizes="auto"
+                     data-srcset="@(imageUrl)?upscale=false&width=300&quality=80 300w,
+            	    @(imageUrl)?upscale=false&width=500&quality=80 500w,
+            	    @(imageUrl)?upscale=false&width=750&quality=80 750w,
+            	    @(imageUrl)?upscale=false&width=1000&quality=80 1000w,
+            	    @(imageUrl)?upscale=false&width=1200&quality=80 1200w,
+            	    @(imageUrl)?upscale=false&width=1600&quality=80 1600w,
+            	    @(imageUrl)?upscale=false&width=1920&quality=80 1920w"
+                     alt="@content.ImageCaption">
+            </a>
+        }
+        else
+        {
+            <img class="lazyload"
+                 src="@(imageUrl)?width=10"
+                 data-sizes="auto"
+                 data-srcset="@(imageUrl)?upscale=false&width=300&quality=80 300w,
+        	    @(imageUrl)?upscale=false&width=500&quality=80 500w,
+        	    @(imageUrl)?upscale=false&width=750&quality=80 750w,
+        	    @(imageUrl)?upscale=false&width=1000&quality=80 1000w,
+        	    @(imageUrl)?upscale=false&width=1200&quality=80 1200w,
+        	    @(imageUrl)?upscale=false&width=1600&quality=80 1600w,
+        	    @(imageUrl)?upscale=false&width=1920&quality=80 1920w"
+                 alt="@content.ImageCaption">
+        }
+
+        @if (content.ImageCaption != "")
+        {
+            <figcaption>@content.ImageCaption</figcaption>
+        }
+    </figure>
+</div>

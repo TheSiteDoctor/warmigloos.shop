@@ -1,0 +1,2 @@
+﻿@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
+@await Component.InvokeAsync("BasketNavigation", new { contentPublishedModel = (BasketNavigation)Model.Content, settingsPublishedModel = (BasketNavigationSettings)Model.Settings })

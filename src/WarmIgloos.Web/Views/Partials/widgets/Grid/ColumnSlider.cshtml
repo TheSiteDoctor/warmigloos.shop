@@ -1,0 +1,65 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.ColumnSlider)Model.Content;
+    var settings = (ContentModels.ColumnSliderSettings)Model.Settings;
+}
+
+<div class="grid-item grid-item--slider">
+    <div class="slider js-flickity"
+         data-flickity-options='
+    		{
+    			"cellAlign": "left",
+    			"contain": 1,
+    			"prevNextButtons": @(settings.ShowNextPrevArrows ? "1" : "0"),
+    			"pageDots": @(settings.ShowPageDots ? "1" : "0"),
+    			"setGallerySize": 1,
+    			"imagesLoaded": 1,
+    			"wrapAround": @(settings.WrapAround ? "1" : "0"),
+    			"autoPlay": @(settings.Autoplay),
+    			"pauseAutoPlayOnHover": @(settings.PauseAutoplayOnHover ? "1" : "0"),
+    			"adaptiveHeight": 1,
+    			"fade": @(settings.FadeAnimation ? "1" : "0")
+    		}
+    	'>
+
+        @if (content.Columns != null)
+        {
+            foreach (BlockListItem column in content.Columns)
+            {
+                var columnWidth = column.Settings?.Value<string>("columnWidth", "")?.Replace("%", "") ?? "100";
+                var columnType = column.Content.ContentType.Alias;
+
+                if (columnWidth == "25")
+                {
+                    columnWidth = "25 col-m-50";
+                }
+                else if (columnWidth == "20")
+                {
+                    columnWidth = "20 col-m-33";
+                }
+                else if (columnWidth == "10")
+                {
+                    columnWidth = "10 col-m-20";
+                }
+
+                <div class="row row--flat" style="width:100%">
+
+                    <div class="col-@(columnWidth) col-s-100">
+                        @if (columnType == "lineBreak")
+                        {
+                            @Html.Partial("~/Views/Partials/Shared/LineBreak.cshtml", column)
+                        }
+                        else
+                        {
+                            @Html.Partial("~/Views/Partials/Widgets/Grid/" + columnType + ".cshtml", column, new ViewDataDictionary(ViewData))
+                        }
+                    </div>
+
+                </div>
+            }
+
+        }
+    </div>
+</div>

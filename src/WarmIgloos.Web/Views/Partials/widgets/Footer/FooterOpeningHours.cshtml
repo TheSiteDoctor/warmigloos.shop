@@ -1,0 +1,34 @@
+﻿@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.FooterOpeningHours)Model.Content;
+    var settings = (ContentModels.FooterOpeningHoursSettings)Model.Settings;
+
+    var openingHours = content.OpeningHours;
+}
+
+<div class="footer-item footer-item--open text-@(settings.AlignContent)">
+
+    @if (content.Heading != "")
+    {
+        <h2 class="h6">@content.Heading</h2>
+    }
+    @if (openingHours != null && openingHours.Any())
+    {
+        <ul class="opening-hours">
+            @foreach (var openingHourBlock in openingHours)
+            {
+                var openingHour = (ContentModels.OpeningHour)openingHourBlock.Content;
+
+                <li>
+                    <span class="time">@openingHour.Time</span>
+                    <span class="day">@openingHour.Day</span>
+                </li>
+            }
+        </ul>
+    }
+</div>
+
+
+
+

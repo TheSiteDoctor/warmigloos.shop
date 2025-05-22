@@ -1,0 +1,33 @@
+﻿
+@using IglooTheme.Commerce.Views.Components.BasketItems
+@using IglooTheme.Commerce.Views.Shared.Models
+@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
+@{
+    var settingsPublishedModel = (BasketItemsSettings)Model.Settings;
+    var contentPublishedModel = (BasketItems)Model.Content;
+    var invokeDto = new BasketItemsInvokeDto
+    {
+        BackgroundColourCssClass = settingsPublishedModel?.BackgroundColour,
+        ContainerWidthCssClass = settingsPublishedModel?.ContainerWidth,
+        BasketEmptyText = contentPublishedModel?.EmptyBasketText,
+        ShowReturnToStoreButtonWhenBasketEmpty = contentPublishedModel?.ShowReturnToStoreButton ?? false,
+        BasketEmptyStoreButtonSettings = new TextButtonSettings
+        {
+            Colour = contentPublishedModel?.ReturnToStoreButtonColour,
+            Size = contentPublishedModel?.ReturnToStoreButtonSize,
+            Style = contentPublishedModel?.ReturnToStoreButtonStyle,
+            Text = contentPublishedModel?.ReturnToStoreButtonText
+        },
+        BasketEmptyStoreButtonUrl = contentPublishedModel?.ReturnToStoreButtonUrl?.Url ?? "/",
+        ApplyGutterToBottom = settingsPublishedModel.ApplyGutterSpacingToBottom,
+        ApplyGutterToTop = settingsPublishedModel.ApplyGutterSpacingToTop,
+        CustomCssClasses = settingsPublishedModel.CustomCssClasses
+    };
+}
+<div class="basket-items-widget__container">
+    @await Component.InvokeAsync("BasketItems", invokeDto)
+</div>
+<script>
+const basketItemsInvokeModel = @Html.Raw(Json.Serialize(invokeDto));
+     WidgetHelper.reRenderOnBasketEmptied("BasketItems", "basket-items-widget__container", basketItemsInvokeModel)
+ </script>

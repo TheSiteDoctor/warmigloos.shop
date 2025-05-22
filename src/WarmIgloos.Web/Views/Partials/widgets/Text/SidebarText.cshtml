@@ -1,0 +1,14 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.TextSidebar)Model.Content;
+}
+
+<div class="block-text__aside-item block-text__aside-item--text @(content.Boxed ? "block-text__aside-item--boxed" : "")">
+    @if (content.Heading != "")
+    {
+        <h2 class="h6">@content.Heading</h2>
+    }
+    @content.Text
+</div>

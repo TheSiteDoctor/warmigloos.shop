@@ -1,0 +1,14 @@
+
+.iconpicker-dialog .thumbnails .span1 {
+    width: 16.66666666%;
+}
+
+.iconpicker-dialog .thumbnail {
+    min-width: 0;
+    text-align: center;
+    font-size: 27px;
+}
+
+.iconpicker-dialog .umb-box-content {
+    padding: 0;
+}

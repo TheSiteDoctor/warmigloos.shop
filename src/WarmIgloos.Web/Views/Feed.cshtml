@@ -1,0 +1,79 @@
+﻿@inherits UmbracoViewPage<ContentModels.Feed>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using System.Globalization
+@{
+    Layout = "IglooCommerceBase.cshtml";
+
+    var posts = Model.Children<ContentModels.Post>().Where(x => x.IsVisible()).OrderByDescending(x => x.Date).ToList();
+
+    var page = 1;
+
+    if (Context.Request.Query.Keys.Contains("page"))
+    {
+        var requestQuery = Context.Request.Query["page"][0];
+        page = int.Parse(requestQuery);
+    }
+
+    const int takePerPage = 9;
+    var numberOfPagesDecimal = Convert.ToDecimal(posts.Count) / takePerPage;
+    var numberOfPagesInt = int.Parse(Math.Ceiling(numberOfPagesDecimal).ToString(CultureInfo.InvariantCulture));
+
+    var pagesToSkip = takePerPage * (page - 1);
+    posts = posts.Skip(pagesToSkip).Take(takePerPage).ToList();
+}
+
+@await Html.PartialAsync("~/Views/Partials/Widgets/RenderWidgets.cshtml")
+
+<section class="block feed gray-bg">
+
+    <div class="container">
+
+        <div class="row row--center box-wrap">
+
+            @foreach (var post in posts)
+            {
+                <div class="col-33 col-s-100">
+                    <article class="box">
+                        @if (post.PostImage != null)
+                        {
+                            <div class="box__image">
+                                <a href="@post.Url()" title="@post.Heading" tabindex="-1">
+                                    <img class="lazyload"
+                                         src="@(post.PostImage.GetCropUrl(10,7, quality: 80))"
+                                         data-sizes="auto"
+                                         data-srcset="@(post.PostImage.GetCropUrl(300,210, quality: 80)) 300w,
+                                	    @(post.PostImage.GetCropUrl(500,350, quality: 80)) 500w,
+                                	    @(post.PostImage.GetCropUrl(1000,700, quality: 80)) 1000w"
+                                         alt="@post.Heading">
+                                </a>
+                            </div>
+                        }
+                        <div class="box__text">
+                            <h3 class="h5"><a title="@post.Heading" href="@post.Url()">@post.Heading</a></h3>
+                            @if (!Model.HideDates)
+                            {
+                                <div class="box__meta">
+                                    @string.Format("{0: dd MMMM yyyy}", post.Date)
+                                </div>
+                            }
+                            <p>@post.PostDescription</p>
+                        </div>
+                    </article>
+                </div>
+            }
+        </div>
+
+    </div>
+
+    @if (numberOfPagesInt > 1)
+    {
+        <div class="text-center">
+            <ul class="pager">
+                @for (var i = 1; i <= numberOfPagesInt; i++)
+                {
+                    <li class="@(i == page ? "selected" : "")"><a title="Go to page @i" href="@(Model.Url())?page=@i">@i</a></li>
+                }
+            </ul>
+        </div>
+    }
+</section>

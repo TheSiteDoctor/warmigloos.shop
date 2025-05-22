@@ -1,0 +1,43 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.ColumnPriceList)Model.Content;
+    var settings = (ContentModels.ColumnPriceListSettings)Model.Settings;
+}
+
+<div class="grid-item grid-item--price-list @(settings.BoxedColumn ? "grid-item--boxed" : "")">
+
+    @if (content.Items != null && content.Items.Any())
+    {
+        if (content.Heading != "")
+        {
+            <legend>@content.Heading</legend>
+        }
+        foreach (var itemBlock in content.Items)
+        {
+            var item = (ContentModels.PriceListItem)itemBlock.Content;
+
+            <article>
+                <div class="row">
+                    <div class="menu-info col-80">
+                        @if (item.Title != "")
+                        {
+                            <h5>@item.Title</h5>
+                        }
+                        @if (item.Description != "")
+                        {
+                            <p>@item.Description</p>
+                        }
+                    </div>
+                    @if (item.Price != "")
+                    {
+                        <div class="menu-price col-20">
+                            @item.Price
+                        </div>
+                    }
+                </div>
+            </article>
+        }
+    }
+</div>

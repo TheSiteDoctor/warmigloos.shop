@@ -1,0 +1,27 @@
+{
+	propertyEditors: [
+		{
+			alias: 'IconPicker',
+			name: 'Igloo - IconPicker',
+			valueType: 'STRING',
+			editor: {
+				view: '/App_Plugins/iconpicker/iconpicker.html',
+				hideLabel: false
+			},
+			prevalues: {
+				fields: [
+					
+				]
+			}
+		}
+	],
+	parameterEditors:[],
+	javascript: [
+		'/App_Plugins/Iconpicker/iconpicker.controller.js',
+		'/App_Plugins/Iconpicker/dialogs/iconpicker.dialog.controller.js'
+	],
+	css: [
+		'/App_Plugins/Iconpicker/iconpicker.css',
+		'/App_Plugins/Iconpicker/dialogs/iconpicker.dialog.css'
+	]
+}

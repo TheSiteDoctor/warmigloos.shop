@@ -1,0 +1,3 @@
+﻿@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
+
+@await Component.InvokeAsync("MinibasketNavIcon", new { contentPublishedModel = (MinibasketNavIcon)Model.Content, settingsPublishedModel = (MinibasketNavIconSettings)Model.Settings })

@@ -1,0 +1,25 @@
+﻿{
+	"propertyEditors": [{
+			"alias": "ColorValue",
+			"name": "Igloo - Color Value",
+			"valueType": "STRING",
+			"editor": {
+				"view": "/App_Plugins/ColorValue/colorvalue.html"
+			},
+			"prevalues": {
+
+			},
+			"defaultConfig": {
+
+			}
+		}
+
+	],
+	"parameterEditors": [],
+	"javascript": [
+		"/App_Plugins/ColorValue/colorvalue.controller.js"
+	],
+	"css": [
+		"/App_Plugins/ColorValue/colorvalue.css"
+	]
+}

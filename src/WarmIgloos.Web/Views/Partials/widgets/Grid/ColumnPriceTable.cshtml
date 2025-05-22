@@ -1,0 +1,58 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.ColumnPriceTable)Model.Content;
+    var settings = (ContentModels.ColumnPriceTableSettings)Model.Settings;
+}
+
+<div class="grid-item @(settings.BoxedColumn ? "grid-item--boxed" : "") grid-item--price-table">
+
+    <div class="price-table @(settings.CenterContent ? "text-center" : "")">
+
+        @if (content.Image != null)
+        {
+            <div class="price-table__image">
+                <img src="@content.Image.Url()" alt="">
+            </div>
+        }
+
+        @if (content.PriceTableName != "")
+        {
+            <h4 class="price-table__heading">@content.PriceTableName</h4>
+        }
+        <div class="price-table__price">@content.Price<span> @content.PriceUnit</span></div>
+
+
+        @if (content.Features != null && content.Features.Any())
+        {
+            <div class="price-table__features">
+                <ul>
+                    @foreach (var feature in content.Features)
+                    {
+                        <li><i class="fa fa-check" aria-hidden="true"></i> @feature</li>
+                    }
+                </ul>
+            </div>
+        }
+
+        @if (content.Buttons != null && content.Buttons.Any())
+        {
+            <div class="button-wrap">
+                @foreach (var button in content.Buttons)
+                {
+                    @Html.Partial("~/Views/Partials/Widgets/RenderButton.cshtml", button)
+                }
+            </div>
+        }
+
+        @if (content.Disclaimer != "")
+        {
+            <div class="price-table__disclaimer">
+                @content.Disclaimer
+            </div>
+        }
+
+    </div>
+
+</div>

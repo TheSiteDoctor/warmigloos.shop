@@ -1,0 +1,46 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.SectionNavigation)Model.Content;
+    var settings = (ContentModels.SectionNavigationSettings)Model.Settings;
+
+    var theme = settings.Theme?.ToString();
+    var themeClass = string.IsNullOrWhiteSpace(theme) ? "section-nav--white" : "section-nav--" + theme;
+
+    var containerWidthClass = "section-nav--standard";
+    switch (settings.ContainerWidth)
+    {
+        case "small":
+            containerWidthClass = "section-nav--small";
+            break;
+        case "standard":
+            containerWidthClass = "section-nav--standard";
+            break;
+        case "big":
+            containerWidthClass = "section-nav--big";
+            break;
+        case "full width":
+            containerWidthClass = "section-nav--full";
+            break;
+    }
+}
+<nav class="section-nav @(themeClass) @(containerWidthClass)" @if (!string.IsNullOrEmpty(settings.AnchorID)) { <text> id="@settings.AnchorID" </text> }>
+    <ul>
+        @foreach (var navItem in content.Items)
+        {
+            var item = (ContentModels.SectionNavigationItem)navItem.Content;
+
+            if (item.Link != null)
+            {
+                <li>
+                    <a href="@item.Link.Url" class="@(item.Link.Url == Umbraco.AssignedContentItem.Url() ? "active" : "")" target="@(item.Link.Target)" @if (item.Link.Target == "_blank") { <text> rel="noopener" </text> }>
+                        <i class="fa @(item.Icon)" aria-hidden="true"></i>
+                        <span class="section-nav__label">@item.LinkName</span>
+                    </a>
+                </li>
+            }
+
+        }
+    </ul>
+</nav>

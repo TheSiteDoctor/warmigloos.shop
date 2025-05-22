@@ -1,0 +1,59 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using Igloo.Core.Models
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inject Igloo.Core.Services.ISettingsService _settingsService;
+@{
+    var content = (ContentModels.Login)Model.Content;
+    var settings = (ContentModels.LoginSettings)Model.Settings;
+
+    var order = int.TryParse(ViewData["order"]?.ToString(), out int parsedOrder) ? parsedOrder : 0;
+
+    var textColorClass = settings.TextColor?.ToString() == "white" ? "light-color" : "";
+    var backgroundColor = settings.BackgroundColor?.ToString();
+    var backgroundColorClass = string.IsNullOrWhiteSpace(backgroundColor) ? "gray-bg" : backgroundColor + "-bg";
+    var location = new Uri($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}");
+
+    var isProtectedPage = Umbraco.AssignedContentItem.Url(mode: UrlMode.Absolute) != location.AbsoluteUri; // test if this is the real login page or a protected page so we can redirect the user to the protected page after login
+
+    var loginModel = new MemberLoginViewModel();
+    loginModel.RedirectUrl = settings.RedirectUrl != null ? settings.RedirectUrl.Url : "/";
+    loginModel.RedirectUrl = isProtectedPage ? location.AbsolutePath : loginModel.RedirectUrl;
+}
+
+<section class="account-form" @if (!string.IsNullOrEmpty(settings.AnchorID)) { <text> id="@settings.AnchorID" </text> }>
+    <div class="account-form__inner @backgroundColorClass @textColorClass">
+        <div class="account-form__content">
+
+            @if (content.Heading != "")
+            {
+                if (order == 0)
+                {
+                    <h1 class="h2">@content.Heading</h1>
+                }
+                else
+                {
+                    <h2>@content.Heading</h2>
+                }
+            }
+            @content.Text
+            
+            @ViewData["errors"]
+
+            @await Html.PartialAsync("~/Views/Partials/Shared/LoginForm.cshtml", loginModel)
+
+        </div>
+    </div>
+
+    @if (content.Image != null)
+    {
+        <div class="account-form__media lazyload hide--m"
+             data-bgset="@(content.Image.Url())?upscale=false&width=1280&quality=80 1280w,
+    		@(content.Image.Url())?upscale=false&width=1600&quality=80 1600w,
+    		@(content.Image.Url())?upscale=false&width=1920&quality=80 1920w"
+             data-sizes="auto">
+        </div>
+    }
+
+</section>
+

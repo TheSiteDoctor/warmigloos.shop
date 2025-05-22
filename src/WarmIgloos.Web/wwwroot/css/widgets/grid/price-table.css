@@ -1,0 +1,52 @@
+.grid-item--price-table {
+  padding: var(--grid-gutter);
+}
+.price-table__image {
+  margin-bottom: 1.25em;
+}
+.price-table__image img {
+  display: block;
+}
+.price-table__heading {
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+.price-table__price {
+  font-size: 3.5rem;
+  font-weight: var(--font-weight-bolder);
+}
+.price-table__price span {
+  font-size: 0.25em;
+  opacity: 0.5;
+}
+.price-table__features {
+  margin-bottom: 1.25em;
+  font-size: 1rem;
+}
+.price-table__features ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.price-table__features ul li {
+  position: relative;
+  padding-left: 1.7em;
+}
+.price-table__features ul li > i {
+  position: absolute;
+  left: 0;
+  top: 0.3em;
+}
+.price-table__disclaimer {
+  opacity: 0.5;
+  font-size: 0.75rem;
+  margin-top: 1em;
+  font-weight: var(--font-weight-bold);
+}
+.text-center.price-table .price-table__features ul li {
+  padding-left: 0;
+}
+.text-center.price-table .price-table__features ul li > i {
+  position: static;
+  padding-right: 0.2em;
+}

@@ -1,0 +1,23 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Category>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Models.Blocks
+@using Igloo.Core.Extensions
+
+@{
+	Layout = "IglooCommerceBase.cshtml";
+	var widgets = Model.Ancestor<Categories>()?.Value<IEnumerable<BlockListItem>>("categoryDetailWidgets");
+	var indexNumberResult = this.ViewData.ContainsKey("indexNumber") ? this.ViewData["indexNumber"].ToString() : string.Empty;
+	var useIndexNumber = int.TryParse(indexNumberResult, out int indexNumber);
+}
+
+@if (widgets != null)
+{
+	int index = useIndexNumber ? indexNumber : 0;
+	<div class="container">
+			@foreach (var widget in widgets)
+        	{
+        		@await Html.RenderWidget(widget, WidgetIndex: index)
+        		index++;
+        	}
+	</div>
+}

@@ -1,0 +1,13 @@
+﻿@inherits UmbracoViewPage
+@{
+	var shareUrl = Umbraco.AssignedContentItem.Url(mode: UrlMode.Absolute);
+}
+<div class="share">
+	<h6>@Umbraco.GetDictionaryValue("Share")</h6>
+	<ul class="share-list">
+		<li class="share-facebook"><a href="http://www.facebook.com/sharer.php?u=@(shareUrl)" data-height="520" data-width="350" target="_blank" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+		<li class="share-twitter"><a href="http://twitter.com/share?url=@(shareUrl)" data-height="240" data-width="450" target="_blank" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+		<li class="share-linkedin"><a href="https://www.linkedin.com/shareArticle?url=@(shareUrl)" data-height="520" data-width="350" target="_blank" title="Linked In"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+		<li class="share-email"><a href="mailto:?body=@(shareUrl)" title="@Umbraco.GetDictionaryValue("Email")"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>
+	</ul>
+</div>

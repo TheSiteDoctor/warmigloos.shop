@@ -1,0 +1,42 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.ColumnHeader)Model.Content;
+    var settings = (ContentModels.ColumnHeaderSettings)Model.Settings;
+
+    var order = ViewData["order"] != null ? Convert.ToInt32(ViewData["order"]) : 0;
+    var centerClass = settings.CenterContent ? "text-center" : "";
+}
+<div class="grid-item grid-item--header @(centerClass)">
+    @if (content.PreHeading != "")
+    {
+        <div class="pre-head">@content.PreHeading</div>
+    }
+    @if (content.Heading != "")
+    {
+        if (order == 0)
+        {
+            <h1>@content.Heading</h1>
+        }
+        else
+        {
+            <h2>@content.Heading</h2>
+        }
+    }
+    @if (content.Text.ToString() != "")
+    {
+        <div class="text-big">
+            @content.Text
+        </div>
+    }
+    @if (content.Buttons != null && content.Buttons.Any())
+    {
+        <div class="button-wrap">
+            @foreach (var button in content.Buttons)
+            {
+                @await Html.PartialAsync("~/Views/Partials/Widgets/RenderButton.cshtml", button)
+            }
+        </div>
+    }
+</div>

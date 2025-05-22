@@ -1,0 +1,56 @@
+﻿{
+	"propertyEditors": [{
+			"alias": "IglooApprovedColorPicker",
+			"name": "Igloo Approved Color Picker",
+			"valueType": "STRING",
+			"editor": {
+				"view": "/App_Plugins/IglooApprovedColorPicker/IglooApprovedColorPicker.html",
+			},
+			"prevalues": {
+				"fields": [
+						{
+							label: "Use Text Colors",
+							key: "useTextColors",
+							view: "boolean"
+						},
+						{
+							label: "Display Dark Color",
+							key: "displayDark",
+							view: "boolean"
+						},
+						{
+							label: "Display White Color",
+							key: "displayWhite",
+							view: "boolean"
+						},
+						{
+							label: "Display Gray Color",
+							key: "displayGray",
+							view: "boolean"
+						},
+						{
+							label: "Display Theme Color",
+							key: "displayTheme",
+							view: "boolean"
+						},	
+						{
+							label: "Display Theme Alt Color",
+							key: "displayThemeAlt",
+							view: "boolean"
+						},
+				]
+			},
+			"defaultConfig": {
+
+			}
+		}
+
+	],
+	"parameterEditors": [],
+	"javascript": [
+		"/App_Plugins/IglooApprovedColorPicker/IglooApprovedColorPicker.controller.js"
+	],
+	"css": [
+		"/App_Plugins/IglooApprovedColorPicker/IglooApprovedColorPicker.css"
+	]
+}

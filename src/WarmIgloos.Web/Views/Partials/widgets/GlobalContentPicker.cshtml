@@ -1,0 +1,23 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Igloo.Core.Extensions;
+@{
+    var globalContentsBlock = (ContentModels.GlobalContentPicker)Model.Content;
+    var globalContentNodes = globalContentsBlock.GlobalContent;
+}
+
+@if (globalContentNodes != null)
+{
+    foreach (var globalContentNode in globalContentNodes)
+    {
+        var widgets = globalContentNode.Value<IEnumerable<BlockListItem>>("widgets");
+        if (widgets != null)
+        {
+            foreach (var widget in widgets)
+            {
+                @await Html.RenderWidget(widget, 1)
+            }
+        }
+    }
+}

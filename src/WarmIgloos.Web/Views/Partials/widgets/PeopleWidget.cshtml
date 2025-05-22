@@ -1,0 +1,173 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.PeopleWidget)Model.Content;
+    var settings = (ContentModels.PeopleWidgetSettings)Model.Settings;
+
+    var containerWidthClass = "container";
+    switch (settings.ContainerWidth)
+    {
+        case "small":
+            containerWidthClass = "container container--small";
+            break;
+        case "standard":
+            containerWidthClass = "container";
+            break;
+        case "big":
+            containerWidthClass = "container container--big";
+            break;
+        case "full width":
+            containerWidthClass = "container-fluid";
+            break;
+    }
+
+    var textColorClass = settings.TextColor?.ToString() == "white" ? "light-color" : "";
+    var backgroundColor = settings.BackgroundColor?.ToString();
+    var backgroundColorClass = string.IsNullOrWhiteSpace(backgroundColor) ? "white-bg" : backgroundColor + "-bg";
+
+    var columnWidth = "";
+
+    switch (settings.PeoplePerRow)
+    {
+        case "2":
+            columnWidth = "col-50 col-s-100";
+            break;
+        case "3":
+            columnWidth = "col-33 col-s-100";
+            break;
+        case "4":
+            columnWidth = "col-25 col-m-50 col-s-100";
+            break;
+        case "5":
+            columnWidth = "col-20 col-m-33 col-s-50";
+            break;
+    }
+}
+
+<section class="block people @backgroundColorClass @textColorClass" @if (!string.IsNullOrEmpty(settings.AnchorID)) { <text> id="@settings.AnchorID" </text> }>
+
+    @if (content.PreHeading != "" || content.Heading != "" || content.Text.ToString() != "")
+    {
+
+        <div class="block__header">
+            @if (content.PreHeading != "")
+            {
+                <div class="pre-head">@content.PreHeading</div>
+            }
+            @if (content.Heading != "")
+            {
+                <h2>@content.Heading</h2>
+            }
+            @if (content.Text.ToString() != "")
+            {
+                <div class="block__header-text text-big">
+                    @content.Text
+                </div>
+            }
+        </div>
+    }
+
+    <div class="block__body">
+
+        <div class="@containerWidthClass">
+
+            <div class="row row--center people-wrap">
+
+                @if (content.People != null)
+                {
+
+                    foreach (ContentModels.Person person in content.People)
+                    {
+                        <div class="@(columnWidth)">
+
+                            <div class="person @(settings.CenterText ? "text-center" : "") @(settings.Boxed ? "person--boxed" : "")">
+                                @if (person.Image != null)
+                                {
+                                    <div class="person__image @(settings.CircleImage ? "person__image--circle" :"")">
+                                        <img class="lazyload"
+                                             src="@(person.Image.GetCropUrl(10,10))"
+                                             data-sizes="auto"
+                                             data-srcset="@(person.Image.GetCropUrl(300,300, quality: 80)) 300w,
+    								    @(person.Image.GetCropUrl(500,500, quality: 80)) 500w,
+    								    @(person.Image.GetCropUrl(750,750, quality: 80)) 750w,
+    								    @(person.Image.GetCropUrl(1000,1000, quality: 80)) 1000w"
+                                             alt="@person.FullName">
+                                    </div>
+                                }
+                                <div class="person__text">
+                                    <h3 class="nm">@person.FullName</h3>
+                                    @if (person.Title != "")
+                                    {
+                                        <h4 class="section-head">@person.Title</h4>
+                                    }
+                                    @if (!person.Description.IsNullOrWhiteSpace(true) && !settings.HideDescriptions)
+                                    {
+                                        <p class="person__description">
+                                            @person.Description
+                                        </p>
+                                    }
+                                    <ul class="contact-list">
+                                        @if (!settings.HidePhoneNumbers)
+                                        {
+                                            if (person.Phone != "")
+                                            {
+                                                <li>
+                                                    <a href="tel:@person.Phone"><i class="fa fa-phone" aria-hidden="true"></i> @person.Phone</a>
+                                                </li>
+                                            }
+                                            if (person.Mobile != "")
+                                            {
+                                                <li>
+                                                    <a href="tel:@person.Mobile"><i class="fa fa-mobile" aria-hidden="true"></i> @person.Mobile</a>
+                                                </li>
+                                            }
+                                        }
+                                        @if (!settings.HideEmails && person.Email != "")
+                                        {
+                                            <li>
+                                                <a href="mailto:@person.Email"><i class="fa fa-envelope" aria-hidden="true"></i> @person.Email</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                    @if (!settings.HideSocialLinks)
+                                    {
+                                        <ul class="social-nav social-nav--small">
+                                            @if (person.Facebook != "")
+                                            {
+                                                <li><a href="@person.Facebook" target="_blank" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                            }
+                                            @if (person.Twitter != "")
+                                            {
+                                                <li><a href="@person.Twitter" target="_blank" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                            }
+                                            @if (person.Instagram != "")
+                                            {
+                                                <li><a href="@person.Instagram" target="_blank" title="Instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                            }
+                                            @if (person.LinkedIn != "")
+                                            {
+                                                <li><a href="@person.LinkedIn" target="_blank" title="LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                                            }
+                                            @if (person.Youtube != "")
+                                            {
+                                                <li><a href="@person.Youtube" target="_blank" title="Youtube"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+                                            }
+                                        </ul>
+                                    }
+
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

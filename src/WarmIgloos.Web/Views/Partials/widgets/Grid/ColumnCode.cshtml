@@ -1,0 +1,10 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{ 
+    var content = (ContentModels.ColumnCode)Model.Content;
+}
+
+<div class="grid-item grid-item--code">
+    @Html.Raw(content.Code)
+</div>

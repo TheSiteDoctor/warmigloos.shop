@@ -1,0 +1,71 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Igloo.Core.Extensions
+@{
+    var content = (ContentModels.Tabs)Model.Content;
+    var settings = (ContentModels.TabsSettings)Model.Settings;
+
+    var order = (int)ViewData["order"];
+    var theme = settings.ThemeColor?.ToString();
+    var themeClass = string.IsNullOrWhiteSpace(theme) ? "tabs--white" : "tabs--" + theme;
+}
+
+<section class="tabs @themeClass @(settings.TabNavigationPills ? "tabs--pills" : "")" @if (!string.IsNullOrEmpty(settings.AnchorID)) { <text> id="@settings.AnchorID" </text> }>
+
+    <nav class="tabs__nav">
+        @if (content.TabsList != null)
+        {
+            <ul>
+                @{var i = 0;}
+                @foreach (var tabBlock in content.TabsList)
+                {
+                    var tab = (ContentModels.Tab)tabBlock.Content;
+
+                    <li><a href="#tab--@formatLink(tab.Title)" class="@(i == 0 ? "active" : "")">@tab.Title</a></li>
+                    i++;
+                }
+            </ul>
+        }
+    </nav>
+
+    <div class="tabs__container">
+
+        @if (content.TabsList != null)
+        {
+            var x = 0;
+            foreach (var tabBlock in content.TabsList)
+            {
+
+                var tab = (ContentModels.Tab)tabBlock.Content;
+
+                <div id="tab--@formatLink(tab.Title)" class="tab @(x == 0 ? "tab--active" : "")">
+                    <div class="tab__body">
+
+                        @{ var widgets = tab.Widgets; }
+
+                        @if (widgets != null)
+                        {
+                            foreach (var widget in widgets)
+                            {
+                                @await Html.RenderWidget(widget)
+                            }
+                        }
+
+                    </div>
+                </div>
+                x++;
+            }
+        }
+
+    </div>
+
+</section>
+
+@functions {
+
+    private string formatLink(string word)
+    {
+        return word.Replace(" ", "-").Replace("&", "").Replace("?", "").Replace("/", "").Replace(".", "").Replace(",", "").ToLower();
+    }
+}

@@ -1,0 +1,14 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.ColumnUmbracoForm)Model.Content;
+    var settings = (ContentModels.ColumnUmbracoFormSettings)Model.Settings;
+}
+
+<div class="grid-item grid-item--form @(settings.BoxedColumn ? "grid-item--boxed" : "")">
+    @if (content.Form != null)
+    {
+        @(await Umbraco.RenderMacroAsync("renderUmbracoForm", new { FormGuid = content.Form, FormTheme = "igloo", ExcludeScripts = "0" }))
+    }
+</div>

@@ -1,0 +1,7 @@
+<div ng-controller="BBB.ButtonPicker">
+ 
+    <div class="bbb-buttons" ng-class="{'bbb-buttons--small' : model.config.small == '1'}">
+        <button type="button" ng-repeat="button in model.config.buttons" class="bbb-item" ng-click="model.value = button.value" ng-class="{'bbb-item--active' : model.value == button.value}">{{button.value}}</button>
+    </div>
+
+</div>

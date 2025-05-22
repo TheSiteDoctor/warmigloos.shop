@@ -1,0 +1,92 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+@using Igloo.Core.Extensions
+@inject Igloo.Core.Services.ISettingsService _settingsService;
+@{
+    Layout = "IglooCommerceBase.cshtml";
+    var q = "";
+
+    if (Context.Request.Query.Keys.Contains("search")) {
+        q = Context.Request.Query["search"][0];
+    }
+
+    var searchGridView = _settingsService.Get<bool>(Model, "searchGridView", defaultValue: false);
+    var searchPageAmount = _settingsService.Get<int>(Model, "searchPageAmount", defaultValue: 8);
+}
+<section class="block search-block gray-bg">
+    <div class="container">
+        <div class="row row--center">
+            <div class="col-50 col-s-100">
+
+                <form action="@Model.Url()" class="search__form">
+                    <label for="page-search-input-inline" class="sr-only">@Umbraco.GetDictionaryValue("Search")</label>
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <input type="text" name="search" id="page-search-input-inline" class="search__input" value="@(q)" placeholder="@Umbraco.GetDictionaryValue("Search Placeholder")">
+                    <input type="hidden" name="amount" class="search-pagination-amount" value="@searchPageAmount" />
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="search-result-info">
+        @Umbraco.GetDictionaryValue("Your Search") <strong class="query">"@(q)"</strong> @Umbraco.GetDictionaryValue("Gave") <strong class="search-results-count"></strong> <strong class="search-results-count-label single">@Umbraco.GetDictionaryValue("Result")</strong> <strong class="search-results-count-label multi">@Umbraco.GetDictionaryValue("Results")</strong>
+    </div>
+</section>
+<section class="block gray-bg search-results">
+    @if (searchGridView)
+    {
+        <div class="container">
+            <div class="row row--center">
+
+                <template>
+                    <div class="col-33 col-s-100 search-result-container">
+                        <article class="box">
+                            <div class="box__image">
+                                <a href="" title="" tabindex="-1">
+                                    <img class="lazyload" src="" alt="">
+                                </a>
+                            </div>
+
+                            <div class="box__text">
+                                <h3 class="h5"><a title="" href=""></a></h3>
+                                <p></p>
+                            </div>
+                        </article>
+                    </div>
+                </template>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <div class="container container--small">
+            <div class="row">
+                <div class="col-100">
+                    <template>
+                        <article class="search-result">
+                            <h3 class="h5"><a href=""></a></h3>
+                            <p></p>
+                        </article>
+                    </template>
+
+                </div>
+            </div>
+
+        </div>
+    }
+
+    <div class="search-empty">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        <h5>@Umbraco.GetDictionaryValue("No Results Found")</h5>
+    </div>
+
+    <div class="container container--small search-pagination-container">
+        <div class="row">
+            <div class="col-100">
+                <button class="button button--block button--dark">@Umbraco.GetDictionaryValue("Load More")</button>
+            </div>
+        </div>
+    </div>
+
+</section>
+@await Html.PartialAsync("~/Views/Partials/Widgets/RenderWidgets.cshtml", Model, new ViewDataDictionary(ViewData) { { "indexNumber", 1 } })

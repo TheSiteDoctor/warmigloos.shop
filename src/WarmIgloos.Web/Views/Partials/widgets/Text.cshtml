@@ -1,0 +1,168 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.Text)Model.Content;
+    var settings = (ContentModels.TextSettings)Model.Settings;
+
+    var containerWidthClass = "container";
+    switch (settings.ContainerWidth)
+    {
+        case "small":
+            containerWidthClass = "container container--small";
+            break;
+        case "standard":
+            containerWidthClass = "container";
+            break;
+        case "big":
+            containerWidthClass = "container container--big";
+            break;
+        case "full width":
+            containerWidthClass = "container-fluid";
+            break;
+    }
+
+    var textColorClass = settings.TextColor?.ToString() == "white" ? "light-color" : "";
+    var backgroundColor = settings.BackgroundColor?.ToString();
+    var backgroundColorClass = string.IsNullOrWhiteSpace(backgroundColor) ? "white-bg" : backgroundColor + "-bg";
+}
+
+<section class="block text @backgroundColorClass @textColorClass" @if (!string.IsNullOrEmpty(settings.AnchorID)) { <text> id="@settings.AnchorID" </text> }>
+
+    @if (content.SidebarWidgets != null && content.SidebarWidgets.Any())
+    {
+        <div class="block-text block-text--sidebar">
+            <div class="@containerWidthClass">
+                <div class="row">
+                    <div class="col-66 col-s-100 @(settings.SidebarLeft ? "col-order-2 col-s-order-1" : "") block-text__main">
+                        @content.RichText
+
+                        @if (content.ContentWidgets != null && content.ContentWidgets.Any())
+                        {
+                            <div class="row sub-grid">
+
+                                @foreach (BlockListItem column in content.ContentWidgets)
+                                {
+                                    var columnWidth = column.Settings?.Value<string>("columnWidth", "")?.Replace("%", "") ?? "100";
+                                    var columnType = column.Content.ContentType.Alias;
+
+                                    if (columnWidth == "25")
+                                    {
+                                        columnWidth = "25 col-m-50";
+                                    }
+                                    else if (columnWidth == "20")
+                                    {
+                                        columnWidth = "20 col-m-33";
+                                    }
+                                    else if (columnWidth == "10")
+                                    {
+                                        columnWidth = "10 col-m-20";
+                                    }
+
+                                    <div class="col-@(columnWidth) col-s-100">
+                                        @if (columnType == "lineBreak")
+                                        {
+                                            @await Html.PartialAsync("~/Views/Partials/Shared/LineBreak.cshtml", column)
+                                        }
+                                        else
+                                        {
+                                            @await Html.PartialAsync("~/Views/Partials/Widgets/Grid/" + columnType + ".cshtml", column, new ViewDataDictionary(ViewData) { { "containerWidth", "standard" } })
+                                        }
+                                    </div>
+                                }
+
+                            </div>
+                        }
+                    </div>
+                    <aside class="col-30 col-s-100 @(settings.SidebarLeft ? "col-order-1 col-s-order-2" : "")  block-text__aside">
+
+                        <div class="block-text__aside-inner @(settings.StickySidebar ? "block-text__aside-inner--sticky" : "")">
+
+                            @foreach (BlockListItem sidebarWidget in content.SidebarWidgets)
+                            {
+                                var sidebarWidgetType = sidebarWidget.Content.ContentType.Alias;
+
+                                @*=====================
+                                    # Text
+                                    =====================*@
+                                if (sidebarWidgetType == "textSidebar")
+                                {
+                                    @await Html.PartialAsync("~/Views/Partials/Widgets/Text/SidebarText.cshtml", sidebarWidget)
+                                }
+
+                                @*=====================
+                                    # Navigation
+                                    =====================*@
+                                if (sidebarWidgetType == "navigationSidebar")
+                                {
+                                    @await Html.PartialAsync("~/Views/Partials/Widgets/Text/NavigationSidebar.cshtml", sidebarWidget)
+                                }
+
+                                @*=====================
+                                    # Button
+                                    =====================*@
+                                if (sidebarWidgetType == "button")
+                                {
+                                    <div class="block-text__aside-item block-text__aside-item--button">
+                                        @await Html.PartialAsync("~/Views/Partials/Widgets/Renderbutton.cshtml", sidebarWidget)
+                                    </div>
+                                }
+                            }
+
+                        </div>
+
+                    </aside>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="block-text block-text--single">
+            <div class="@containerWidthClass">
+                <div class="row">
+                    <div class="col-100">
+                        @content.RichText
+
+                        @if (content.ContentWidgets != null && content.ContentWidgets.Any())
+                        {
+                            <div class="row sub-grid">
+
+                                @foreach (BlockListItem column in content.ContentWidgets)
+                                {
+                                    var columnWidth = column.Settings?.Value<string>("columnWidth", "")?.Replace("%", "") ?? "100";
+                                    var columnType = column.Content.ContentType.Alias;
+
+                                    if (columnWidth == "25")
+                                    {
+                                        columnWidth = "25 col-m-50";
+                                    }
+                                    else if (columnWidth == "20")
+                                    {
+                                        columnWidth = "20 col-m-33";
+                                    }
+                                    else if (columnWidth == "10")
+                                    {
+                                        columnWidth = "10 col-m-20";
+                                    }
+
+                                    <div class="col-@(columnWidth) col-s-100">
+                                        @if (columnType == "lineBreak")
+                                        {
+                                            @await Html.PartialAsync("~/Views/Partials/Shared/LineBreak.cshtml", column)
+                                        }
+                                        else
+                                        {
+                                            @await Html.PartialAsync("~/Views/Partials/Widgets/Grid/" + columnType + ".cshtml", column, new ViewDataDictionary(ViewData) { { "containerWidth", "standard" } })
+                                        }
+                                    </div>
+                                }
+
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</section>

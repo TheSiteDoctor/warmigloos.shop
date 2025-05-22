@@ -1,0 +1,20 @@
+﻿@using Igloo.Core.Extensions;
+@using Umbraco.Cms.Core.Models.Blocks;
+@using Microsoft.AspNetCore.Html;
+@inherits UmbracoViewPage
+@{
+    Layout = null;
+    var widgets = Model.Value<IEnumerable<BlockListItem>>("widgets");
+    var indexNumberResult = this.ViewData.ContainsKey("indexNumber") ? this.ViewData["indexNumber"].ToString() : string.Empty;
+    var useIndexNumber = int.TryParse(indexNumberResult, out int indexNumber);
+}
+
+@if (widgets != null)
+{
+    int index = useIndexNumber ? indexNumber : 0;
+    foreach (var widget in widgets)
+    {
+        @await Html.RenderWidget(widget, WidgetIndex: index)
+        index++;
+    }
+}

@@ -1,0 +1,12 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var button = (ContentModels.Button)Model.Content;
+    var buttonColor = button.ButtonColor?.ToString();
+    var buttonClass = string.IsNullOrWhiteSpace(buttonColor) ? "button--theme" : "button--" + buttonColor;
+}
+@if (button.ButtonLink != null)
+{
+    <a href="@(button.ButtonLink.Url)" target="@(button.ButtonLink.Target)" @if (button.ButtonLink.Target == "_blank") { <text> rel="noopener" </text> } title="@(button.ButtonLink.Name)" class="button button--@(button.ButtonSize) @(buttonClass) button--@(button.Style)">@(button.ButtonText)</a>
+}

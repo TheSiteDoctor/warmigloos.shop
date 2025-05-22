@@ -1,0 +1,31 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.ColumnVideo)Model.Content;
+    var settings = (ContentModels.ColumnVideoSettings)Model.Settings;
+
+    var videoUrl = content.Video != null ? content.Video.Url() : "";
+    var posterUrl = content.Poster != null ? content.Poster.Url() : "";
+    var mute = settings.Mute ? "muted" : "";
+    var autoplay = settings.Autoplay ? "autoplay playsinline" : "";
+    var hideControls = settings.HideControls ? "" : "controls";
+    var loop = settings.Loop ? "loop" : "";
+    var videoShadow = settings.VideoShadow ? "video-shadow" : "";
+}
+
+<div class="grid-item grid-item--video @videoShadow">
+
+    @if (videoUrl != "")
+    {
+        <video @(mute) @(autoplay) @(hideControls) @(loop)
+               @if (posterUrl != "") { <text> poster="@posterUrl" </text> }>
+            <source src="@(videoUrl)" type="video/mp4">
+        </video>
+    }
+    else if (content.VideoEmbedCode != "")
+    {
+        @Html.Raw(content.VideoEmbedCode)
+    }
+
+</div>

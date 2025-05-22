@@ -1,0 +1,123 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Models;
+@{
+    var content = (ContentModels.NavigationSidebar)Model.Content;
+
+    var links = content.Links;
+    var levelsRendered = 0;
+    var levelsOfChildren = int.Parse(content.LevelsOfChildren.ToString());
+}
+
+<div class="block-text__aside-item block-text__aside-item--links @(content.Boxed ? "block-text__aside-item--boxed" : "")">
+
+    @if (content.Heading != "")
+    {
+        if (content.LinkHeading != null)
+        {
+            <h2 class="h6 navigation-link-heading">
+                <a href="@(content.LinkHeading.Url)" target="@(content.LinkHeading.Target)" @if (content.LinkHeading.Target == "_blank") { <text> rel="noopener" </text> }>
+                    @content.Heading
+                </a>
+            </h2>
+        }
+        else
+        {
+            <h2 class="h6">@content.Heading</h2>
+        }
+    }
+
+    <nav class="navigation navigation--level-@levelsOfChildren" data-expand="@(content.DisableAutoExpand ? "false" : "true")">
+        <ul>
+            @if (links != null && links.Any())
+            {
+                foreach (Link link in links)
+                {
+                    if (link.Udi != null && link.Type == LinkType.Content)
+                    {
+                        var node = Umbraco.Content(link.Udi);
+
+                        ListChildNodes(link, node, levelsRendered, levelsOfChildren);
+                    }
+                    else
+                    {
+                        <li>
+                            <div>
+                                <a href="@(link.Url)" target="@(link.Target)" @if (link.Target == "_blank") { <text> rel="noopener" </text> }>@link.Name</a>
+                            </div>
+                        </li>
+                    }
+                }
+            }
+        </ul>
+    </nav>
+</div>
+@functions {
+    void ListChildNodes(Link link, IPublishedContent root, int levelsRendered, int levelsOfChildren)
+    {
+        var expandLabel = Umbraco.GetDictionaryValue("Show Subpages");
+        var content = (ContentModels.NavigationSidebar)Model.Content;
+
+        if (levelsOfChildren >= levelsRendered)
+        {
+            var children = root.Children
+            .Where(x => x.IsVisible())
+            .Where(x => x?.ContentType?.Alias != "sitemap" && x?.ContentType?.Alias != "websiteSettings").ToList();
+            levelsRendered++;
+
+            if ((content.OnlyRenderChildren && levelsRendered > 1) || !content.OnlyRenderChildren)
+            {
+                if (link != null)
+                {
+                    <li class="@(link.Url == Umbraco.AssignedContentItem.Url() ? "selected" : "")">
+                        <div>
+                            <a href="@(link.Url)" target="@(link.Target)" @if (link.Target == "_blank") { <text> rel="noopener" </text> }>@link.Name</a>
+                            @if (children.Count > 0 && levelsOfChildren >= levelsRendered)
+                            {
+                                <button aria-expanded="false" aria-label="@expandLabel"></button>
+                            }
+                        </div>
+                        @if (children.Count > 0)
+                        {
+                            <ul>
+                                @foreach (var child in children)
+                                {
+                                    ListChildNodes(null, child, levelsRendered, levelsOfChildren);
+                                }
+                            </ul>
+                        }
+                    </li>
+                }
+                else
+                {
+                    <li class="@(root.Url() == Umbraco.AssignedContentItem.Url() ? "selected" : "")">
+                        <div>
+                            <a href="@(root.Url())">@root.Name</a>
+                            @if (children.Count > 0 && levelsOfChildren >= levelsRendered)
+                            {
+                                <button aria-expanded="false" aria-label="@expandLabel"></button>
+                            }
+                        </div>
+                        @if (children.Count > 0)
+                        {
+                            <ul>
+                                @foreach (var child in children)
+                                {
+                                    ListChildNodes(null, child, levelsRendered, levelsOfChildren);
+                                }
+                            </ul>
+                        }
+                    </li>
+                        }
+                    }
+                    else
+                    {
+                        foreach (var child in children)
+                        {
+                            ListChildNodes(null, child, levelsRendered, levelsOfChildren);
+                        }
+                    }
+                }
+            }
+        }

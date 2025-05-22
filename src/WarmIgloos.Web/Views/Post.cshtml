@@ -1,0 +1,243 @@
+﻿@inherits UmbracoViewPage<ContentModels.Post>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Models.Blocks;
+@using System.Globalization
+@inject Igloo.Core.Services.ISettingsService _settingsService;
+@{
+    Layout = "IglooCommerceBase.cshtml";
+
+    var parentFeed = Model.Parent<ContentModels.Feed>();
+    var posts = parentFeed.Children<ContentModels.Post>().Where(x => x.IsVisible() && x.Id != Model.Id).OrderByDescending(x => x.Date).Take(3).ToList();
+    var hideDate = parentFeed.HideDates;
+    var disqusShortname = _settingsService.Get<string>(Model, "disqusShortname");
+    var companyName = _settingsService.Get<string>(Model, "companyName");
+    var companyLogo = _settingsService.Get<IPublishedContent>(Model, "companyLogo")?.Url();
+
+    var author = Model.Author as ContentModels.Person;
+}
+
+
+<section class="block post white-bg">
+
+    <div class="block__header">
+        @if (Model.PreHeading != "")
+        {
+            <div class="pre-head">@(Model.PreHeading)</div>
+        }
+        <h1>@(Model.Heading)</h1>
+        <div class="post__header">
+            @if (author != null)
+            {
+                <div class="post__author">
+                    @if (author.Image != null)
+                    {
+                        <img src="@author.Image.GetCropUrl(100, 100, quality: 80)" alt="@author.FullName">
+                    }
+                    <span>@author.FullName</span>
+                </div>
+            }
+            @if (!hideDate && Model.Date != null)
+            {
+                <div class="post__meta">
+                    @string.Format("{0: dd MMMM yyyy}", Model.Date)
+                </div>
+            }
+        </div>
+        @if (!string.IsNullOrEmpty(Model.IntroText.ToString()))
+        {
+            <div class="block__header-text text-big">
+                @Html.Raw(Model.IntroText)
+            </div>
+        }
+    </div>
+
+    <div class="block__body">
+
+        @if (Model.Image != null)
+        {
+            <div class="post__image">
+
+                <img class="lazyload"
+                     src="@(Model.Image.Url())?width=50"
+                     data-sizes="auto"
+                     data-srcset="@(Model.Image.Url())?upscale=false&width=480&quality=80 480w,
+                	@(Model.Image.Url())?upscale=false&width=768&quality=80 768w,
+                	@(Model.Image.Url())?upscale=false&width=1100&quality=80 1100w"
+                     alt="@Model.Heading">
+            </div>
+        }
+
+        <div class="post__body">
+
+            @Model.Text
+
+            @if (Model.ContentWidgets != null && Model.ContentWidgets.Any())
+            {
+                <div class="row sub-grid">
+
+                    @foreach (BlockListItem column in Model.ContentWidgets)
+                    {
+                        var columnWidth = column.Settings?.Value<string>("columnWidth", "")?.Replace("%", "") ?? "100";
+                        var columnType = column.Content.ContentType.Alias;
+
+                        if (columnWidth == "25")
+                        {
+                            columnWidth = "25 col-m-50";
+                        }
+                        else if (columnWidth == "20")
+                        {
+                            columnWidth = "20 col-m-33";
+                        }
+                        else if (columnWidth == "10")
+                        {
+                            columnWidth = "10 col-m-20";
+                        }
+
+                        <div class="col-@(columnWidth) col-s-100">
+                            @if (columnType == "lineBreak")
+                            {
+                                @await Html.PartialAsync("~/Views/Partials/Shared/LineBreak.cshtml", column)
+                            }
+                            else
+                            {
+                                @await Html.PartialAsync("~/Views/Partials/Widgets/Grid/" + columnType + ".cshtml", column, new ViewDataDictionary(ViewData) { { "containerWidth", "standard" }, { "order", 2 } })
+                            }
+                        </div>
+                    }
+
+                </div>
+            }
+
+            @if (author != null)
+            {
+
+                <div class="post__author-bio">
+                    @if (author.Image != null)
+                    {
+                        <img src="@author.Image.GetCropUrl(200, 200, quality: 80)" alt="@author.FullName">
+                    }
+                    <div class="post__author-bio-text">
+                        <h5 class="h6">@author.FullName</h5>
+                        <p>@author.Description</p>
+                    </div>
+                </div>
+            }
+
+            @if (!parentFeed.HideShareButtons)
+            {
+                @await Html.PartialAsync("~/Views/Partials/Shared/ShareButtons.cshtml")
+            }
+
+            @if (disqusShortname != "")
+            {
+                if (!Model.DisableComments)
+                {
+                    <br>
+                    <div id="disqus_thread"></div>
+                    <script>
+						(function() {
+						var d = document, s = d.createElement('script');
+						s.src = 'https://@(disqusShortname).disqus.com/embed.js';
+						s.setAttribute('data-timestamp', +new Date());
+						(d.head || d.body).appendChild(s);
+						})();
+                    </script>
+                }
+            }
+
+        </div>
+
+    </div>
+
+</section>
+
+@await Html.PartialAsync("~/Views/Partials/Widgets/RenderWidgets.cshtml", Model, new ViewDataDictionary(ViewData) { { "indexNumber", 1 } })
+
+@if (posts.Count > 0)
+{
+    <section class="block feed gray-bg">
+
+        <div class="container">
+
+            <div class="row row--center box-wrap">
+
+                @foreach (var post in posts)
+                {
+                    <div class="col-33 col-s-100">
+                        <article class="box">
+                            @if (post.PostImage != null)
+                            {
+                                <div class="box__image">
+                                    <a href="@post.Url()" title="@post.Heading" tabindex="-1">
+                                        <img class="lazyload"
+                                             src="@(post.PostImage.GetCropUrl(10,7, quality: 80))"
+                                             data-sizes="auto"
+                                             data-srcset="@(post.PostImage.GetCropUrl(300,210, quality: 80)) 300w,
+                                    	    @(post.PostImage.GetCropUrl(500,350, quality: 80)) 500w,
+                                    	    @(post.PostImage.GetCropUrl(1000,700, quality: 80)) 1000w"
+                                             alt="@post.Heading">
+                                    </a>
+                                </div>
+                            }
+                            <div class="box__text">
+                                <h3 class="h5"><a title="@post.Heading" href="@post.Url()">@post.Heading</a></h3>
+                                @if (!hideDate)
+                                {
+                                    <div class="box__meta">
+                                        @String.Format("{0: dd MMMM yyyy}", post.Date)
+                                    </div>
+                                }
+                                <p>@post.PostDescription</p>
+                            </div>
+                        </article>
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+        @if (posts.Count > 2)
+        {
+            <div class="text-center">
+                <div class="button-wrap">
+                    <br>
+                    <a href="@parentFeed.Url()" class="button button--dark">@Umbraco.GetDictionaryValue("Show more")</a>
+                </div>
+            </div>
+        }
+
+    </section>
+}
+@section bodyEnd
+{
+    <script type="application/ld+json">
+        {
+        "@@context": "http://schema.org",
+        "@@type": "NewsArticle",
+        "mainEntityOfPage": {
+        "@@type": "WebPage",
+        "@@id": "@Model.Url(mode: UrlMode.Absolute)"
+        },
+        "headline": "@Model.Heading",
+        "image": [
+        "@(Model.PostImage != null ? Model.PostImage.Url(mode: UrlMode.Absolute) : "")"
+        ],
+        "datePublished": "@Model.Date",
+        "dateModified": "@Model.UpdateDate",
+        "author": {
+        "@@type": "Organization",
+        "name": "@companyName"
+        },
+        "publisher": {
+        "@@type": "Organization",
+        "name": "@companyName",
+        "logo": {
+            "@@type": "ImageObject",
+            "url": "@(companyLogo != null ? companyLogo : "")"
+        }
+        },
+        "description": "@Model.PostDescription"
+        }
+    </script>
+}

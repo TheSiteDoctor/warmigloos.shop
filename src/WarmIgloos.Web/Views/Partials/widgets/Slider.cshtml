@@ -1,0 +1,48 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Igloo.Core.Extensions
+@{
+    var content = (ContentModels.Slider)Model.Content;
+    var settings = (ContentModels.SliderSettings)Model.Settings;
+
+    var order = ViewData["order"] != null ? Convert.ToInt32(ViewData["order"]) : 0;
+}
+
+<div class="slider js-flickity"
+     data-flickity-options='
+		{
+			"cellAlign": "left",
+			"contain": 1,
+			"prevNextButtons": @(settings.ShowNextPrevArrows ? "1" : "0"),
+			"pageDots": @(settings.ShowPageDots ? "1" : "0"),
+			"setGallerySize": 1,
+			"imagesLoaded": 1,
+			"wrapAround": @(settings.WrapAround ? "1" : "0"),
+			"autoPlay": @(settings.Autoplay),
+			"pauseAutoPlayOnHover": @(settings.PauseAutoplayOnHover ? "1" : "0"),
+			"adaptiveHeight": 1,
+			"fade": @(settings.FadeAnimation ? "1" : "0")
+		}
+	' @if (!string.IsNullOrEmpty(settings.AnchorID)) { <text> id="@settings.AnchorID" </text> }>
+
+    @if (content.Widgets != null)
+    {
+        var index = 0;
+
+        foreach (BlockListItem widget in content.Widgets)
+        {
+            if (order == 0 && index == 0)
+            {
+                <div class="slide">
+                    @await Html.RenderWidget(widget, 0)
+                </div>
+            }
+            else
+            {
+                <div class="slide">@await Html.RenderWidget(widget, 1)</div>
+            }
+            index++;
+        }
+        }
+    </div>

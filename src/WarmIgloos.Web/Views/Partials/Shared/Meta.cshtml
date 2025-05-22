@@ -1,0 +1,120 @@
+﻿@inherits UmbracoViewPage
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Web.Common.PublishedModels
+@using System.Globalization
+@inject Igloo.Core.Services.ISettingsService _settingsService;
+@inject IPublishedValueFallback _publishedValueFallback;
+@{
+    var site = Model.Root() as ContentModels.Site;
+    var theme = new Theme(Umbraco.AssignedContentItem, _publishedValueFallback);
+    var page = new Page(Umbraco.AssignedContentItem, _publishedValueFallback);
+
+    var title = (
+        !string.IsNullOrEmpty(page.MetaTitle) ?
+        page.MetaTitle :
+        page.Name) +
+        _settingsService.Get<string>(Model, "titleSignature");
+
+    var description = !string.IsNullOrEmpty(page.MetaDescription) ?
+        page.MetaDescription : site.MetaDescription;
+
+    var ogImage = site.MetaImage?.Url(mode: UrlMode.Absolute) ?? "";
+    ogImage = page.MetaImage?.Url(mode: UrlMode.Absolute) ?? ogImage;
+    ogImage = page.Value<IPublishedContent>("postImage")?.Url(mode: UrlMode.Absolute) ?? ogImage;
+
+    var twitterUsername = _settingsService.Get<string>(Model, "twitterUsername");
+    var twitterUsernameString = "@" + twitterUsername.Trim("@");
+
+    var iconBackgroundColor = _settingsService.Get<string>(Model, "iconBackgroundColor") ?? "#FFFFFF";
+
+    var favicon = _settingsService.Get<IPublishedContent>(Model, "favicon");
+    var appicon = _settingsService.Get<IPublishedContent>(Model, "appIcon");
+
+    var siteName = _settingsService.Get<string>(Model, "siteName");
+    var email = _settingsService.Get<string>(Model, "companyEmail");
+    var latitude = _settingsService.Get<string>(Model, "companyLatitude");
+    var longitude = _settingsService.Get<string>(Model, "companyLongitude");
+    var phoneNumber = _settingsService.Get<string>(Model, "companyPhoneNumber");
+}
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>@(title)</title>
+<meta name="description" content="@(description)">
+
+<meta property="og:title" content="@(title)" />
+<meta property="og:type" content="website" />
+<meta property="og:description" content="@(description)" />
+<meta property="og:url" content="@(Model.Url(mode: UrlMode.Absolute))">
+<meta name="twitter:card" content="summary_large_image">
+
+@if (!string.IsNullOrEmpty(twitterUsernameString))
+{
+    <meta name="twitter:site" content="@(twitterUsernameString)">
+}
+
+<meta name="twitter:title" content="@(title)">
+<meta name="twitter:description" content="@(description)">
+
+@if (!string.IsNullOrEmpty(ogImage))
+{
+    <meta property="og:image" content="@Html.Raw(ogImage)?upscale=false&width=1200" />
+    <meta name="twitter:image" content="@Html.Raw(ogImage)?upscale=false&width=1200">
+}
+
+@if (!string.IsNullOrEmpty(siteName))
+{
+    <meta name="og:site_name" content="@siteName" />
+}
+@if (!string.IsNullOrEmpty(email))
+{
+    <meta name="og:email" content="@email" />
+}
+
+@if (!string.IsNullOrEmpty(latitude) && !string.IsNullOrEmpty(longitude))
+{
+    <meta name="og:latitude" content="@latitude" />
+    <meta name="og:longitude" content="@longitude" />
+}
+
+@if (!string.IsNullOrEmpty(phoneNumber))
+{
+    <meta name="og:phone_number" content="@phoneNumber" />
+}
+
+@if (appicon != null)
+{
+    <link rel="apple-touch-icon" sizes="57x57" href="@appicon.GetCropUrl(57, 57)">
+    <link rel="apple-touch-icon" sizes="60x60" href="@appicon.GetCropUrl(60, 60)">
+    <link rel="apple-touch-icon" sizes="72x72" href="@appicon.GetCropUrl(72, 72)">
+    <link rel="apple-touch-icon" sizes="76x76" href="@appicon.GetCropUrl(76, 76)">
+    <link rel="apple-touch-icon" sizes="114x114" href="@appicon.GetCropUrl(114, 114)">
+    <link rel="apple-touch-icon" sizes="120x120" href="@appicon.GetCropUrl(120, 120)">
+    <link rel="apple-touch-icon" sizes="144x144" href="@appicon.GetCropUrl(144, 144)">
+    <link rel="apple-touch-icon" sizes="152x152" href="@appicon.GetCropUrl(152, 152)">
+    <link rel="apple-touch-icon" sizes="180x180" href="@appicon.GetCropUrl(180, 180)">
+}
+@if (favicon != null)
+{
+    <link rel="icon" type="image/png" sizes="192x192" href="@favicon.GetCropUrl(192, 192)">
+    <link rel="icon" type="image/png" sizes="32x32" href="@favicon.GetCropUrl(32, 32)">
+    <link rel="icon" type="image/png" sizes="96x96" href="@favicon.GetCropUrl(96, 96)">
+    <link rel="icon" type="image/png" sizes="16x16" href="@favicon.GetCropUrl(16, 16)">
+    <meta name="msapplication-TileColor" content="@(iconBackgroundColor)">
+    <meta name="msapplication-TileImage" content="@favicon.GetCropUrl(144, 144)">
+}
+
+@if (page.HideFromSearchEngines)
+{
+    <meta name="robots" content="noindex, nofollow">
+}
+
+@if (Model.Cultures != null && Model.Cultures.Count > 1)
+{
+    foreach (var (culture, infos) in Model.Cultures)
+    {
+        CultureInfo ci = new CultureInfo(culture);
+        <link rel="alternate" href="@Model.Url(culture, mode: UrlMode.Absolute)" hreflang="@ci.Name" />
+    }
+}

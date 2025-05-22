@@ -1,0 +1,92 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.Logos)Model.Content;
+    var settings = (ContentModels.LogosSettings)Model.Settings;
+
+    var containerWidthClass = "container";
+    switch (settings.ContainerWidth)
+    {
+        case "small":
+            containerWidthClass = "container container--small";
+            break;
+        case "standard":
+            containerWidthClass = "container";
+            break;
+        case "big":
+            containerWidthClass = "container container--big";
+            break;
+        case "full width":
+            containerWidthClass = "container-fluid";
+            break;
+    }
+
+    var compactClass = settings.Compact ? "block--compact" : "";
+    var blackWhiteClass = settings.BlackWhite ? "black-and-white" : "";
+
+    var textColorClass = settings.TextColor?.ToString() == "white" ? "light-color" : "";
+    var backgroundColor = settings.BackgroundColor?.ToString();
+    var backgroundColorClass = string.IsNullOrWhiteSpace(backgroundColor) ? "gray-bg" : backgroundColor + "-bg";
+
+}
+<section class="block logos @(backgroundColorClass) @(textColorClass) @(compactClass)" @if (!string.IsNullOrEmpty(settings.AnchorID)) { <text> id="@settings.AnchorID" </text> }>
+
+    @if (content.PreHeading != "" || content.Heading != "" || content.Text.ToString() != "")
+    {
+
+        <div class="block__header">
+            @if (content.PreHeading != "")
+            {
+                <div class="pre-head">@content.PreHeading</div>
+            }
+            @if (content.Heading != "")
+            {
+                <h2>@content.Heading</h2>
+            }
+            @if (content.Text.ToString() != "")
+            {
+                <div class="block__header-text text-big">
+                    @content.Text
+                </div>
+            }
+        </div>
+    }
+
+    <div class="block__body">
+
+        <div class="@(containerWidthClass)">
+
+            <div class="row row--center">
+
+                <div class="col-100">
+
+                    @if (content.LogoItems != null)
+                    {
+                        <ul class="logos @(blackWhiteClass)">
+                            @foreach (var logo in content.LogoItems)
+                            {
+                                var logoContent = (ContentModels.Logo)logo.Content;
+
+                                if (logoContent.LogoImage != null)
+                                {
+                                    <li style="width: @(logoContent.CustomWidth == "" ? "120px" : logoContent.CustomWidth)">
+                                        @if (logoContent.Link != null)
+                                        {
+                                            <a href="@(logoContent.Link.Url)" target="@(logoContent.Link.Target)" title="@(logoContent.Link.Name)"><img class="lazyload" data-src="@logoContent.LogoImage.Url()"></a>
+                                        }
+                                        else
+                                        {
+                                            <div><img class="lazyload" data-src="@logoContent.LogoImage.Url()"></div>
+                                        }
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

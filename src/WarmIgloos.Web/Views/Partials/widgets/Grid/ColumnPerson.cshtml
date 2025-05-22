@@ -1,0 +1,85 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Web.Common.Models
+@using Umbraco.Cms.Core.Models;
+@{
+    var content = (ContentModels.ColumnPerson)Model.Content;
+    var settings = (ContentModels.ColumnPersonSettings)Model.Settings;
+    
+    var person = content.Person as ContentModels.Person;
+}
+
+<div class="grid-item grid-item--person">
+    @if(content.Heading != ""){
+        <h3 class="h6 @(settings.CenterText ? "text-center" : "")">@content.Heading</h3>
+    }
+    
+    @if(person != null){
+        <div class="person @(settings.CenterText ? "text-center" : "") @(settings.Boxed ? "person--boxed" : "")">
+		    @if(person.Image != null){
+		        <div class="person__image @(settings.CircleImage ? "person__image--circle" :"")">
+				    <img class="lazyload"
+				    src="@(person.Image.GetCropUrl(10,10))"
+				    data-sizes="auto"
+				    data-srcset="@(person.Image.GetCropUrl(300,300, quality: 80)) 300w,
+				    @(person.Image.GetCropUrl(500,500, quality: 80)) 500w,
+				    @(person.Image.GetCropUrl(750,750, quality: 80)) 750w,
+				    @(person.Image.GetCropUrl(1000,1000, quality: 80)) 1000w" 
+				    alt="@person.FullName">	
+				</div>   
+		    }
+			<div class="person__text">
+				<h4 class="nm">@person.FullName</h4>
+				@if(person.Title != ""){
+				    <h5 class="section-head">@person.Title</h5>
+				}
+				@if(!person.Description.IsNullOrWhiteSpace(true) && !settings.HideDescription){
+				    <p class="person__description">
+						@person.Description
+					</p>
+				}
+				<ul class="contact-list">
+				    @if(!settings.HidePhoneNumbers){
+				        if(person.Phone != ""){
+				            <li>
+								<a href="tel:@person.Phone"><i class="fa fa-phone" aria-hidden="true"></i> @person.Phone</a>
+							</li>
+				        }
+				        if(person.Mobile != ""){
+				            <li>
+								<a href="tel:@person.Mobile"><i class="fa fa-mobile" aria-hidden="true"></i> @person.Mobile</a>
+							</li>
+				        }
+				    }
+					@if(!settings.HideEmail && person.Email != ""){
+					    <li>
+							<a href="mailto:@person.Email"><i class="fa fa-envelope" aria-hidden="true"></i> @person.Email</a>
+						</li>
+					}
+				</ul>
+				@if(!settings.HideSocialLinks){
+				    <ul class="social-nav social-nav--small">
+				        @if(person.Facebook != ""){
+				            <li><a href="@person.Facebook" target="_blank" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+				        }
+				        @if(person.Twitter != ""){
+				            <li><a href="@person.Twitter" target="_blank" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+				        }
+				        @if(person.Instagram != ""){
+				            <li><a href="@person.Instagram" target="_blank" title="Instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+				        }
+				        @if(person.LinkedIn != ""){
+				            <li><a href="@person.LinkedIn" target="_blank" title="LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+				        }
+				        @if(person.Youtube != ""){
+				            <li><a href="@person.Youtube" target="_blank" title="Youtube"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+				        }
+					</ul>
+				}
+				
+			</div>
+		</div>
+    }
+    
+</div>

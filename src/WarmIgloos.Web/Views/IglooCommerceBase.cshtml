@@ -1,0 +1,36 @@
+﻿@using IglooTheme.Commerce.Configuration
+@using Microsoft.Extensions.Options
+@using Smidge.TagHelpers
+@using Umbraco.Cms.Core.Hosting
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@inject IOptions<UmbracoOptions> Options
+@inject IHostingEnvironment HostingEnvironment
+@{
+	Layout = "Master.cshtml";
+    var commerceConfig = Options.Value;
+    
+}
+@section IglooCommerceScripts
+{
+<script src="https://js.stripe.com/v3/"></script>
+        @await SmidgeHelper.JsHereAsync("igloo-commerce-widgets-bundle", HostingEnvironment.IsDebugMode)
+        <script>
+                document.addEventListener('DOMContentLoaded', function ()
+                {
+                    window.IglooCommerceApiApiKey = '@(commerceConfig.Commerce!.StorefrontApi!.ApiKey)'
+                }
+                )
+            </script>
+        
+        @await SmidgeHelper.CssHereAsync("igloo-commerce-css-bundle", HostingEnvironment.IsDebugMode)
+}
+
+@* @await UmbracoCommerceApi.Instance.Uow.ExecuteAsync((work, token) => *@
+@* { *@
+@*     var pp = UmbracoCommerceApi.Instance.GetPaymentProvider("tsd-stripe-onsite"); *@
+@*    var sett = pp.DefaultSettings SettingDefinitions.FirstOrDefault(x => x.Key == "onSiteProvider"); *@
+@*    sett.DefaultValue = true; *@
+@*     *@
+@* }) *@
+@RenderBody()
+@await RenderSectionAsync("bodyEnd", false)

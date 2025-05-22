@@ -1,0 +1,54 @@
+﻿
+<div class="umb-box ng-scope">
+    <div class="umb-box-content ng-scope">
+
+        <div ng-controller="Igloo.Controller" class="text-center" style="max-width: 500px; margin: 0 auto;">
+
+            <img src="/App_Plugins/IglooDashboard/igloo_logo_v2.svg" style="margin-top: 20px; margin-bottom: 30px; width: 150px;" />
+
+            <div ng-if="!loading" ng-init="GetLicense()">
+                <h3 ng-if="!IglooLicenseKey" class="bold">Welcome to Igloo!</h3>
+                <p ng-if="!IglooLicenseKey">Here you can register your Igloo License Key or License Token. If you have any questions or want more information about Igloo, please visit <a target="_blank" href="https://iglootheme.com">https://iglootheme.com</a></p>
+                <br />
+                <p style="font-size: 20px; " ng-if="IglooLicenseKeyValid"><i class="icon icon-checkbox" style="color: #35c786; display: block; font-size: 43px; margin-bottom: 20px;"></i> Your license is <strong style="color: #35c786;">valid<span ng-if="IglooLicenseDate"> until  {{IglooLicenseDate}}</span></strong></p>
+                <p style="font-size: 20px;" ng-if="!IglooLicenseKeyValid"><i class="icon icon-delete" style="color: #fe6561; display: block; font-size: 43px; margin-bottom: 20px;"></i> <strong style="font-size: 20px; color: #fe6561;" ng-if="!IglooLicenseKeyValid">not valid<span ng-if="IglooLicenseDateInValid">, trial ran out {{IglooLicenseDate}}</span></strong>.</p>
+
+                <br />
+                <p ng-if="IglooLicenseDate"><a class="btn umb-button__button btn-success umb-button--" target="_blank" href="https://iglootheme.com/buy">Buy Igloo</a></p>
+                <p ng-if="!IglooLicenseKey"><a class="btn umb-button__button btn-info umb-button--" target="_blank" href="https://iglootheme.com/free-trial">Register Trial</a> <a class="btn umb-button__button btn-success umb-button--" target="_blank" href="https://iglootheme.com/buy">Buy Igloo</a></p>
+                <br />
+
+                <umb-tabs-nav tabs="tabs" on-tab-change="changeTab(tab)">
+                </umb-tabs-nav>
+                <umb-tab-content ng-repeat="tab in tabs" ng-show="tab.active" tab="tab">
+                    <div ng-if="tab.alias === 'tabOne'">
+                        <div class="umb-el-wrap align-left">
+                            <label class="control-label" for="iglooKey">License Key</label>
+                            <textarea id="iglooKey" placeholder="License key" type="text" no-Dirty-Check class="umb-textstring textstring" ng-model="IglooLicenseKeyModel" ng-init="IglooLicenseKeyModel = IglooLicenseKey" style="margin-bottom: 20px; height: 140px; width: 100%;  padding: 9px; resize: none;"></textarea>
+
+                            <div class="align-right">
+                                <button ng-click="RegisterLicense()" class="btn umb-button__button btn-success umb-button--" ng-disabled="">Register Key</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="tab.alias === 'tabTwo'">
+                        <div class="umb-el-wrap align-left">
+                            <label class="control-label" for="iglooToken">License Token (Advanced)</label>
+                            <textarea id="iglooToken" placeholder="License Token" type="text" no-Dirty-Check class="umb-textstring textstring" ng-model="IglooLicenseTokenModel" ng-init="IglooLicenseTokenModel = IglooLicenseToken" style="margin-bottom: 20px; height: 140px; width: 100%;  padding: 9px; resize: none;"></textarea>
+
+                            <div class="align-right">
+                                <button ng-click="RegisterToken()" class="btn umb-button__button btn-success umb-button--" ng-disabled="">Register Token</button>
+                            </div>
+                        </div>
+                    </div>
+                </umb-tab-content>
+
+            </div>
+
+            <div ng-if="loading">
+                Loading...
+            </div>
+        </div>
+    </div>
+</div>
+

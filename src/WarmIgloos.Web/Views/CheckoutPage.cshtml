@@ -1,0 +1,77 @@
+﻿@using Umbraco.Commerce.Core.Api
+@using IglooThemeCommerce.Extensions
+@inherits UmbracoViewPage
+@inject IUmbracoCommerceApi CommerceApi;
+@{
+    Layout = "IglooCommerceBase.cshtml";
+    var restrictionType = Model.Value("accessRestrictions");
+    
+    const string noRestrictionsValue = "No Restrictions";
+    const string basketRestriction = "Must have populated basket";
+    const string finalisedOrderRestriction = "Must Have a Finalised Order";
+    const string queryParameterRestriction = "Must have \"orderId\" query parameter that matches a valid order";
+
+    var canRender = true;
+    var needToCheck = restrictionType?.ToString() != noRestrictionsValue;
+
+    if (needToCheck)
+    {
+        if (restrictionType?.ToString() == basketRestriction)
+        {
+            var order = CommerceApi.GetCurrentOrderRegardlessOfPage(UmbracoContext);
+
+            canRender = order is not null && order.TotalQuantity > 0;
+        }
+        
+        if (restrictionType?.ToString() == finalisedOrderRestriction)
+        {
+            var store = UmbracoContext.TryGetCurrentStoreFromContext();
+
+            if (store is null)
+            {
+                canRender = false;
+            }
+            else
+            {
+                var order = CommerceApi.GetCurrentFinalizedOrder(store.Id);
+
+                canRender = order is not null;
+            }
+        }
+        
+        if (restrictionType?.ToString() == queryParameterRestriction)
+        {
+            var validQp = Context.Request.Query.TryGetValue("orderId", out var value);
+
+            if (validQp)
+            {
+                var firstValue = value.FirstOrDefault();
+                var validGuid = Guid.TryParse(firstValue, out var orderId);
+
+                if (validGuid)
+                {
+                    var order = CommerceApi.GetOrder(orderId);
+                    canRender = order is not null;
+                }
+                else
+                {
+                    canRender = false;
+                }
+            }
+            else
+            {
+                canRender = false;
+            }
+        }
+    } 
+
+  
+}
+   @if (!canRender)
+    {
+        Context.Response.Redirect("/", true);
+    }
+   else
+   {
+       @await Html.PartialAsync("~/Views/Partials/Widgets/RenderWidgets.cshtml")
+   }

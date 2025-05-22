@@ -1,0 +1,38 @@
+﻿@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.FooterContact)Model.Content;
+    var settings = (ContentModels.FooterContactSettings)Model.Settings;
+}
+
+<div class="footer-item footer-item--contact text-@(settings.AlignContent)">
+
+    @if (content.Heading != "")
+    {
+        <h2 class="h6">@content.Heading</h2>
+    }
+    <address>
+        <ul class="contact-list">
+            @if (content.Address != "")
+            {
+                <li>
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    @Html.Raw(content.Address.Replace("\n", "<br/>"))
+                </li>
+            }
+            @if (content.Phone != "")
+            {
+                <li>
+                    <a href="tel:@(content.Phone)"><i class="fa fa-phone" aria-hidden="true"></i> @(content.Phone)</a>
+                </li>
+            }
+            @if (content.Email != "")
+            {
+                <li>
+                    <a href="mailto:@(content.Email)"><i class="fa fa-envelope" aria-hidden="true"></i> @(content.Email)</a>
+                </li>
+            }
+        </ul>
+    </address>
+
+</div>

@@ -1,0 +1,107 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.TextAndImages)Model.Content;
+    var settings = (ContentModels.TextAndImagesSettings)Model.Settings;
+
+    var order = ViewData["order"] != null ? Convert.ToInt32(ViewData["order"]) : 0;
+    var removeImageBorder = settings.RemoveImageBorder ? "split__image--no-border" : "";
+    var containImage = settings.ContainImage ? "split__image--contain" : "";
+    var height = settings.Height == null ? "" : settings.Height.Replace("%", "");
+    var animateClass = settings.Animate ? "animate" : "";
+
+    var textColorClass = settings.TextColor?.ToString() == "white" ? "light-color" : "";
+    var backgroundColor = settings.BackgroundColor?.ToString();
+    var backgroundColorClass = string.IsNullOrWhiteSpace(backgroundColor) ? "white-bg" : backgroundColor + "-bg";
+
+    var containerWidthClass = "split--full";
+    switch (settings.ContainerWidth)
+    {
+        case "small":
+            containerWidthClass = "split--small";
+            break;
+        case "standard":
+            containerWidthClass = "split--standard";
+            break;
+        case "big":
+            containerWidthClass = "split--big";
+            break;
+        case "full width":
+            containerWidthClass = "split--full";
+            break;
+    }
+}
+
+<section class="split-wrap @(settings.Compact ? "" : "block") @(backgroundColorClass) @(textColorClass) @(animateClass)" @if (!string.IsNullOrEmpty(settings.AnchorID)) { <text> id="@settings.AnchorID" </text> }>
+
+    <div class="split split--@(height) split--text-@(settings.TextBlockPlacement) @(containerWidthClass)">
+
+        <div class="split__text split__text--v-@(settings.VerticalTextAlignment) split__text--text-@(settings.TextAlignment)">
+
+            <div class="split__text-inner">
+
+                @if (content.PreHeading != "")
+                {
+                    <div class="pre-head">@content.PreHeading</div>
+                }
+                @if (content.Heading != "")
+                {
+                    if (order == 0)
+                    {
+                        <h1>@content.Heading</h1>
+                    }
+                    else
+                    {
+                        <h2>@content.Heading</h2>
+                    }
+                }
+                @if (content.Text.ToString() != "")
+                {
+                    @content.Text
+                }
+
+                @if (content.Buttons != null && content.Buttons.Any())
+                {
+                    <div class="button-wrap">
+                        @foreach (var button in content.Buttons)
+                        {
+                            @await Html.PartialAsync("~/Views/Partials/Widgets/RenderButton.cshtml", button)
+                        }
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+
+        @if (content.Images != null)
+        {
+            <div class="split__image split__image--@content.Images.Count() @removeImageBorder @containImage">
+                @foreach (var mediaItem in content.Images)
+                {
+                    if (settings.ContainImage)
+                    {
+                        <div class="split__image-item lazyload"
+                             data-sizes="auto"
+                             data-bgset="@(mediaItem.Url())?upscale=false&width=700&quality=80 700w,
+                    		@(mediaItem.Url())?upscale=false&width=1000&quality=80 1000w,
+                    		@(mediaItem.Url())?upscale=false&width=1500&quality=80 1500w"></div>
+                    }
+                    else
+                    {
+                        <div class="split__image-item lazyload"
+                             data-sizes="auto"
+                             data-bgset="
+        				    @mediaItem.GetCropUrl(700, 700, quality: 80) 700w,
+                    		@mediaItem.GetCropUrl(1000, 1000, quality: 80) 1000w,
+                    		@mediaItem.GetCropUrl(1500, 1500, quality: 80) 1500w"></div>
+                    }
+                }
+            </div>
+        }
+
+    </div>
+
+</section>

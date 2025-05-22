@@ -1,0 +1,19 @@
+.iconpicker .iconpicker-icon span {
+	cursor:pointer;
+}
+
+.iconpicker .iconpicker-icon span:hover {
+        text-decoration: underline;
+    }
+
+.iconpicker .iconpicker-remove {
+    margin-top: 10px;
+}
+
+    .iconpicker .iconpicker-remove span {
+        cursor: pointer;
+    }
+
+        .iconpicker .iconpicker-remove span:hover {
+            text-decoration: underline;
+        }

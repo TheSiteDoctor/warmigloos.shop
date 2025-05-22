@@ -1,0 +1,398 @@
+﻿@inherits UmbracoViewPage
+@inject Igloo.Core.Services.ISettingsService _settingsService;
+<div class="theme-explorer" data-current-node="@Umbraco.AssignedContentItem.Id" data-theme-node="@(Umbraco.AssignedContentItem?.Root()?.FirstChildOfType("websiteSettings")?.FirstChildOfType("theme")?.Id)">
+
+    <button class="theme-explorer__toggle" title="Toggle Theme Explorer">
+        <i class="fa fa-paint-brush" aria-hidden="true"></i>
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </button>
+
+    <div class="theme-explorer__nav">
+        <button class="active" data-section="color"><i class="fa fa-paint-brush" aria-hidden="true"></i> Colors</button>
+        <button data-section="text"><i class="fa fa-font" aria-hidden="true"></i>Text</button>
+        <button data-section="header"><i class="fa fa-arrow-up" aria-hidden="true"></i>Header</button>
+        <button data-section="footer"><i class="fa fa-arrow-down" aria-hidden="true"></i>Footer</button>
+        <button data-section="grid"><i class="fa fa-th" aria-hidden="true"></i>Grid</button>
+        <button data-section="forms"><i class="fa fa-check-square" aria-hidden="true"></i>Forms</button>
+    </div>
+
+    <div class="theme-explorer__inner">
+
+        <div class="theme-explorer__section active" id="color">
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Theme</label>
+                <input data-prop="--theme" class="theme-explorer__input theme-explorer__input--color" data-jscolor>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Theme Contrast</label>
+                <input data-prop="--theme-contrast" class="theme-explorer__input theme-explorer__input--color" data-jscolor>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Theme Alt</label>
+                <input data-prop="--theme-alt" class="theme-explorer__input theme-explorer__input--color" data-jscolor>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Theme Alt Contrast</label>
+                <input data-prop="--theme-alt-contrast" class="theme-explorer__input theme-explorer__input--color" data-jscolor>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Heading Dark</label>
+                <input data-prop="--heading-dark" class="theme-explorer__input theme-explorer__input--color" data-jscolor>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Text Dark</label>
+                <input data-prop="--text-dark" class="theme-explorer__input theme-explorer__input--color" data-jscolor>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Heading Light</label>
+                <input data-prop="--heading-light" class="theme-explorer__input theme-explorer__input--color" data-jscolor>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Text Light</label>
+                <input data-prop="--text-light" class="theme-explorer__input theme-explorer__input--color" data-jscolor>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Background Light</label>
+                <input data-prop="--background-light" class="theme-explorer__input theme-explorer__input--color" data-jscolor>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Background Dark</label>
+                <input data-prop="--background-dark" class="theme-explorer__input theme-explorer__input--color" data-jscolor>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Selected Nav</label>
+                <input data-prop="--selected-nav-item" class="theme-explorer__input theme-explorer__input--color" data-jscolor>
+            </div>
+            <div class="theme-explorer__item"></div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Success</label>
+                <input data-prop="--success" class="theme-explorer__input theme-explorer__input--color" data-jscolor>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Error</label>
+                <input data-prop="--error" class="theme-explorer__input theme-explorer__input--color" data-jscolor>
+            </div>
+            <div class="theme-explorer__item theme-explorer__item--full">
+                <label for="" class="form-label">Border Dark</label>
+                <input data-prop="--border-dark" class="theme-explorer__input theme-explorer__input--color" data-jscolor>
+            </div>
+            <div class="theme-explorer__item theme-explorer__item--full">
+                <label for="" class="form-label">Border Light</label>
+                <input data-prop="--border-light" class="theme-explorer__input theme-explorer__input--color" data-jscolor>
+            </div>
+        </div>
+
+        <div class="theme-explorer__section " id="header">
+            <div class="theme-explorer__item theme-explorer__item--full">
+                <label for="" class="form-label">Theme</label>
+                <select id="--header-theme" name="" class="theme-explorer__select" data-scope=".top">
+                    <option value="top--light">Light</option>
+                    <option value="top--dark">Dark</option>
+                </select>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Nav Position</label>
+                <select id="--header-nav" name="" class="theme-explorer__select" data-scope=".top">
+                    <option value="top--navigation-left">Left</option>
+                    <option value="top--navigation-center">Center</option>
+                    <option value="top--navigation-right">Right</option>
+                    <option value="top--navigation-left-logo-center">Left Logo Center</option>
+                </select>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Container</label>
+                <select id="--header-container" name="" class="theme-explorer__select" data-scope=".top">
+                    <option value="top--small-width">Small</option>
+                    <option value="top--standard-width">Standard</option>
+                    <option value="top--big-width">Big</option>
+                    <option value="top--full-width">Full width</option>
+                </select>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Height</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--header-height" data-alias="headerHeight" class="theme-explorer__input theme-explorer__input--text" type="number">
+                    <div class="theme-explorer__input-unit">px</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Height Mobile</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--header-height-mobile" data-alias="headerHeightMobile" data-size="992" value="@(_settingsService.Get<string>(Model, "headerHeightMobile", defaultValue: "50").Replace("px", ""))" class="theme-explorer__input theme-explorer__input--text" type="number">
+                    <div class="theme-explorer__input-unit">px</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Logo Padding</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--logo-padding" class="theme-explorer__input theme-explorer__input--text" type="number">
+                    <div class="theme-explorer__input-unit">px</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Logo Padding Mobile</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--logo-padding" data-alias="logoPaddingMobile" data-size="992" value="@(_settingsService.Get<string>(Model, "logoPaddingMobile", defaultValue: "12").Replace("px", ""))" class="theme-explorer__input theme-explorer__input--text" type="number">
+                    <div class="theme-explorer__input-unit">px</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Nav Padding</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--navigation-padding" class="theme-explorer__input theme-explorer__input--text" type="number">
+                    <div class="theme-explorer__input-unit">px</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Nav Padding Small Screen</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--navigation-padding" data-alias="navigationPaddingSmallerScreens" data-size="1200" value="@(_settingsService.Get<string>(Model, "navigationPaddingSmallerScreens", defaultValue: "15").Replace("px", ""))" class="theme-explorer__input theme-explorer__input--text" type="number">
+                    <div class="theme-explorer__input-unit">px</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Nav: Font Size</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--navigation-font-size" data-alias="navigationFontSize" class="theme-explorer__input theme-explorer__input--text" data-unit="rem" step="0.01" type="number">
+                    <div class="theme-explorer__input-unit">rem</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Nav Mobile: Font Size</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--navigation-font-size" data-size="992" data-alias="navigationFontSizeMobile" value="@(_settingsService.Get<string>(Model, "navigationFontSizeMobile", defaultValue: "1").Replace("rem", ""))" class="theme-explorer__input theme-explorer__input--text" data-unit="rem" step="0.01" type="number">
+                    <div class="theme-explorer__input-unit">rem</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Nav: Font Weight</label>
+                <input data-prop="--navigation-font-weight" data-alias="navigationFontWeight" class="theme-explorer__input theme-explorer__input--text" data-unit="" type="text">
+            </div>
+
+        </div>
+
+        <div class="theme-explorer__section" id="footer">
+
+            <div class="theme-explorer__item theme-explorer__item--full">
+                <label for="" class="form-label">Theme</label>
+                <select id="--footer-theme" name="" class="theme-explorer__select" data-scope=".footer">
+                    <option value="footer--light" data-remove="light-color">Light</option>
+                    <option value="footer--dark" data-extra="light-color">Dark</option>
+                </select>
+            </div>
+            <div class="theme-explorer__item theme-explorer__item--full">
+                <label for="" class="form-label">Container</label>
+                <select id="--footer-container" name="" class="theme-explorer__select" data-scope=".footer-grid">
+                    <option value="container--small" data-extra="container">Small</option>
+                    <option value="container">Standard</option>
+                    <option value="container--big" data-extra="container">Big</option>
+                    <option value="container--fluid" data-extra="container">Full width</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="theme-explorer__section" id="grid">
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Container Small</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--grid-width-small" class="theme-explorer__input theme-explorer__input--text" type="number">
+                    <div class="theme-explorer__input-unit">px</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Container</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--grid-width" class="theme-explorer__input theme-explorer__input--text" type="number">
+                    <div class="theme-explorer__input-unit">px</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Container Big</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--grid-width-big" class="theme-explorer__input theme-explorer__input--text" type="number">
+                    <div class="theme-explorer__input-unit">px</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Gutter</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--grid-gutter" class="theme-explorer__input theme-explorer__input--text" type="number">
+                    <div class="theme-explorer__input-unit">px</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Gutter Medium Screen</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--grid-gutter" data-alias="gridGutterMedium" data-size="992" value="@(_settingsService.Get<string>(Model, "gridGutterMedium", defaultValue: "15").Replace("px", ""))" class="theme-explorer__input theme-explorer__input--text" type="number">
+                    <div class="theme-explorer__input-unit">px</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Gutter Small Screen</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--grid-gutter" data-alias="gridGutterSmall" data-size="768" value="@(_settingsService.Get<string>(Model, "gridGutterSmall", defaultValue: "15").Replace("px", ""))" class="theme-explorer__input theme-explorer__input--text" type="number">
+                    <div class="theme-explorer__input-unit">px</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Gutter XS Screen</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--grid-gutter" data-alias="gridGutterXS" data-size="480" value="@(_settingsService.Get<string>(Model, "gridGutterXS", defaultValue: "15").Replace("px", ""))" class="theme-explorer__input theme-explorer__input--text" type="number">
+                    <div class="theme-explorer__input-unit">px</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="theme-explorer__section" id="text">
+            <div class="theme-explorer__item theme-explorer__item--full">
+                <label for="" class="form-label">Heading Font</label>
+                <select name="" class="theme-explorer__font" data-prop="--heading-font">
+                    <option disabled selected>Select Font</option>
+                </select>
+                <input type="hidden" class="font-hidden" name="heading-font">
+            </div>
+            <div class="theme-explorer__item theme-explorer__item--full">
+                <label for="" class="form-label">Body Font</label>
+                <select name="" class="theme-explorer__font" data-prop="--body-font">
+                    <option disabled selected>Select Font</option>
+                </select>
+                <input type="hidden" class="font-hidden" name="body-font">
+            </div>
+            <div class="theme-explorer__item theme-explorer__item--full">
+                <label class="cb-wrap">
+                    <input type="checkbox" class="toggle-design-mode"><strong>Enable Text Edit</strong><br> <span>Makes all the text on this page editable</span>
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+
+            <div class="theme-explorer__heading">
+                Text
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Text</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--font-size" data-alias="textFontSize" class="theme-explorer__input theme-explorer__input--text" data-unit="rem" step="0.01" type="number">
+                    <div class="theme-explorer__input-unit">rem</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Text Big</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--font-size-big" data-alias="textBigFontSize" class="theme-explorer__input theme-explorer__input--text" data-unit="rem" step="0.01" type="number">
+                    <div class="theme-explorer__input-unit">rem</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Text Small</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--font-size-small" data-alias="textSmallFontSize" class="theme-explorer__input theme-explorer__input--text" data-unit="rem" step="0.01" type="number">
+                    <div class="theme-explorer__input-unit">rem</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Text: Line Height</label>
+                <input data-prop="--body-line-height" data-alias="textLineHeight" class="theme-explorer__input theme-explorer__input--text" data-unit="" step="0.1" type="number">
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Text: Font Weight</label>
+                <input data-prop="--body-font-weight" data-alias="textFontWeight" class="theme-explorer__input theme-explorer__input--text" data-unit="" type="text">
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Text Big: Font Weight</label>
+                <input data-prop="--text-big-font-weight" data-alias="textBigFontWeight" class="theme-explorer__input theme-explorer__input--text" data-unit="" type="text">
+            </div>
+            <div class="theme-explorer__heading">
+                Headings
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Heading: Line Height</label>
+                <input data-prop="--heading-line-height" data-alias="headingLineHeight" class="theme-explorer__input theme-explorer__input--text" data-unit="" step="0.1" type="number">
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Heading: Font Weight</label>
+                <input data-prop="--heading-font-weight" data-alias="headingFontWeight" class="theme-explorer__input theme-explorer__input--text" data-unit="" type="text">
+            </div>
+
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Heading 1</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--font-size-h1" data-alias="heading1FontSize" class="theme-explorer__input theme-explorer__input--text" data-unit="rem" step="0.01" type="number">
+                    <div class="theme-explorer__input-unit">rem</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Heading 2</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--font-size-h2" data-alias="heading2FontSize" class="theme-explorer__input theme-explorer__input--text" data-unit="rem" step="0.01" type="number">
+                    <div class="theme-explorer__input-unit">rem</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Heading 3</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--font-size-h3" data-alias="heading3FontSize" class="theme-explorer__input theme-explorer__input--text" data-unit="rem" step="0.01" type="number">
+                    <div class="theme-explorer__input-unit">rem</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Heading 4</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--font-size-h4" data-alias="heading4FontSize" class="theme-explorer__input theme-explorer__input--text" data-unit="rem" step="0.01" type="number">
+                    <div class="theme-explorer__input-unit">rem</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Heading 5</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--font-size-h5" data-alias="heading5FontSize" class="theme-explorer__input theme-explorer__input--text" data-unit="rem" step="0.01" type="number">
+                    <div class="theme-explorer__input-unit">rem</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Heading 6</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--font-size-h6" data-alias="heading6FontSize" class="theme-explorer__input theme-explorer__input--text" data-unit="rem" step="0.01" type="number">
+                    <div class="theme-explorer__input-unit">rem</div>
+                </div>
+            </div>
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Hero Heading</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--hero-heading" data-alias="heroHeadingFontSize" class="theme-explorer__input theme-explorer__input--text" data-unit="rem" step="0.01" type="number">
+                    <div class="theme-explorer__input-unit">rem</div>
+                </div>
+            </div>
+
+            <div class="theme-explorer__item">
+                <label for="" class="form-label">Hero Heading Moblie</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--hero-heading" data-alias="heroHeadingMobileFontSize" class="theme-explorer__input theme-explorer__input--text" data-alias="heroHeadingMobileFontSize" value="@(_settingsService.Get<string>(Model, "heroHeadingMobileFontSize", defaultValue: "2.5").Replace("rem", ""))" data-unit="rem" data-size="768" step="0.01" type="number">
+                    <div class="theme-explorer__input-unit">rem</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="theme-explorer__section" id="forms">
+            <div class="theme-explorer__item theme-explorer__item--full">
+                <label for="" class="form-label">Button Border Radius</label>
+                <div class="theme-explorer__input-wrap">
+                    <input data-prop="--button-border-radius" class="theme-explorer__input theme-explorer__input--text" type="number">
+                    <div class="theme-explorer__input-unit">px</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    @if (Context.Request.Cookies["UMB-XSRF-TOKEN"] != null)
+    {
+        <div class="theme-explorer__save text-right">
+            <button class="button button--close">Close</button>
+            <button class="button button--save">Save</button>
+        </div>
+    }
+    <div class="theme-explorer-saving">
+
+    </div>
+</div>

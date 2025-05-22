@@ -1,0 +1,25 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.ColumnQuote)Model.Content;
+    var settings = (ContentModels.ColumnQuoteSettings)Model.Settings;
+}
+
+<div class="grid-item grid-item--quote @(settings.BoxedColumn ? "grid-item--boxed" : "")">
+    <blockquote>
+        @content.Quote
+        <footer>
+            @if (content.AuthorImage != null)
+            {
+                <img src="@(content.AuthorImage.GetCropUrl(100,100,quality: 80))" alt="@content.Author">
+            }
+            <div>
+                @content.Author
+                <div>
+                    @content.AuthorTitle
+                </div>
+            </div>
+        </footer>
+    </blockquote>
+</div>

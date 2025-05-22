@@ -1,0 +1,118 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Site>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inject Igloo.Core.Services.ISettingsService _settingsService;
+@using Umbraco.Cms.Web.Common.Models
+@{
+
+    var footerTheme = _settingsService.Get<string>(Umbraco.AssignedContentItem, "footerBackgroundColor") == "white" ? "footer--light" : "footer--dark light-color";
+    var scrollToTopDictionaryValue = Umbraco.GetDictionaryValue("Scroll to top");
+
+    var containerWidth = _settingsService.Get<string>(Umbraco.AssignedContentItem, "footerContainerWidth");
+    var containerWidthClass = "container container--standard";
+    switch (containerWidth)
+    {
+        case "small":
+            containerWidthClass = "container container--small";
+            break;
+        case "standard":
+            containerWidthClass = "container container--standard";
+            break;
+        case "big":
+            containerWidthClass = "container container--big";
+            break;
+        case "full width":
+            containerWidthClass = "container container--fluid";
+            break;
+    }
+
+    var toTopButtonColor = _settingsService.Get<string>(Umbraco.AssignedContentItem, "toTopButtonColor");
+
+    var commonWidgets = new[] { "grid", "instagramFeed", "textAndImages", "gallery", "slider", "umbracoForm", "contactForm", "login", "register" };
+    var gridWidgets = new[] { "columnImage" };
+    var sharedWidgets = new[] { "lineBreak" };
+}
+
+<footer class="footer @(footerTheme)">
+
+    @if (Model.FooterColumns != null && Model.FooterColumns.Any())
+    {
+        <div class="@(containerWidthClass) footer-grid">
+            <div class="row">
+
+                @foreach (var column in Model.FooterColumns)
+                {
+
+                    var columnWidth = column.Settings?.Value<string>("columnWidth", "")?.Replace("%", "") ?? "100";
+                    var columnType = column.Content.ContentType.Alias;
+
+                    switch (columnWidth)
+                    {
+                        case "":
+                            columnWidth = "col";
+                            break;
+                        case "25":
+                            columnWidth = "col-25 col-m-50";
+                            break;
+                        case "20":
+                            columnWidth = "col-20 col-m-33";
+                            break;
+                        case "10":
+                            columnWidth = "col-10 col-m-20";
+                            break;
+                        default:
+                            columnWidth = "col-" + columnWidth;
+                            break;
+                    }
+
+                    <div class="@(columnWidth) col-s-100">
+
+                        @if (sharedWidgets.Contains(columnType))
+                        {
+                            @await Html.PartialAsync("~/Views/Partials/Shared/" + columnType + ".cshtml", column)
+                        }
+                        else if (commonWidgets.Contains(columnType))
+                        {
+                            @await Html.PartialAsync("~/Views/Partials/Widgets/" + columnType + ".cshtml", column)
+                        }
+                        else if (gridWidgets.Contains(columnType))
+                        {
+                            @await Html.PartialAsync("~/Views/Partials/Widgets/Grid/" + columnType + ".cshtml", column)
+                        }
+                        else
+                        {
+                            @await Html.PartialAsync("~/Views/Partials/Widgets/Footer/" + columnType + ".cshtml", column)
+                        }
+
+                    </div>
+                }
+
+            </div>
+        </div>
+    }
+
+    @if (Model.BottomText != "")
+    {
+        <p class="footer__bottom-info">
+            @Model.BottomText
+        </p>
+    }
+
+    <a href="https://www.iglootheme.com/" target="_blank" rel="noopener" class="igloo-symbol" title="Powered by Igloo" aria-label="Powered by Igloo" tabindex="-1">
+        <svg width="26px" height="14px" viewBox="0 0 26 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true">
+            <defs></defs>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="igloo_symbol" fill="#FFFFFF" fill-rule="nonzero">
+                    <path d="M1.3109849,13.1780822 C1.3109849,6.63398364 6.54433521,1.3289436 13,1.3289436 C19.4556648,1.3289436 24.6890151,6.63398364 24.6890151,13.1780822 L26,13.1780822 C26,5.90002836 20.1797017,4.45652266e-16 13,0 C5.82029824,-4.45652266e-16 8.79259875e-16,5.90002836 0,13.1780822 L1.3109849,13.1780822 Z"></path>
+                    <path d="M5.87840007,13.1780822 C5.87840012,9.15559265 9.1079176,5.89472064 13.0917293,5.89472064 C17.0755409,5.89472064 20.3050584,9.15559265 20.3050585,13.1780822 L22.260274,13.1780822 C22.2602738,8.06377407 18.154173,3.91780822 13.0890411,3.91780822 C8.02390909,3.91780822 3.9178083,8.06377407 3.91780822,13.1780822 L5.87840007,13.1780822 Z"></path>
+                    <path d="M13.1780822,8.01369863 C10.3258719,8.01369863 8.01369863,10.3258719 8.01369863,13.1780822 L18.3424658,13.1780822 C18.3424658,10.3258719 16.0302925,8.01369863 13.1780822,8.01369863 Z"></path>
+                </g>
+            </g>
+        </svg>
+    </a>
+
+</footer>
+
+<a href="#content" title="@scrollToTopDictionaryValue" class="to-top to-top--@(toTopButtonColor)">
+    <i class="fa fa-chevron-up" aria-hidden="true"></i>
+    <span class="sr-only">@scrollToTopDictionaryValue</span>
+</a> 

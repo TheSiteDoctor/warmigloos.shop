@@ -1,0 +1,39 @@
+﻿@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.FooterLogos)Model.Content;
+    var settings = (ContentModels.FooterLogosSettings)Model.Settings;
+}
+
+<div class="footer-item footer-item--logos text-@(settings.AlignContent)">
+
+    @if (content.Heading != "")
+    {
+        <h2 class="h6">@content.Heading</h2>
+    }
+
+    @if (content.Logos != null && content.Logos.Any())
+    {
+        <ul>
+            @foreach (var logoBlock in content.Logos)
+            {
+                var logo = (ContentModels.Logo)logoBlock.Content;
+
+                if (logo.LogoImage != null)
+                {
+                    <li style="width: @(logo.CustomWidth == "" ? "120px" : logo.CustomWidth)">
+                        @if (logo.Link != null)
+                        {
+                            <a href="@(logo.Link.Url)" target="@(logo.Link.Target)" title="@(logo.Link.Name)"><img src="@logo.LogoImage.Url()" alt=""></a>
+                        }
+                        else
+                        {
+                            <div><img src="@logo.LogoImage.Url()" alt=""></div>
+                        }
+                    </li>
+                }
+            }
+        </ul>
+    }
+
+</div>

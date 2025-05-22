@@ -1,0 +1,125 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inject Igloo.Core.Services.ISettingsService _settingsService;
+@{
+    var content = (ContentModels.Map)Model.Content;
+    var settings = (ContentModels.MapSettings)Model.Settings;
+
+    var googleMapsAPIKey = _settingsService.Get<string>(Umbraco.AssignedContentItem, "googleMapsApikey");
+    var height = settings.Height == null ? "" : settings.Height.Replace("%", "");
+}
+
+@if (!content.ShowContentNextToMap)
+{
+    <section class="map map--@(height)">
+
+        <div class="map__canvas"
+             data-lat="@(content.Latitude)"
+             data-long="@(content.Longitude)"
+             data-zoom="@(settings.MapZoom != default ?  settings.MapZoom : "7")"
+             data-pin="@(settings.CustomMapPinIcon != null ? settings.CustomMapPinIcon.Url() : "no")">
+        </div>
+
+    </section>
+}
+else
+{
+    var order = (int)ViewData["order"];
+
+    var openingHours = content.OpeningHours;
+
+    var textColorClass = settings.TextColor?.ToString() == "white" ? "light-color" : "";
+    var backgroundColor = settings.BackgroundColor?.ToString();
+    var backgroundColorClass = string.IsNullOrWhiteSpace(backgroundColor) ? "gray-bg" : backgroundColor + "-bg";
+
+    <section class="map map--@(height) map--split map--text-@(settings.TextPlacement)" @if (!string.IsNullOrEmpty(settings.AnchorID)) { <text> id="@settings.AnchorID" </text> }>
+
+        <div class="map__content @(backgroundColorClass) @(textColorClass)">
+
+            <div class="map__content-inner">
+
+                @if (content.PreHeading != "")
+                {
+                    <div class="pre-head">@content.PreHeading</div>
+                }
+                @if (content.Heading != "")
+                {
+                    if (order == 0)
+                    {
+                        <h1>@content.Heading</h1>
+                    }
+                    else
+                    {
+                        <h2>@content.Heading</h2>
+                    }
+                }
+                @if (content.Text.ToString() != "")
+                {
+                    @content.Text
+                }
+
+                <address>
+                    <ul class="contact-list">
+                        @if (content.Address != "")
+                        {
+                            <li>
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                @Html.Raw(content.Address.Replace("\n", "<br/>"))
+                            </li>
+                        }
+                        @if (content.PhoneNumber != "")
+                        {
+                            <li>
+                                <a href="tel:@(content.PhoneNumber)"><i class="fa fa-phone" aria-hidden="true"></i> @content.PhoneNumber</a>
+                            </li>
+                        }
+                        @if (content.Email != "")
+                        {
+                            <li>
+                                <a href="mailto:@(content.Email)"><i class="fa fa-envelope" aria-hidden="true"></i> @content.Email</a>
+                            </li>
+                        }
+                    </ul>
+                </address>
+
+                @if (openingHours != null)
+                {
+                    <ul class="opening-hours">
+                        @foreach (var openingHourBlock in openingHours)
+                        {
+                            var openingHour = (ContentModels.OpeningHour)openingHourBlock.Content;
+
+                            <li>
+                                <span class="time">@openingHour.Time</span>
+                                <span class="day">@openingHour.Day</span>
+                            </li>
+                        }
+                    </ul>
+                }
+
+                @if (content.Buttons != null && content.Buttons.Any())
+                {
+                    <div class="button-wrap">
+                        @foreach (var button in content.Buttons)
+                        {
+                            @await Html.PartialAsync("~/Views/Partials/Widgets/RenderButton.cshtml", button)
+                        }
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+        <div class="map__canvas"
+            data-lat="@(content.Latitude)"
+            data-long="@(content.Longitude)"
+            data-zoom="@(settings.MapZoom.ToString() != "" ?  settings.MapZoom.ToString() : "7")"
+            data-pin="@(settings.CustomMapPinIcon != null ? settings.CustomMapPinIcon.Url() : "no")">
+        </div>
+
+    </section>
+}
+<script src="//maps.googleapis.com/maps/api/js?key=@(googleMapsAPIKey)"></script>
+

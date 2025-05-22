@@ -1,0 +1,142 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Igloo.Core.Controllers; 
+@{
+    var content = (ContentModels.Register)Model.Content;
+    var settings = (ContentModels.RegisterSettings)Model.Settings;
+
+    var order = int.TryParse(ViewData["order"]?.ToString(), out int parsedOrder) ? parsedOrder : 0;
+    var registerModel = new MemberRegisterModel();
+
+    //registerModel.MemberTypeAlias = Services.MemberService.GetDefaultMemberType();
+
+    @*
+        Configurable here:
+
+        registerModel.RedirectUrl       - Optional. What path to redirect to if registration is successful.
+                                          By default the member will be redirected to the current umbraco page
+                                          unless this is specified.
+
+        registerModel.UsernameIsEmail   - the default is true
+                                          if you want the username to be different from the email
+                                          address, set this to true and add a new Username field in
+                                          the form below
+
+                                          @Html.LabelFor(m => registerModel.Username)
+                                          @Html.TextBoxFor(m => registerModel.Username)
+                                          @Html.ValidationMessageFor(m => registerModel.Username)
+    *@
+
+    //Html.EnableClientValidation();
+    //Html.EnableUnobtrusiveJavaScript();
+
+
+    var success = TempData["FormSuccess"] != null;
+
+    var textColorClass = settings.TextColor?.ToString() == "white" ? "light-color" : "";
+    var backgroundColor = settings.BackgroundColor?.ToString();
+    var backgroundColorClass = string.IsNullOrWhiteSpace(backgroundColor) ? "white-bg" : backgroundColor + "-bg";
+}
+
+<section class="account-form" @if (!string.IsNullOrEmpty(settings.AnchorID)) { <text> id="@settings.AnchorID" </text> }>
+    <div class="account-form__inner @backgroundColorClass @textColorClass">
+        <div class="account-form__content">
+
+            @if (success)
+            {
+                @* This message will show if RedirectOnSucces is set to false (default) *@
+                <div class="text-center">
+                    <svg class="checkmark-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"></circle><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"></path></svg>
+                    <h4 class="success-color">@content.SuccessMessageHeading</h4>
+                    @content.SuccessMessageText
+                </div>
+            }
+            else
+            {
+                if (content.Heading != "")
+                {
+                    if (order == 0)
+                    {
+                        <h1 class="h2">@content.Heading</h1>
+                    }
+                    else
+                    {
+                        <h2>@content.Heading</h2>
+                    }
+                }
+
+                @content.Text
+
+                @ViewData["errors"]
+
+                @using (Html.BeginUmbracoForm<IglooMemberController>("HandleRegisterMember"))
+                {
+
+                    @Html.LabelFor(m => registerModel.Name, Umbraco.GetDictionaryValue("Name"))
+                    @Html.TextBoxFor(m => registerModel.Name)
+                    @Html.ValidationMessageFor(m => registerModel.Name)
+
+                    @Html.LabelFor(m => registerModel.Email, Umbraco.GetDictionaryValue("Email"))
+                    @Html.TextBoxFor(m => registerModel.Email)
+                    @Html.ValidationMessageFor(m => registerModel.Email)
+
+
+
+                    @*
+                if (registerModel.MemberProperties != null)
+                {
+
+                    for (var i = 0; i < registerModel.MemberProperties.Count; i++)
+                    {
+                        @Html.LabelFor(m => registerModel.MemberProperties[i].Value, registerModel.MemberProperties[i].Name)
+
+                        @Html.EditorFor(m => registerModel.MemberProperties[i].Value)
+                        @Html.HiddenFor(m => registerModel.MemberProperties[i].Alias)
+
+                    }
+                }
+                    *@
+                    <div class="password-input">
+                        @Html.LabelFor(m => registerModel.Password, Umbraco.GetDictionaryValue("Password"))
+                        <button class="password-input__show "><i class="fa fa-eye" aria-hidden="true"></i> @Umbraco.GetDictionaryValue("Show Password")</button>
+                        <button class="password-input__hide" style="display: none;"><i class="fa fa-eye-slash" aria-hidden="true"></i> @Umbraco.GetDictionaryValue("Hide Password")</button>
+                        @Html.PasswordFor(m => registerModel.Password)
+                    </div>
+                    @Html.ValidationMessageFor(m => registerModel.Password)
+
+                    <div class="password-input">
+                        @Html.LabelFor(m => registerModel.ConfirmPassword, Umbraco.GetDictionaryValue("Confirm Password"))
+                        <button class="password-input__show "><i class="fa fa-eye" aria-hidden="true"></i> @Umbraco.GetDictionaryValue("Show Password")</button>
+                        <button class="password-input__hide" style="display: none;"><i class="fa fa-eye-slash" aria-hidden="true"></i> @Umbraco.GetDictionaryValue("Hide Password")</button>
+                        @Html.PasswordFor(m => registerModel.ConfirmPassword)
+                    </div>
+                    @Html.ValidationMessageFor(m => registerModel.ConfirmPassword)
+
+
+                    @Html.HiddenFor(m => registerModel.MemberTypeAlias)
+                    @Html.HiddenFor(m => registerModel.RedirectUrl)
+                    @Html.HiddenFor(m => registerModel.UsernameIsEmail)
+
+                    <button class="button button--block">@Umbraco.GetDictionaryValue("Register")</button>
+
+                }
+            }
+
+        </div>
+    </div>
+
+    @if (content.Image != null)
+    {
+        <div class="account-form__media lazyload hide--m"
+             data-bgset="@(content.Image.Url())?upscale=false&width=1280&quality=80 1280w,
+    		@(content.Image.Url())?upscale=false&width=1600&quality=80 1600w,
+    		@(content.Image.Url())?upscale=false&width=1920&quality=80 1920w"
+             data-sizes="auto">
+        </div>
+    }
+
+</section>
+
+
+

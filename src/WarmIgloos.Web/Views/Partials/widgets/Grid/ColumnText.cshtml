@@ -1,0 +1,11 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.ColumnText)Model.Content;
+    var settings = (ContentModels.ColumnTextSettings)Model.Settings;
+}
+
+<div class="grid-item grid-item--text @(settings.BoxedColumn ? "grid-item--boxed" : "")">
+    @content.Text
+</div>

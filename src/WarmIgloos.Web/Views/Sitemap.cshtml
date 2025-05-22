@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+@inherits UmbracoViewPage
+@using System.Linq;
+@{
+    Layout = null;
+    Context.Response.ContentType = "text/xml";
+}
+    
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+        @{ListChildNodes(Model.Root());}
+    </urlset>
+
+    @functions{ 
+    void ListChildNodes(IPublishedContent root)
+    {
+        if (root.Root().Id == root.Id)
+        {
+            <url>
+                <loc>@root.Url(mode: UrlMode.Absolute)</loc>
+                <lastmod>@(string.Format("{0:s}+00:00", root.UpdateDate))</lastmod>
+                @if(root.Value("sitemapPageChangeFrequently") != ""){
+                    <changefreq>@root.Value("sitemapPageChangeFrequently")</changefreq>
+                }
+                <priority>@(root.Value("sitemapPagePriority") == "" ? "0.5" : root.Value("sitemapPagePriority"))</priority>
+            </url>
+        }
+
+        foreach (var node in root.Children.Where(x => !x.Value<bool>("hideFromSearchEngines") && !x.IsDocumentType("websiteSettings")))
+        {
+            if (node.TemplateId != 0 && node.ContentType.Alias != "sitemap")
+            {
+                <url>
+                    <loc>@node.Url(mode: UrlMode.Absolute)</loc>
+                    <lastmod>@(string.Format("{0:s}+00:00", node.UpdateDate))</lastmod>
+                    <changefreq>@(node.Value("sitemapPageChangeFrequently", fallback: Fallback.ToAncestors) ?? "daily")</changefreq>
+                    <priority>@(node.Value("sitemapPagePriority", fallback: Fallback.ToAncestors) ?? "0.5")</priority>
+                </url>
+            }
+
+            if (node.Children.Any(x => x.TemplateId != 0))
+            {
+                ListChildNodes(node);
+            }
+        }
+    }
+}

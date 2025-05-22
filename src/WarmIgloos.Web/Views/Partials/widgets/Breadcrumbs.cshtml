@@ -1,0 +1,65 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.Breadcrumbs)Model.Content;
+
+    var textColorClass = content.TextColor?.ToString() == "white" ? "light-color" : "";
+    var backgroundColor = content.BackgroundColor?.ToString();
+    var backgroundColorClass = string.IsNullOrWhiteSpace(backgroundColor) ? "white-bg" : backgroundColor + "-bg";
+
+    var containerWidthClass = "container";
+    switch (content.ContainerWidth)
+    {
+        case "small":
+            containerWidthClass = "container container--small";
+            break;
+        case "standard":
+            containerWidthClass = "container";
+            break;
+        case "big":
+            containerWidthClass = "container container--big";
+            break;
+        case "full width":
+            containerWidthClass = "container-fluid";
+            break;
+    }
+
+    var breadcrumbs = Umbraco.AssignedContentItem.Ancestors().ToArray();
+
+    var position = 1;
+}
+
+<div class="block breadcrumbs-block @(backgroundColorClass) @(textColorClass)">
+
+    <div class="@containerWidthClass">
+        <div class="row">
+            <div class="col-100">
+
+                <nav aria-label="Breadcrumb">
+                    <ul class="breadcrumbs @(content.CenterContent ? "breadcrumbs--center" : "")" itemscope itemtype="http://schema.org/BreadcrumbList">
+                        @foreach (var item in breadcrumbs.OrderBy(x => x.Level))
+                        {
+                            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                                <a itemprop="item" href="@item.Url()">
+                                    <span itemprop="name">@item.Name</span>
+                                </a>
+                                <meta itemprop="position" content="@position" />
+                            </li>
+                            position++;
+                        }
+                        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                            <a itemprop="item" href="@Umbraco.AssignedContentItem.Url()">
+                                <span itemprop="name">@Umbraco.AssignedContentItem.Name</span>
+                            </a>
+                            <meta itemprop="position" content="@position" />
+                        </li>
+
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+
+</div>

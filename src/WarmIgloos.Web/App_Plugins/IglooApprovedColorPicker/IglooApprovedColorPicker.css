@@ -1,0 +1,16 @@
+﻿.cv_colorbox_container {
+    position: relative;
+}
+
+.cv_colorbox {
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba(0,0,0,0.15);
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.cv_input {
+    min-width: calc(66.6% - 35px);
+    left: 35px;
+}

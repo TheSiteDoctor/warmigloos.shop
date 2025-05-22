@@ -1,0 +1,132 @@
+﻿@inherits UmbracoViewPage
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Extensions;
+@inject Umbraco.Cms.Core.Security.IMemberManager _memberManager;
+@inject Igloo.Core.Services.ISettingsService _settingsService;
+
+@{
+    var site = Model.AncestorOrSelf<ContentModels.Site>(1);
+    var headerTheme = _settingsService.Get<string>(Model, "headerBackgroundColor") == "white" ? "pre-top--light" : "pre-top--dark";
+    var scrollClass = "";
+    var transparentHeader = Model.Value<bool>("transparentHeader");
+    var transparentHeaderColor = Model.Value<string>("transparentHeaderColor");
+
+    var subHeaderLeft = site.SubHeaderLeft;
+    var subHeaderRight = site.SubHeaderRight;
+
+    if (transparentHeader)
+    {
+        scrollClass = transparentHeaderColor == "white" ? "pre-top--scroll-bg pre-top--scroll-light" : "pre-top--scroll-bg pre-top--scroll-dark";
+    }
+
+    var containerWidth = _settingsService.Get<string>(Model, "headerContainerWidth");
+    var containerWidthClass = "container";
+    switch (containerWidth)
+    {
+        case "small":
+            containerWidthClass = "container container--small";
+            break;
+        case "standard":
+            containerWidthClass = "container";
+            break;
+        case "big":
+            containerWidthClass = "container container--big";
+            break;
+        case "full width":
+            containerWidthClass = "container-fluid";
+            break;
+    }
+}
+
+<div class="pre-top @(headerTheme) @(scrollClass)">
+
+    <div class="@(containerWidthClass)">
+        <div class="row">
+            <div class="col-100">
+
+                <div class="pre-top__inner">
+
+                    @if (subHeaderLeft != null)
+                    {
+                        <ul class="pre-top__list pre-top__list--left">
+                            @{ListMenuItems(subHeaderLeft);}
+                        </ul>
+                    }
+
+                    @if (subHeaderRight != null)
+                    {
+                        <ul class="pre-top__list pre-top__list--right">
+                            @{ListMenuItems(subHeaderRight);}
+                        </ul>
+                    }
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@functions{
+
+    async void ListMenuItems(Umbraco.Cms.Core.Models.Blocks.BlockListModel items)
+    {
+
+        foreach (var itemBlock in items)
+        {
+
+            if (!(itemBlock.Content is ContentModels.SubHeaderItem item))
+            {
+                continue;
+            }
+
+            if ((item.Visibility == null || item.Visibility.ToString() == "Always")
+                || (item.Visibility.ToString() == "Logged Out" && !_memberManager.IsLoggedIn())
+                || (item.Visibility.ToString() == "Logged In" && _memberManager.IsLoggedIn()))
+            {
+
+                var itemTitle = item.Title;
+                if (_memberManager.IsLoggedIn())
+                {
+                    var currentMember = await _memberManager.GetCurrentMemberAsync();
+                    itemTitle = itemTitle.Replace("{MemberName}", currentMember?.Name);
+                }
+
+                <li>
+                    @if (item.Link != null)
+                    {
+                        <a href="@item.Link.Url" target="@item.Link.Target"
+                           @if (item.Link.Target == "_blank") { <text> rel="noopener" </text> }>
+                            @if (item.Icon != "")
+                            {
+                                <i class="fa @item.Icon pre-top__icon" style="@(item.CustomIconColor != "" ? "color:" + item.CustomIconColor + "" : "")" aria-hidden="true"></i>
+                            }
+                            <span style="@(item.CustomTextColor != "" ? "color:" + item.CustomTextColor + "" : "")">@itemTitle</span>
+
+                            @if (item.NavChildren != null && item.NavChildren.Count() > 0)
+                            {
+                                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                            }
+                        </a>
+                    }
+                    else
+                    {
+                        if (item.Icon != "")
+                        {
+                            <i class="fa @item.Icon pre-top__icon" style="@(item.CustomIconColor != "" ? "color:" + item.CustomIconColor + "" : "")" aria-hidden="true"></i>
+                        }
+                        <span style="@(item.CustomTextColor != "" ? "color:" + item.CustomTextColor + "" : "")">@itemTitle</span>
+                    }
+
+                    @if (item.NavChildren != null && item.NavChildren.Count() > 0)
+                    {
+                        <ul>
+                            @{ListMenuItems(item.NavChildren);}
+                        </ul>
+                    }
+                </li>
+            }
+        }
+    }
+}

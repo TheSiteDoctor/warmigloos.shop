@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<umbPackage>
+  <info>
+    <package>
+      <name>IT266ChangeMiniNavTextColor</name>
+    </package>
+  </info>
+  <DocumentTypes>
+    <DocumentType Folders="Widgets/Navigation" FolderKeys="fadd2193-84ec-4cd5-96f7-d6901c842a7c/a6288430-d867-41ac-898c-4303418c1dfe">
+      <Info>
+        <Name>Sub Header Item</Name>
+        <Alias>subHeaderItem</Alias>
+        <Key>e6adc0f3-6cb4-4d20-b480-2cd04a15ea19</Key>
+        <Icon>icon-flash color-black</Icon>
+        <Thumbnail>folder.png</Thumbnail>
+        <Description />
+        <AllowAtRoot>False</AllowAtRoot>
+        <IsListView>False</IsListView>
+        <IsElement>True</IsElement>
+        <Variations>Nothing</Variations>
+        <Compositions />
+        <AllowedTemplates />
+        <DefaultTemplate></DefaultTemplate>
+      </Info>
+      <Structure />
+      <GenericProperties>
+        <GenericProperty>
+          <Name>Name</Name>
+          <Alias>title</Alias>
+          <Key>d74dc443-aa80-4e89-8299-3b751ee117b3</Key>
+          <Type>Umbraco.TextBox</Type>
+          <Definition>0cc0eba1-9960-42c9-bf9b-60e150b429ae</Definition>
+          <Tab Alias="content">Content</Tab>
+          <SortOrder>0</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Custom Text Color</Name>
+          <Alias>customTextColor</Alias>
+          <Key>731339b7-49d9-4323-9e22-355e8f9be3b5</Key>
+          <Type>ColorValue</Type>
+          <Definition>ca5d09cb-6193-4b95-b7c1-bc3de01fea8d</Definition>
+          <Tab Alias="content">Content</Tab>
+          <SortOrder>1</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <Description><![CDATA[Hex color to give the "Text" a different color.]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Icon</Name>
+          <Alias>icon</Alias>
+          <Key>d41f78b6-5bc6-4d28-aa38-2d00e82e33b3</Key>
+          <Type>IconPicker</Type>
+          <Definition>bca16803-e645-46ea-ae32-26d7d4d98456</Definition>
+          <Tab Alias="content">Content</Tab>
+          <SortOrder>2</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Add a icon before the "Name"]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Custom Icon Color</Name>
+          <Alias>customIconColor</Alias>
+          <Key>e6749c3d-16ed-4972-a3f6-958b753bf3b0</Key>
+          <Type>ColorValue</Type>
+          <Definition>ca5d09cb-6193-4b95-b7c1-bc3de01fea8d</Definition>
+          <Tab Alias="content">Content</Tab>
+          <SortOrder>3</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Hex color to give the "Icon" a different color than "Name"]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Link</Name>
+          <Alias>link</Alias>
+          <Key>67149aca-81bc-4e74-be8e-daf7ef6bd66f</Key>
+          <Type>Umbraco.MultiUrlPicker</Type>
+          <Definition>ded9b564-0a63-4fe5-84bf-606d84e5d55e</Definition>
+          <Tab Alias="content">Content</Tab>
+          <SortOrder>4</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Visibility</Name>
+          <Alias>visibility</Alias>
+          <Key>3e65698a-fff0-480a-b9ec-56b34aeeea2e</Key>
+          <Type>BBB.ButtonPicker</Type>
+          <Definition>34e4fb07-73b4-4967-90d4-909288dc6a12</Definition>
+          <Tab Alias="content">Content</Tab>
+          <SortOrder>5</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Children</Name>
+          <Alias>navChildren</Alias>
+          <Key>56f21503-6be7-4875-84c1-8be03368d18f</Key>
+          <Type>Umbraco.BlockList</Type>
+          <Definition>b549b99c-0d06-4370-a05f-53b4f756d48c</Definition>
+          <Tab Alias="content">Content</Tab>
+          <SortOrder>6</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Add one more level of navigation]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+      </GenericProperties>
+      <Tabs>
+        <Tab>
+          <Id>158</Id>
+          <Key>74cd5a05-8d46-4fa7-98b3-6a554e5227b3</Key>
+          <Type>Group</Type>
+          <Caption>Content</Caption>
+          <Alias>content</Alias>
+          <SortOrder>0</SortOrder>
+        </Tab>
+      </Tabs>
+      <HistoryCleanupPolicy preventCleanup="false" />
+    </DocumentType>
+  </DocumentTypes>
+  <MediaTypes />
+  <Templates />
+  <Stylesheets />
+  <Scripts />
+  <PartialViews />
+  <Macros />
+  <MacroPartialViews />
+  <DictionaryItems />
+  <Languages />
+  <DataTypes />
+  <MediaItems />
+</umbPackage>

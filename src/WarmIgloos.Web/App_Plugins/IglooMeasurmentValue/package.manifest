@@ -1,0 +1,30 @@
+{
+	"propertyEditors": [{
+			"alias": "IglooMeasurmentValue",
+			"name": "Igloo Measurment Value",
+			"valueType": "STRING",
+			"editor": {
+				"view": "/App_Plugins/IglooMeasurmentValue/IglooMeasurmentValue.html",
+			},
+			"prevalues": {
+				"fields": [
+					{
+						"label": "Measurment",
+						"key": "measurment",
+						"view": "textstring"
+					}
+				]
+			},
+			"defaultConfig": {
+
+			}
+		}
+	],
+	"parameterEditors": [],
+	"javascript": [
+		"/App_Plugins/IglooMeasurmentValue/IglooMeasurmentValue.controller.js"
+	],
+	"css": [
+		"/App_Plugins/IglooMeasurmentValue/IglooMeasurmentValue.css"
+	]
+}

@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<umbPackage>
+  <info>
+    <package>
+      <name>IT274PODVIDEO</name>
+    </package>
+  </info>
+  <DocumentTypes>
+    <DocumentType Folders="Widgets/Grid/Pod" FolderKeys="fadd2193-84ec-4cd5-96f7-d6901c842a7c/dad5dd1b-321a-4809-8942-5beea83b6c38/335f3f88-8ca3-4989-8a29-addb3bb6f76a">
+      <Info>
+        <Name>Pod</Name>
+        <Alias>columnPod</Alias>
+        <Key>4c147893-6ed5-4cfe-94b0-e5e1abd47bc5</Key>
+        <Icon>icon-chess color-black</Icon>
+        <Thumbnail>folder.png</Thumbnail>
+        <Description />
+        <AllowAtRoot>False</AllowAtRoot>
+        <IsListView>False</IsListView>
+        <IsElement>True</IsElement>
+        <Variations>Nothing</Variations>
+        <Compositions />
+        <AllowedTemplates />
+        <DefaultTemplate></DefaultTemplate>
+      </Info>
+      <Structure />
+      <GenericProperties>
+        <GenericProperty>
+          <Name>Heading</Name>
+          <Alias>heading</Alias>
+          <Key>b44b7a17-e365-43b7-8a6a-f099e34709ae</Key>
+          <Type>Umbraco.TextBox</Type>
+          <Definition>0cc0eba1-9960-42c9-bf9b-60e150b429ae</Definition>
+          <Tab Alias="content">Content</Tab>
+          <SortOrder>0</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Text</Name>
+          <Alias>text</Alias>
+          <Key>428ec78f-30d7-4cf1-95f0-0f054f0f99d9</Key>
+          <Type>Umbraco.TinyMCE</Type>
+          <Definition>558c2f81-e36f-4e32-b038-52ea5db20d3c</Definition>
+          <Tab Alias="content">Content</Tab>
+          <SortOrder>1</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Icon</Name>
+          <Alias>icon</Alias>
+          <Key>80b50e7f-2fa0-4953-b8e1-4999b5149e14</Key>
+          <Type>IconPicker</Type>
+          <Definition>bca16803-e645-46ea-ae32-26d7d4d98456</Definition>
+          <Tab Alias="content">Content</Tab>
+          <SortOrder>2</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Image &amp; Video</Name>
+          <Alias>image</Alias>
+          <Key>7f758af5-fb78-44b2-9817-91b324954512</Key>
+          <Type>Umbraco.MediaPicker3</Type>
+          <Definition>d195af77-4fe1-41ed-a70e-91cad8f35595</Definition>
+          <Tab Alias="content">Content</Tab>
+          <SortOrder>3</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Can not be used together with Icon]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Link</Name>
+          <Alias>link</Alias>
+          <Key>a63c5a67-8763-4c57-be00-b684060cd1b1</Key>
+          <Type>Umbraco.MultiUrlPicker</Type>
+          <Definition>ded9b564-0a63-4fe5-84bf-606d84e5d55e</Definition>
+          <Tab Alias="content">Content</Tab>
+          <SortOrder>4</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[Links heading and image/icon]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+        <GenericProperty>
+          <Name>Buttons</Name>
+          <Alias>buttons</Alias>
+          <Key>e31b2871-db50-4707-b1bf-32547f9ced6e</Key>
+          <Type>Umbraco.BlockList</Type>
+          <Definition>69bc5d28-8798-44fc-9369-9e9763028592</Definition>
+          <Tab Alias="content">Content</Tab>
+          <SortOrder>5</SortOrder>
+          <Mandatory>False</Mandatory>
+          <LabelOnTop>False</LabelOnTop>
+          <MandatoryMessage></MandatoryMessage>
+          <Validation></Validation>
+          <ValidationRegExpMessage></ValidationRegExpMessage>
+          <Description><![CDATA[]]></Description>
+          <Variations>Nothing</Variations>
+        </GenericProperty>
+      </GenericProperties>
+      <Tabs>
+        <Tab>
+          <Id>132</Id>
+          <Key>caa7de48-544b-4b09-9f77-30a13ef69c70</Key>
+          <Type>Group</Type>
+          <Caption>Content</Caption>
+          <Alias>content</Alias>
+          <SortOrder>0</SortOrder>
+        </Tab>
+      </Tabs>
+      <HistoryCleanupPolicy preventCleanup="false" />
+    </DocumentType>
+  </DocumentTypes>
+  <MediaTypes />
+  <Templates />
+  <Stylesheets />
+  <Scripts />
+  <PartialViews />
+  <Macros />
+  <MacroPartialViews />
+  <DictionaryItems />
+  <Languages />
+  <DataTypes />
+  <MediaItems />
+</umbPackage>

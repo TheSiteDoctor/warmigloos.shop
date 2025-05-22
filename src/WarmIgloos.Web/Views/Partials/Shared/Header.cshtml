@@ -1,0 +1,77 @@
+﻿@inherits UmbracoViewPage
+@using Umbraco.Cms.Core.Models;
+@inject Igloo.Core.Services.ISettingsService _settingsService;
+@using Umbraco.Cms.Core.Models.PublishedContent;
+@{
+    var site = Model.Root();
+    var headerLogoOnLight = _settingsService.Get<MediaWithCrops>(Umbraco.AssignedContentItem, "headerLogoOnLight");
+    var headerLogoOnDark = _settingsService.Get<MediaWithCrops>(Umbraco.AssignedContentItem, "headerLogoOnDark");
+    var headerTheme = _settingsService.Get<string>(Umbraco.AssignedContentItem, "headerBackgroundColor") == "white" ? "top--light" : "top--dark";
+
+    var siteName = _settingsService.Get<string>(Umbraco.AssignedContentItem, "siteName");
+    var companyName = _settingsService.Get<string>(Umbraco.AssignedContentItem, "companyName");
+    var headerLayout = _settingsService.Get<string>(Umbraco.AssignedContentItem, "headerLayout");
+    var searchPage = site.FirstChildOfType("search");
+
+    var transparentHeader = Model.Value<bool>("transparentHeader");
+    var scrollClass = "";
+
+    if (transparentHeader)
+    {
+        var transparentHeaderColor = Model.Value<string>("transparentHeaderColor")?.ToString();
+        scrollClass = transparentHeaderColor == "white" ? "top--scroll-bg top--scroll-light" : "top--scroll-bg top--scroll-dark";
+    }
+
+    var containerWidth = _settingsService.Get<string>(Model, "headerContainerWidth");
+    var containerWidthClass = "";
+    switch (containerWidth)
+    {
+        case "small":
+            containerWidthClass = "top--small-width";
+            break;
+        case "standard":
+            containerWidthClass = "top--standard-width";
+            break;
+        case "big":
+            containerWidthClass = "top--big-width";
+            break;
+        case "full width":
+            containerWidthClass = "top--full-width";
+            break;
+    }
+}
+<header class="top @(headerTheme) @(containerWidthClass) @(scrollClass) top--@(headerLayout)">
+    <div class="top-inner">
+
+        <div class="top__left">
+            <a href="@site.Url()" class="logo logo--on-light" title="@siteName">
+                <img src="@(headerLogoOnLight?.Url())" alt="@companyName">
+            </a>
+            <a href="@site.Url()" class="logo logo--on-dark" title="@siteName">
+                <img src="@(headerLogoOnDark?.Url())" alt="@companyName">
+            </a>
+        </div>
+
+        @await Html.PartialAsync("~/Views/Partials/Shared/Navigation.cshtml")
+
+        <nav class="mobile-actions">
+            <ul>
+                @if (searchPage != null)
+                {
+                    <li class="toggle-search">
+                        <a href="#" title="@Umbraco.GetDictionaryValue("Search")">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                }
+                <li>
+                    <button class="hamburger" type="button" aria-label="Show navigation">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>

@@ -1,0 +1,87 @@
+﻿@inherits UmbracoViewPage<BlockListItem>
+@using Umbraco.Cms.Core.Models.Blocks;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Igloo.Core.Controllers
+@inject Igloo.Core.Services.ISettingsService _settingsService;
+@{
+    var content = (ContentModels.Newsletter)Model.Content;
+    var settings = (ContentModels.NewsletterSettings)Model.Settings;
+
+    var buttonColor = settings.ButtonColor?.ToString();
+    var buttonClass = string.IsNullOrWhiteSpace(buttonColor) ? "button--theme" : "button--" + buttonColor;
+
+    var newsletterEmailMarketingProvider = _settingsService.Get<string>(Umbraco.AssignedContentItem, "newsletterEmailMarketingProvider");
+    var newsletterDefaultSubscriberListID = _settingsService.Get<string>(Umbraco.AssignedContentItem, "newsletterDefaultSubscriberListID");
+    var animateClass = settings.Animate ? "animate" : "";
+    var thankYouMessage = Umbraco.GetDictionaryValue("Thank you");
+    var emailLabel = Umbraco.GetDictionaryValue("Email");
+
+    if (settings.ListID != "")
+    {
+        newsletterDefaultSubscriberListID = settings.ListID;
+    }
+
+    var pageID = Umbraco.AssignedContentItem.Id;
+
+    var textColorClass = settings.TextColor?.ToString() == "white" ? "light-color" : "";
+    var backgroundColor = settings.BackgroundColor?.ToString();
+    var backgroundColorClass = string.IsNullOrWhiteSpace(backgroundColor) ? "gray-bg" : backgroundColor + "-bg";
+
+    var backgroundMediaUrl = settings.BackgroundImage != null ? settings.BackgroundImage.Url() : "";
+
+    if (backgroundMediaUrl != "")
+    {
+        backgroundColorClass = "";
+    }
+}
+
+<section class="block newsletter @(backgroundColorClass) @(textColorClass) @(animateClass)" @if (!string.IsNullOrEmpty(settings.AnchorID)) { <text> id="@settings.AnchorID" </text> }>
+    <div class="newsletter__inner">
+        @if (content.Heading != "")
+        {
+            <h2 class="h3">@content.Heading</h2>
+        }
+        <div class="text-big">
+            @content.Text
+        </div>
+
+        @if (newsletterEmailMarketingProvider == "MailChimp")
+        {
+            <form action="@(Url.GetUmbracoApiService("AddMailchimpMember", "IglooNewsletter"))" data-thankyoumessage="@thankYouMessage">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="ListID" value="@(newsletterDefaultSubscriberListID)" />
+                <input type="hidden" name="PageID" value="@(pageID)" />
+                <label for="newsletter-email" class="sr-only">@emailLabel</label>
+                <input type="email" name="Email" autocomplete="email" id="newsletter-email" required placeholder="@content.PlaceholderText">
+                <button class="button button--block @(buttonClass)" aria-label="Sign up for newsletter"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+            </form>
+        }
+        else if (newsletterEmailMarketingProvider == "Campaign Monitor")
+        {
+            <form action="@(Url.GetUmbracoApiService("AddCampaignMonitorMember", "IglooNewsletter"))" data-thankyoumessage="@thankYouMessage">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="ListID" value="@(newsletterDefaultSubscriberListID)" />
+                <input type="hidden" name="PageID" value="@(pageID)" />
+                <label for="newsletter-email" class="sr-only">@emailLabel</label>
+                <input type="email" name="Email" autocomplete="email" id="newsletter-email" required placeholder="@content.PlaceholderText">
+                <button class="button button--block @(buttonClass)" aria-label="Sign up for newsletter"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+            </form>
+        }
+        @if (content.SmallText != "")
+        {
+            <p class="newsletter__disclaimer">
+                @content.SmallText
+            </p>
+        }
+    </div>
+
+    @if (backgroundMediaUrl != "")
+    {
+        <div class="block__background lazyload"
+             data-bgset="@(backgroundMediaUrl)?upscale=false&width=1280&quality=80 1280w,
+    		@(backgroundMediaUrl)?upscale=false&width=1600&quality=80 1600w,
+    		@(backgroundMediaUrl)?upscale=false&width=1920&quality=80 1920w"
+             data-sizes="auto">
+        </div>
+    }
+</section>
