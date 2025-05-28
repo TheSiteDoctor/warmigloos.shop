@@ -1,0 +1,3 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
+
+@await Component.InvokeAsync("PaymentProvider", new { contentPublishedModel = Model.Content, settingsPublishedModel = Model.Settings })
