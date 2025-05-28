@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="IglooTheme.Commerce" Version="1.0.0-11" />
+        <PackageReference Include="IglooTheme.Commerce" Version="1.0.0-12" />
         <PackageReference Include="LittleNorth.Igloo" Version="13.3.0" />
         <PackageReference Include="Serilog.Sinks.Seq" Version="9.0.0" />
         <PackageReference Include="Umbraco.Cms" Version="13.5.2"/>
