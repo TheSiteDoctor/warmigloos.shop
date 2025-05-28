@@ -404,3 +404,4 @@ FodyWeavers.xsd
 /src/WarmIgloos/WarmIgloos.Web/umbraco/Data/TEMP
 /src/.idea
 /src/WarmIgloos.Web/App_Plugins/ConditionalDisplayers
+/src/WarmIgloos.Web/wwwroot/css/generated-themes
