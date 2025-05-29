@@ -1,24 +1,24 @@
-﻿
+﻿@using IglooTheme.Commerce.Extensions
 @using IglooTheme.Commerce.Views.Shared.Models
-@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
 @{
-    var settingsPublishedModel = (BasketSummarySettings)Model.Settings;
-    var invokeDto = new BasketSummaryInvokeDto
-    {
-        ColumnHorizontalAlignmentCssClass = settingsPublishedModel.TableHorizontalAlignment,
-        ColumnWidthCssClass = settingsPublishedModel.TableWidth,
-        ContainerWidthCssClass = settingsPublishedModel.ContainerWidth,
-        BackgroundColourCssClass = settingsPublishedModel.BackgroundColour,
-        ApplyGutterToBottom = settingsPublishedModel.ApplyGutterSpacingToBottom,
-        ApplyGutterToTop = settingsPublishedModel.ApplyGutterSpacingToTop,
-        CustomCssClasses = settingsPublishedModel.CustomCssClasses,
-        SubTotalText = settingsPublishedModel.SubTotalText,
-        DiscountText = settingsPublishedModel.DiscountText,
-        ShippingText = settingsPublishedModel.ShippingText,
-        TaxText = settingsPublishedModel.TaxText,
-        TotalPriceText = settingsPublishedModel.TotalPriceText
-    };
-}
+        var settingsPublishedModel = Model.Settings;
+        var contentPublishedModel = Model.Content;
+        var invokeDto = new BasketSummaryInvokeDto
+        {
+            ColumnHorizontalAlignmentCssClass = settingsPublishedModel?.Value<string>("tableHorizontalAlignment"),
+            ColumnWidthCssClass = settingsPublishedModel?.Value<string>("tableWidth"),
+            ContainerWidthCssClass = settingsPublishedModel?.Value<string>("containerWidth"),
+            StyleVariableOverrides = settingsPublishedModel.GenerateWidgetStyleVariables(),
+            CustomCssClasses = settingsPublishedModel?.Value<List<string>>("customCssClasses"),
+            SubTotalText = contentPublishedModel?.Value<string>("subTotalText"),
+            DiscountText = contentPublishedModel?.Value<string>("discountText"),
+            ShippingText = contentPublishedModel?.Value<string>("shippingText"),
+            TaxText = contentPublishedModel?.Value<string>("taxText"),
+            TotalPriceText = contentPublishedModel?.Value<string>("totalPriceText"),
+            ItemsIdentifier = contentPublishedModel?.Value<string>("itemsIdentifier"),
+        };
+    }
 <div class="basket-summary-widget__container">
     @await Component.InvokeAsync("BasketSummary", invokeDto)
 </div>

@@ -1,4 +1,4 @@
-﻿@inherits UmbracoViewPage<BlockListItem>
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<BlockListItem>
 @using Umbraco.Cms.Core.Models.Blocks;
 @using Umbraco.Cms.Core.Models
 @using IglooTheme.Commerce.Extensions
@@ -8,4 +8,4 @@
      var imageUrl = haveCategory ? category!.Value<MediaWithCrops>("categoryImage")?.Url() : null;
      var name = haveCategory ? category!.Value<string>("categoryName") : null;
 }
-@await Component.InvokeAsync("CategoryImage", new { contentPublishedModel = (CategoryImage)Model.Content, settingsPublishedModel = (CategoryImageSettings)Model.Settings, categoryImageUrl = imageUrl, categoryName = name })
+@await Component.InvokeAsync("CategoryImage", new { contentPublishedModel = Model.Content, settingsPublishedModel = Model.Settings, categoryImageUrl = imageUrl, categoryName = name })

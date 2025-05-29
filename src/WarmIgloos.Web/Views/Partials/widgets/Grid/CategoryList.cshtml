@@ -1,29 +1,38 @@
-﻿@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
-@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
 @using Umbraco.Cms.Core.Models.Blocks
 @using Igloo.Core.Extensions
-@using IglooThemeCommerce.Extensions
+@using IglooTheme.Commerce.Extensions
 
 @{
     UmbracoContext.PricesIncludeTax();
-    var content = (ContentModels.CategoryList)Model.Content;
-    var settings = (ContentModels.CategoryListSettings)Model.Settings;
+    var content = Model.Content;
+    var settings = Model.Settings;
 
-    var parentCategoriesList = content.Categories?.Select(x => (Category)x).ToList();
-    var categoriesList = null as List<Category>;
+    var maxNumberOfColumns = settings.Value<int>("maximumNumberOfColumns");
+    var containerWidth = settings.Value<string>("containerWidth")?.GetChosenContainerWidthCssClass();
+    var customCssClassesValue = settings.Value<List<string>>("customCssClasses");
+    var styleOverrides = settings.GenerateWidgetStyleVariables();
     
-    var includeChildCategories = content.IncludeSubCategories;
-    var maxItemsPerCol = settings.MaximumNumberOfColumns;
+    var customCssClasses = customCssClassesValue?.HasAny() ?? false
+        ? string.Join(" ", customCssClassesValue)
+        : string.Empty;
+
+    var maxColumnsClass = maxNumberOfColumns is 0 or 4 ? string.Empty : $"max-{maxNumberOfColumns}";
+
+    var parentCategoriesList = content.Value<IEnumerable<IPublishedContent>>("categories")?.ToList();
+    List<IPublishedContent>? categoriesList;
+    
+    var includeChildCategories = content.Value<bool>("includeSubCategories");
 
     var haveCategories = parentCategoriesList is not null && parentCategoriesList.Any();
 
     if (includeChildCategories && haveCategories)
     {
-        categoriesList = new List<Category>();
+        categoriesList = [];
         foreach (var parentCategory in parentCategoriesList!)
         {
             categoriesList.Add(parentCategory);
-            var subCategories = parentCategory.Children?.Select(x => (Category)x).ToList();
+            var subCategories = parentCategory.Children.ToList();
 
             if (subCategories?.Any() ?? false) 
             {
@@ -44,14 +53,16 @@
     if (haveCategories)
     {
         //Ensure we go up the chain in case the category is a sub category
-        var categoriesParent = categoriesList!.First().Ancestor<Categories>();
-        Console.WriteLine();
+        var categoriesParent = UmbracoContext?.Content?.GetAtRoot()
+            .FirstOrDefault(x => x.ContentType.Alias == "site")?.Children
+            .FirstOrDefault(x => x.ContentType.Alias == "shop");
+        
         widgets = categoriesParent?.Value<IEnumerable<BlockListItem>>("widgets");
     }
 }
 
-<div class="container">
-    <div class="categories-grid">
+<div class="@containerWidth @customCssClasses widget-styles--cms" style="@styleOverrides">
+    <div class="categories-grid @maxColumnsClass">
         @if (widgets != null && haveCategories)
             {
                 var allWidgetsList = widgets.ToList();
@@ -72,10 +83,3 @@
             }
     </div>
 </div>
-<style>
-    .categories-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-gap: 10px;
-    }
-</style>

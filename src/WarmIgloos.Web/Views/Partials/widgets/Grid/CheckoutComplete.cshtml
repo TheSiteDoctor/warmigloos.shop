@@ -1,3 +1,3 @@
-﻿@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
 
-@await Component.InvokeAsync("CheckoutComplete", new { contentPublishedModel = (CheckoutComplete)Model.Content, settingsPublishedModel = (CheckoutCompleteSettings)Model.Settings })
+@await Component.InvokeAsync("CheckoutComplete", new { contentPublishedModel = Model.Content, settingsPublishedModel = Model.Settings })

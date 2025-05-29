@@ -1,27 +1,25 @@
-﻿
-@using IglooTheme.Commerce.Views.Components.BasketItems
+﻿@using IglooTheme.Commerce.Extensions
 @using IglooTheme.Commerce.Views.Shared.Models
-@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
+@using Umbraco.Cms.Core.Models
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
 @{
-    var settingsPublishedModel = (BasketItemsSettings)Model.Settings;
-    var contentPublishedModel = (BasketItems)Model.Content;
+    var settingsPublishedModel = Model.Settings;
+    var contentPublishedModel = Model.Content;
     var invokeDto = new BasketItemsInvokeDto
     {
-        BackgroundColourCssClass = settingsPublishedModel?.BackgroundColour,
-        ContainerWidthCssClass = settingsPublishedModel?.ContainerWidth,
-        BasketEmptyText = contentPublishedModel?.EmptyBasketText,
-        ShowReturnToStoreButtonWhenBasketEmpty = contentPublishedModel?.ShowReturnToStoreButton ?? false,
+        ContainerWidthCssClass = settingsPublishedModel?.Value<string>("containerWidth"),
+        BasketEmptyText = contentPublishedModel?.Value<string>("emptyBasketText"),
+        ShowReturnToStoreButtonWhenBasketEmpty = contentPublishedModel?.Value<bool>("showReturnToStoreButton") ?? false,
         BasketEmptyStoreButtonSettings = new TextButtonSettings
         {
-            Colour = contentPublishedModel?.ReturnToStoreButtonColour,
-            Size = contentPublishedModel?.ReturnToStoreButtonSize,
-            Style = contentPublishedModel?.ReturnToStoreButtonStyle,
-            Text = contentPublishedModel?.ReturnToStoreButtonText
+            Colour = contentPublishedModel?.Value<string>("returnToStoreButtonColour"),
+            Size = contentPublishedModel?.Value<string>("returnToStoreButtonSize"),
+            Style = contentPublishedModel?.Value<string>("returnToStoreButtonStyle"),
+            Text = contentPublishedModel?.Value<string>("returnToStoreButtonText")
         },
-        BasketEmptyStoreButtonUrl = contentPublishedModel?.ReturnToStoreButtonUrl?.Url ?? "/",
-        ApplyGutterToBottom = settingsPublishedModel.ApplyGutterSpacingToBottom,
-        ApplyGutterToTop = settingsPublishedModel.ApplyGutterSpacingToTop,
-        CustomCssClasses = settingsPublishedModel.CustomCssClasses
+        BasketEmptyStoreButtonUrl = contentPublishedModel?.Value<Link>("returnToStoreButtonUrl")?.Url ?? "/",
+        StyleVariableOverrides = settingsPublishedModel?.GenerateWidgetStyleVariables(),
+        CustomCssClasses = settingsPublishedModel?.Value<List<string>>("customCssClasses"),
     };
 }
 <div class="basket-items-widget__container">
