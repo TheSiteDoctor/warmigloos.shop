@@ -1,6 +1,18 @@
-﻿@inherits UmbracoViewPage
+﻿@using Umbraco.Cms.Core.Models.Blocks
+@using Umbraco.Commerce.Cms.Models
+@inherits UmbracoViewPage
 @{
     Layout = "IglooCommerceBase.cshtml";
-}
 
+    var variantProductData = Model.Value<ProductVariantCollection>("variantProductData");
+    var haveVariants = variantProductData?.Any() ?? false;
+    var parentWidgets = Model.Parent?.Value<BlockListModel>("widgets");
+    var variantSelector = parentWidgets?.Any(x => x.Content.ContentType.Alias == "productVariantSelector") ?? false;
+
+    var needToShowWarning = haveVariants && !variantSelector;
+}
+@if(needToShowWarning)
+{
+    <h3 class="container error-color">Warning! This product has Variants, A Variant Selector is required on the page.</h3>
+}
 @await Html.PartialAsync("~/Views/Partials/Widgets/RenderParentWidgets.cshtml")

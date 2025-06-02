@@ -12,6 +12,7 @@
     var containerWidth = settings.Value<string>("containerWidth")?.GetChosenContainerWidthCssClass();
     var customCssClassesValue = settings.Value<List<string>>("customCssClasses");
     var styleOverrides = settings.GenerateWidgetStyleVariables();
+    var gridItemStyleOverrides = settings.GenerateGridItemWidgetStyleVariables();
     
     var customCssClasses = customCssClassesValue?.HasAny() ?? false
         ? string.Join(" ", customCssClassesValue)
@@ -62,7 +63,7 @@
 }
 
 <div class="@containerWidth @customCssClasses widget-styles--cms" style="@styleOverrides">
-    <div class="categories-grid @maxColumnsClass">
+    <div class="categories-grid @maxColumnsClass" style="@gridItemStyleOverrides">
         @if (widgets != null && haveCategories)
             {
                 var allWidgetsList = widgets.ToList();
@@ -70,7 +71,7 @@
                 {
                     ViewData["categoryData"] = category;
                     var index = 0;
-                    <a href="@category.Url()" style="border: 1px solid black">
+                    <a href="@category.Url()" class="grid-item--cms" >
                     @foreach (var widget in allWidgetsList)
                     {
                       
