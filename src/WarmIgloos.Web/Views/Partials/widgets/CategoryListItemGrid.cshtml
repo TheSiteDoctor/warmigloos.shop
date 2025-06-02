@@ -1,4 +1,4 @@
-﻿@inherits UmbracoViewPage<BlockListItem>
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<BlockListItem>
 @using Umbraco.Cms.Core.Models.Blocks;
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
@@ -73,22 +73,7 @@
                     }
 
                     <div class="@(columnWidth) @(settings.HorizontalScrollMobile ? "col-s-90" : "col-s-100")">
-                        @if (columnType == "lineBreak")
-                        {
-                            @await Html.PartialAsync("~/Views/Partials/Shared/LineBreak.cshtml", column)
-                        }
-                        else if (columnType == "footerSocialLinks")
-                        {
-                            @await Html.PartialAsync("~/Views/Partials/Widgets/Footer/FooterSocialLinks.cshtml", column)
-                        }
-                        else if (columnType == "newsletter")
-                        {
-                            @await Html.PartialAsync("~/Views/Partials/Widgets/Newsletter.cshtml", column)
-                        }
-                        else
-                        {
-                            @await Html.PartialAsync("~/Views/Partials/Widgets/Grid/" + columnType + ".cshtml", column, new ViewDataDictionary(ViewData) { { "containerWidth", settings.ContainerWidth } })
-                        }
+                            @await Html.PartialAsync("~/Views/Partials/Widgets/Grid/" + columnType + ".cshtml", column)
                     </div>
                 }
             </div>

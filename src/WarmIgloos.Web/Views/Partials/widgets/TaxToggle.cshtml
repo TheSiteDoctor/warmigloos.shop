@@ -1,2 +1,2 @@
-﻿@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
-@await Component.InvokeAsync("TaxToggle", new { contentPublishedModel = (TaxToggle)Model.Content, settingsPublishedModel = (TaxToggleSettings)Model.Settings })
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
+@await Component.InvokeAsync("TaxToggle", new { contentPublishedModel = Model.Content, settingsPublishedModel = Model.Settings })

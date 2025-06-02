@@ -5,7 +5,8 @@
 
 @{
 	Layout = "IglooCommerceBase.cshtml";
-	var widgets = Model.Ancestor<Categories>()?.Value<IEnumerable<BlockListItem>>("categoryDetailWidgets");
+	var shopWidget = UmbracoContext.PublishedRequest.PublishedContent.Root().FirstChildOfType("shop");
+	var widgets = shopWidget?.Value<IEnumerable<BlockListItem>>("categoryDetailWidgets");
 	var indexNumberResult = this.ViewData.ContainsKey("indexNumber") ? this.ViewData["indexNumber"].ToString() : string.Empty;
 	var useIndexNumber = int.TryParse(indexNumberResult, out int indexNumber);
 }

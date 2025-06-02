@@ -1,4 +1,4 @@
-﻿@inherits UmbracoViewPage<BlockListItem>
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<BlockListItem>
 @using Umbraco.Cms.Core.Models.Blocks;
 @using IglooTheme.Commerce.Extensions
 
@@ -7,4 +7,4 @@
     var categoryDescription = haveCategory ? category!.Value<string>("categoryDescription") : null;
 }
 
-@await Component.InvokeAsync("CategoryDescription", new { contentPublishedModel = (CategoryDescription)Model.Content, settingsPublishedModel = (CategoryDescriptionSettings)Model.Settings, categoryDescription = categoryDescription })
+@await Component.InvokeAsync("CategoryDescription", new { contentPublishedModel = Model.Content, settingsPublishedModel = Model.Settings, categoryDescription = categoryDescription })

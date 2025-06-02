@@ -1,31 +1,28 @@
-﻿@using IglooTheme.Commerce.Views.Components.BasketDiscounts
+﻿@using IglooTheme.Commerce.Extensions
 @using IglooTheme.Commerce.Views.Shared.Models
-@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
 @{
-    var settingsPublishedModel = (BasketDiscountsSettings)Model.Settings;
+    var settingsPublishedModel = Model.Settings;
     var invokeModel = new BasketDiscountInvokeDto
     {
         ApplyButtonSettings = new TextButtonSettings
         {
-            Text = settingsPublishedModel.ApplyDiscountItemButtonText,
-            Colour = settingsPublishedModel.ApplyDiscountItemButtonColour,
-            Size = settingsPublishedModel.ApplyDiscountItemButtonSize,
-            Style = settingsPublishedModel.ApplyDiscountItemButtonStyle
+            Text = settingsPublishedModel.Value<string>("applyDiscountItemButtonText"),
+            Size = settingsPublishedModel.Value<string>("applyDiscountItemButtonSize"),
+            Style = settingsPublishedModel.Value<string>("applyDiscountItemButtonStyle")
         },
         RemoveButtonSettings = new IconButtonSettings
         {
 
-            Colour = settingsPublishedModel.RemoveDiscountItemButtonColour,
-            Size = settingsPublishedModel.RemoveDiscountItemButtonSize,
-            Style = settingsPublishedModel.RemoveDiscountItemButtonStyle
+            Colour = settingsPublishedModel.Value<string>("removeDiscountItemButtonColour"),
+            Size = settingsPublishedModel.Value<string>("removeDiscountItemButtonSize"),
+            Style = settingsPublishedModel.Value<string>("removeDiscountItemButtonStyle")
         },
-        ContainerWidthCssClass = settingsPublishedModel.ContainerWidth,
-        BackgroundColourCssClass = settingsPublishedModel.BackgroundColour,
-        DiscountFieldLabel = settingsPublishedModel.DiscountFieldLabel ?? string.Empty,
-        DiscountFieldRenderMode = settingsPublishedModel.DiscountFieldRenderMode,
-        ApplyGutterToBottom = settingsPublishedModel.ApplyGutterSpacingToBottom,
-        ApplyGutterToTop = settingsPublishedModel.ApplyGutterSpacingToTop,
-        CustomCssClassesList = settingsPublishedModel.CustomCssClasses
+        ContainerWidthCssClass = settingsPublishedModel.Value<string>("containerWidth"),
+        StyleVariableOverrides = settingsPublishedModel.GenerateWidgetStyleVariables(),
+        DiscountFieldLabel = settingsPublishedModel.Value<string>("discountFieldLabel") ?? string.Empty,
+        DiscountFieldRenderMode = settingsPublishedModel.Value<string>("discountFieldRenderMode"),
+        CustomCssClassesList = settingsPublishedModel.Value<List<string>>("CustomCssClasses")
 
     };
 }

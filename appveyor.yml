@@ -56,7 +56,7 @@ before_build:
 
 build_script:
   - cmd: echo `CONFIGURATION - %configuration% - %APPVEYOR_BUILD_VERSION%`
-  - cmd: dotnet build src\Warmigloos.Web\Warmigloos.Web.csproj -c %configuration% -f net8.0 --no-restore -p:Version=%APPVEYOR_BUILD_VERSION%
+  - cmd: dotnet build src\Warmigloos.Web\Warmigloos.Web.csproj -c %configuration% -f net8.0 -p:Version=%APPVEYOR_BUILD_VERSION%
   - cmd: dotnet publish src\Warmigloos.Web\Warmigloos.Web.csproj -c %configuration% -f net8.0 -o publish\ --no-restore --no-build
 
 #---------------------------------#

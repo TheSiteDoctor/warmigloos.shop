@@ -1,6 +1,6 @@
 ﻿@using Igloo.Core.Extensions;
 @using Umbraco.Cms.Core.Models.Blocks;
-@inherits UmbracoViewPage
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 @{
     Layout = null;
     var widgets = Model.Parent?.Value<IEnumerable<BlockListItem>>("widgets");

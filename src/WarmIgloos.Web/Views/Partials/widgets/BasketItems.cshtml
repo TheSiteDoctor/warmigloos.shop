@@ -1,27 +1,59 @@
-﻿
+﻿@using IglooTheme.Commerce.Extensions
 @using IglooTheme.Commerce.Views.Components.BasketItems
 @using IglooTheme.Commerce.Views.Shared.Models
-@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
+@using Umbraco.Cms.Core.Models
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
 @{
-    var settingsPublishedModel = (BasketItemsSettings)Model.Settings;
-    var contentPublishedModel = (BasketItems)Model.Content;
+    var settingsPublishedModel = Model.Settings;
+    var contentPublishedModel = Model.Content;
     var invokeDto = new BasketItemsInvokeDto
     {
-        BackgroundColourCssClass = settingsPublishedModel?.BackgroundColour,
-        ContainerWidthCssClass = settingsPublishedModel?.ContainerWidth,
-        BasketEmptyText = contentPublishedModel?.EmptyBasketText,
-        ShowReturnToStoreButtonWhenBasketEmpty = contentPublishedModel?.ShowReturnToStoreButton ?? false,
+        ContainerWidthCssClass = settingsPublishedModel?.Value<string>("containerWidth"),
+        BasketEmptyText = contentPublishedModel?.Value<string>("emptyBasketText"),
+        ShowReturnToStoreButtonWhenBasketEmpty = contentPublishedModel?.Value<bool>("showReturnToStoreButton") ?? false,
         BasketEmptyStoreButtonSettings = new TextButtonSettings
         {
-            Colour = contentPublishedModel?.ReturnToStoreButtonColour,
-            Size = contentPublishedModel?.ReturnToStoreButtonSize,
-            Style = contentPublishedModel?.ReturnToStoreButtonStyle,
-            Text = contentPublishedModel?.ReturnToStoreButtonText
+            Colour = contentPublishedModel?.Value<string>("returnToStoreButtonColour"),
+            Size = contentPublishedModel?.Value<string>("returnToStoreButtonSize"),
+            Style = contentPublishedModel?.Value<string>("returnToStoreButtonStyle"),
+            Text = contentPublishedModel?.Value<string>("returnToStoreButtonText")
         },
-        BasketEmptyStoreButtonUrl = contentPublishedModel?.ReturnToStoreButtonUrl?.Url ?? "/",
-        ApplyGutterToBottom = settingsPublishedModel.ApplyGutterSpacingToBottom,
-        ApplyGutterToTop = settingsPublishedModel.ApplyGutterSpacingToTop,
-        CustomCssClasses = settingsPublishedModel.CustomCssClasses
+        BasketEmptyStoreButtonUrl = contentPublishedModel?.Value<Link>("returnToStoreButtonUrl")?.Url ?? "/",
+        StyleVariableOverrides = settingsPublishedModel?.GenerateWidgetStyleVariables(),
+        CustomCssClasses = settingsPublishedModel?.Value<List<string>>("customCssClasses"),
+        ImageStyleVariableOverrides = settingsPublishedModel?.GenerateImageStyleVariables(),
+        GridItemStyleOverrides = settingsPublishedModel?.GenerateGridItemWidgetStyleVariables(),
+        ProductQuantityEditorSettings = new ProductQuantityEditorDto
+        {
+            ShowAddRemoveButtons = settingsPublishedModel.Value<bool>("showAddRemoveButtons"),
+            AddRemoveButtonSettings = new ButtonSettings
+            {
+                Colour = settingsPublishedModel?.Value<string>("addRemoveButtonColour"),
+                Size = settingsPublishedModel?.Value<string>("addRemoveButtonSize"),
+                Style = settingsPublishedModel?.Value<string>("addRemoveButtonStyle")
+            },
+            InputWidthRemValue = settingsPublishedModel?.Value<string>("inputWidth")
+        },
+        DeleteButtonSettings = new ButtonSettings
+        {
+            Colour = settingsPublishedModel?.Value<string>("deleteItemButtonColour"),
+            Size = settingsPublishedModel?.Value<string>("deleteItemButtonSize"),
+            Style = settingsPublishedModel?.Value<string>("deleteItemButtonStyle")
+        },
+        HeadingColourCssClass =  settingsPublishedModel?.Value<string>("textColour")?.GetTextColourClass(),
+        HeadingSizeCssClass =  settingsPublishedModel?.Value<string>("headingTextSize")?.GetHeaderTextSizeCssClass(),
+        ItemText = settingsPublishedModel?.Value<string>("itemText"),
+        PriceText = settingsPublishedModel?.Value<string>("priceText"),
+        QuantityText = settingsPublishedModel?.Value<string>("quantityText"),
+        TotalText = settingsPublishedModel?.Value<string>("totalText"),
+         ProductNameTextSizeCssClass = settingsPublishedModel?.Value<string>("productNameTextSize")?.GetHeaderTextSizeCssClass(),
+         ProductNameTextColourCssClass = settingsPublishedModel?.Value<string>("productNameTextColour")?.GetTextColourClass(),
+         VariantInfoTextSizeCssClass = settingsPublishedModel?.Value<string>("variantInfoTextSize")?.GetBodyTextSizeCssClass(),
+         VariantInfoTextColourCssClass = settingsPublishedModel?.Value<string>("variantInfoTextColour")?.GetTextColourClass(),
+         PriceTextSizeCssClass = settingsPublishedModel?.Value<string>("priceTextSize")?.GetBodyTextSizeCssClass(),
+         PriceTextColourCssClass = settingsPublishedModel?.Value<string>("priceTextColour")?.GetTextColourClass(),
+         TotalPriceTextSizeCssClass = settingsPublishedModel?.Value<string>("totalPriceTextSize")?.GetBodyTextSizeCssClass(),
+         TotalPriceTextColourCssClass = settingsPublishedModel?.Value<string>("totalPriceTextColour")?.GetTextColourClass()
     };
 }
 <div class="basket-items-widget__container">
