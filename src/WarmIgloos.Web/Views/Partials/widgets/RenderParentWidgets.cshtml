@@ -3,7 +3,7 @@
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 @{
     Layout = null;
-    var widgets = Model.Parent?.Value<IEnumerable<BlockListItem>>("widgets");
+    var widgets = Model.Parent?.Value<IEnumerable<BlockListItem>>("parentWidgets");
     var indexNumberResult = this.ViewData.ContainsKey("indexNumber") ? this.ViewData["indexNumber"].ToString() : string.Empty;
     var useIndexNumber = int.TryParse(indexNumberResult, out int indexNumber);
 }
