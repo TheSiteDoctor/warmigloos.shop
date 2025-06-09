@@ -57,8 +57,8 @@
         var categoriesParent = UmbracoContext?.Content?.GetAtRoot()
             .FirstOrDefault(x => x.ContentType.Alias == "site")?.Children
             .FirstOrDefault(x => x.ContentType.Alias == "shop");
-        
-        widgets = categoriesParent?.Value<IEnumerable<BlockListItem>>("widgets");
+
+    widgets = categoriesParent?.Value<IEnumerable<BlockListItem>>("parentWidgets");
     }
 }
 
